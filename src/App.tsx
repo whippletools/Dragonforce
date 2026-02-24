@@ -5,8 +5,9 @@ import HeroSlider from './sections/HeroSlider';
 import AboutSection from './sections/AboutSection';
 import QualitySection from './sections/QualitySection';
 import IdentitySection from './sections/IdentitySection';
-import MapSection from './sections/MapSection';
-import CTASection from './sections/CTASection';
+import EventsSection from './sections/EventsSection';
+import SchoolsSection from './sections/SchoolsSection';
+import TrainChampionsSection from './sections/TrainChampionsSection';
 import InternationalSection from './sections/InternationalSection';
 import NewsSection from './sections/NewsSection';
 import ProductPage from './pages/ProductPage';
@@ -96,8 +97,9 @@ function App() {
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
             <IdentitySection lang={lang} />
-            <MapSection lang={lang} />
-            <CTASection lang={lang} onNavigateProduct={navigateToProduct} />
+            <EventsSection lang={lang} />
+            <SchoolsSection lang={lang} />
+            <TrainChampionsSection lang={lang} />
             <InternationalSection lang={lang} />
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>

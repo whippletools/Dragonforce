@@ -64,6 +64,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 12px rgba(26, 79, 138, 0.3);
 }
 
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .btn-secondary {
   background-color: transparent;
   color: #1a4f8a;

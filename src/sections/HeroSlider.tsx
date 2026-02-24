@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 
 interface HeroSliderProps {
@@ -22,7 +22,7 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(nextSlide, 8000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -46,17 +46,39 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
       </AnimatePresence>
 
       <div className="relative z-10 h-full flex items-center justify-center">
+        <button
+          onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+          className="absolute left-4 md:left-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={40} className="text-white" strokeWidth={2} />
+        </button>
+
+        <button
+          onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+          className="absolute right-4 md:right-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={40} className="text-white" strokeWidth={2} />
+        </button>
+
         <div className="container mx-auto px-4 text-center">
           <AnimatePresence mode="wait">
-            <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="max-w-3xl mx-auto">
+            <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="max-w-4xl mx-auto">
               <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                 {slideText.title}
               </motion.h1>
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-lg md:text-xl text-white/90 mb-8">
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4">
                 {slideText.desc}
               </motion.p>
-              <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} whileHover={{ scale: 1.02 }} className="btn-primary">
-                {slideText.cta} <ChevronRight size={18} />
+              <motion.button 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: 0.6 }} 
+                whileHover={{ scale: 1.05 }} 
+                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
+              >
+                {slideText.cta} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>
             </motion.div>
           </AnimatePresence>
