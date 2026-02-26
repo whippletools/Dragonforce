@@ -1,0 +1,73 @@
+{
+  "slides": [
+    {
+      "id": 1,
+      "mediaType": "video",
+      "mediaUrl": "https://youtu.be/L3374C3OyrY?si=dOh53YoTm_XQ0cWk",
+      "position": {
+        "horizontal": "center",
+        "vertical": "center"
+      },
+      "content": {
+        "es": {
+          "title": "EVENTOS",
+          "body": "Entra en un universo donde la Alegría entrena contigo, la Pasión viste de azul y blanco, y la Motivación te lleva a jugar como un verdadero Dragón.",
+          "buttonText": "VER CATÁLOGO 25/26",
+          "buttonAction": "/catalog"
+        },
+        "en": {
+          "title": "EVENTS",
+          "body": "Enter a universe where Joy trains with you, Passion wears blue and white, and Motivation drives you to play like a true Dragon.",
+          "buttonText": "VIEW CATALOG 25/26",
+          "buttonAction": "/catalog"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "mediaType": "image",
+      "mediaUrl": "/images/hero-schools.jpg",
+      "position": {
+        "horizontal": "center",
+        "vertical": "center"
+      },
+      "content": {
+        "es": {
+          "title": "ESCUELAS",
+          "body": "La pasión por el fútbol comienza aquí. Encuentra la escuela Dragon Force más cercana a ti.",
+          "buttonText": "VER ESCUELAS",
+          "buttonAction": "/schools"
+        },
+        "en": {
+          "title": "SCHOOLS",
+          "body": "The passion for football begins here. Find the Dragon Force school nearest you.",
+          "buttonText": "VIEW SCHOOLS",
+          "buttonAction": "/schools"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "mediaType": "image",
+      "mediaUrl": "/images/hero-international.jpg",
+      "position": {
+        "horizontal": "center",
+        "vertical": "center"
+      },
+      "content": {
+        "es": {
+          "title": "INTERNACIONAL",
+          "body": "Una metodología abierta al mundo. Presente en Brasil, Zimbabue y Mozambique.",
+          "buttonText": "SABER MÁS",
+          "buttonAction": "/international"
+        },
+        "en": {
+          "title": "INTERNATIONAL",
+          "body": "A methodology open to the world. Present in Brazil, Zimbabwe and Mozambique.",
+          "buttonText": "LEARN MORE",
+          "buttonAction": "/international"
+        }
+      }
+    }
+  ]
+}
