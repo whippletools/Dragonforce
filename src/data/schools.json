@@ -1,0 +1,59 @@
+{
+  "schools": [
+    {
+      "id": 1,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/Colegio-da-trofa-2.png",
+      "name": {
+        "es": "COLEGIO IBÉRICO DE GAIA",
+        "en": "IBERIAN SCHOOL OF GAIA"
+      },
+      "location": "(GAIA)",
+      "pdfUrl": "/pdfs/schools/colegio-iberico-gaia.pdf",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/05/colegiobananca.jpg",
+      "name": {
+        "es": "COLEGIO NUESTRA SEÑORA DE LA BONDAD",
+        "en": "OUR LADY OF KINDNESS SCHOOL"
+      },
+      "location": "(PORTO)",
+      "pdfUrl": "/pdfs/schools/colegio-bondad-porto.pdf",
+      "order": 2
+    },
+    {
+      "id": 3,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/Colegio-Camoes.png",
+      "name": {
+        "es": "NUEVO COLEGIO DE MAIA",
+        "en": "NEW SCHOOL OF MAIA"
+      },
+      "location": "(MAIA)",
+      "pdfUrl": "/pdfs/schools/nuevo-colegio-maia.pdf",
+      "order": 3
+    },
+    {
+      "id": 4,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/Colegio-da-trofa-2.png",
+      "name": {
+        "es": "COLEGIO DRAGON FORCE TROFA",
+        "en": "DRAGON FORCE TROFA SCHOOL"
+      },
+      "location": "(TROFA)",
+      "pdfUrl": "/pdfs/schools/colegio-trofa.pdf",
+      "order": 4
+    },
+    {
+      "id": 5,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/05/colegiobananca.jpg",
+      "name": {
+        "es": "COLEGIO INTERNACIONAL DE PORTO",
+        "en": "INTERNATIONAL SCHOOL OF PORTO"
+      },
+      "location": "(PORTO)",
+      "pdfUrl": "/pdfs/schools/colegio-internacional-porto.pdf",
+      "order": 5
+    }
+  ]
+}

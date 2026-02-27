@@ -25,8 +25,8 @@
     },
     {
       "id": 2,
-      "mediaType": "image",
-      "mediaUrl": "/images/hero-schools.jpg",
+      "mediaType": "video",
+      "mediaUrl": "https://youtu.be/q7qHspDkD28?si=IbLBbfA49UStUMxQ",
       "position": {
         "horizontal": "center",
         "vertical": "center"
@@ -48,8 +48,8 @@
     },
     {
       "id": 3,
-      "mediaType": "image",
-      "mediaUrl": "/images/hero-international.jpg",
+      "mediaType": "video",
+      "mediaUrl": "https://youtu.be/V7ZQ3tsGiNI?si=vLs-yatH5ps71cFq",
       "position": {
         "horizontal": "center",
         "vertical": "center"

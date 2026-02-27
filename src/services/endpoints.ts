@@ -1,7 +1,8 @@
 export const endpoints = {
   heroSlider: '/hero-slider',
-  schools: '/schools',
+  qualityCarousel: '/quality-carousel',
   events: '/events',
+  schools: '/schools',
   news: '/news',
   products: '/products',
 } as const;

@@ -8,6 +8,19 @@ interface HeroSliderProps {
   lang: Lang;
 }
 
+const getYouTubeEmbedUrl = (url: string): string | null => {
+  const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+  const match = url.match(youtubeRegex);
+  if (match && match[1]) {
+    return `https://www.youtube.com/embed/${match[1]}?autoplay=1&mute=1&loop=1&playlist=${match[1]}&controls=0&showinfo=0&rel=0&modestbranding=1`;
+  }
+  return null;
+};
+
+const isYouTubeUrl = (url: string): boolean => {
+  return url.includes('youtube.com') || url.includes('youtu.be');
+};
+
 const HeroSlider = ({ lang }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error } = useHeroSlider(lang);
@@ -67,6 +80,14 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
         >
           {slideData.mediaType === 'image' ? (
             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${slideData.mediaUrl})` }} />
+          ) : isYouTubeUrl(slideData.mediaUrl) ? (
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src={getYouTubeEmbedUrl(slideData.mediaUrl) || ''}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              style={{ border: 'none', pointerEvents: 'none' }}
+            />
           ) : (
             <video
               className="absolute inset-0 w-full h-full object-cover"

@@ -2,35 +2,20 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type Lang } from '../data/translations';
+import { useSchools } from '../hooks/useSchools';
 
 interface SchoolsSectionProps {
   lang: Lang;
 }
 
-const schools = [
-  {
-    id: 1,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/Colegio-da-trofa-2.png',
-    name: 'COLEGIO IBÉRICO DE GAIA',
-    location: '(GAIA)',
-  },
-  {
-    id: 2,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/05/colegiobananca.jpg',
-    name: 'COLEGIO NUESTRA SEÑORA DE LA BONDAD',
-    location: '(PORTO)',
-  },
-  {
-    id: 3,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/Colegio-Camoes.png',
-    name: 'NUEVO COLEGIO DE MAIA',
-    location: '(MAIA)',
-  },
-];
-
 const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { schools, loading, error } = useSchools(lang);
+
+  const handleOpenPDF = (pdfUrl: string) => {
+    window.open(pdfUrl, '_blank');
+  };
 
   return (
     <section className="py-20 bg-gray-50 overflow-hidden">
@@ -44,7 +29,16 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
           </h2>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center py-20">
+            <p className="text-gray-600">Error loading schools</p>
+          </div>
+        ) : (
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
           <button
             onClick={() => {
               const carousel = document.getElementById('schools-carousel');
@@ -84,14 +78,17 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                   <div className="aspect-[16/10] overflow-hidden">
                     <img 
                       src={school.image} 
-                      alt={school.name} 
+                      alt={school.name[lang]} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
-                    <h3 className="text-white font-bold text-xl mb-1">{school.name}</h3>
+                    <h3 className="text-white font-bold text-xl mb-1">{school.name[lang]}</h3>
                     <p className="text-white/90 text-sm">{school.location}</p>
-                    <button className="mt-4 text-white text-sm font-medium hover:underline text-left">
+                    <button 
+                      onClick={() => handleOpenPDF(school.pdfUrl)}
+                      className="mt-4 text-white text-sm font-medium hover:underline text-left"
+                    >
                       {lang === 'es' ? 'Más información' : 'More information'}
                     </button>
                   </div>
@@ -100,6 +97,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
             ))}
           </div>
         </motion.div>
+        )}
       </div>
     </section>
   );

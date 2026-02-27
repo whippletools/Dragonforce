@@ -2,25 +2,17 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
+import { useQualityCarousel } from '../hooks/useQualityCarousel';
 
 interface QualitySectionProps {
   lang: Lang;
 }
 
-const qualityImages = [
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ALE06147-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/DF_Gersl-16-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/LdCup1-15-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/IMG_9709-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/FCPascoa-Dia2-28-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/LLL04767-scaled.jpg',
-  'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/LLL04497-scaled.jpg',
-];
-
 const QualitySection = ({ lang }: QualitySectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
+  const { images, loading, error } = useQualityCarousel();
 
   return (
     <section id="quality" className="py-20 bg-[#f5f5f5] overflow-hidden">
@@ -55,48 +47,60 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
-            <div 
-              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
-              style={{ scrollBehavior: 'smooth' }}
-              id="quality-carousel"
-            >
-              {qualityImages.map((img, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className="flex-shrink-0 w-full md:w-[350px] snap-start"
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
+              </div>
+            ) : error ? (
+              <div className="flex items-center justify-center py-20">
+                <p className="text-gray-600">Error loading images</p>
+              </div>
+            ) : (
+              <>
+                <div 
+                  className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+                  style={{ scrollBehavior: 'smooth' }}
+                  id="quality-carousel"
                 >
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-                    <img src={img} alt={`Quality ${i + 1}`} className="w-full h-full object-cover" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => {
-                  const carousel = document.getElementById('quality-carousel');
-                  if (carousel) carousel.scrollLeft -= 370;
-                }}
-                className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <button
-                onClick={() => {
-                  const carousel = document.getElementById('quality-carousel');
-                  if (carousel) carousel.scrollLeft += 370;
-                }}
-                className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
-                aria-label="Next image"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
+                  {images.map((img, i) => (
+                    <motion.div
+                      key={img.id}
+                      initial={{ opacity: 0, x: 100 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                      className="flex-shrink-0 w-full md:w-[350px] snap-start"
+                    >
+                      <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
+                        <img src={img.url} alt={img.alt} className="w-full h-full object-cover" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={() => {
+                      const carousel = document.getElementById('quality-carousel');
+                      if (carousel) carousel.scrollLeft -= 370;
+                    }}
+                    className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const carousel = document.getElementById('quality-carousel');
+                      if (carousel) carousel.scrollLeft += 370;
+                    }}
+                    className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
       </div>
