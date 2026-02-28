@@ -13,8 +13,17 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const { schools, loading, error } = useSchools(lang);
 
-  const handleOpenPDF = (pdfUrl: string) => {
-    window.open(pdfUrl, '_blank');
+  const getFullPdfUrl = (pdfUrl: string) => {
+    if (pdfUrl.startsWith('http')) {
+      return pdfUrl;
+    }
+    return pdfUrl.startsWith('/') ? pdfUrl : `/pdfs/schools/${pdfUrl}`;
+  };
+
+  const handlePdfClick = (e: React.MouseEvent<HTMLAnchorElement>, pdfUrl: string) => {
+    e.stopPropagation();
+    const fullUrl = getFullPdfUrl(pdfUrl);
+    window.open(fullUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -85,12 +94,15 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
                     <h3 className="text-white font-bold text-xl mb-1">{school.name[lang]}</h3>
                     <p className="text-white/90 text-sm">{school.location}</p>
-                    <button 
-                      onClick={() => handleOpenPDF(school.pdfUrl)}
-                      className="mt-4 text-white text-sm font-medium hover:underline text-left"
+                    <a 
+                      href={getFullPdfUrl(school.pdfUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => handlePdfClick(e, school.pdfUrl)}
+                      className="mt-4 text-white text-sm font-medium hover:underline inline-block"
                     >
                       {lang === 'es' ? 'Más información' : 'More information'}
-                    </button>
+                    </a>
                   </div>
                 </div>
               </motion.div>

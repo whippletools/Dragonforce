@@ -45,28 +45,30 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
               </button>
 
               <div className="flex-1 overflow-y-auto">
-                <div className="grid lg:grid-cols-2 gap-8 p-6 md:p-8">
-                  <div className="space-y-6">
-                    <div className="rounded-xl overflow-hidden shadow-lg">
+                <div className="grid md:grid-cols-2 gap-0 h-full">
+                  <div className="relative bg-gray-100">
+                    <div className="relative h-full min-h-[400px] md:min-h-full">
                       <img 
                         src={event.image} 
                         alt={title} 
-                        className="w-full h-auto object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </div>
+                  </div>
 
+                  <div className="flex flex-col p-6 md:p-8 lg:p-10 overflow-y-auto">
                     <div>
-                      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 md:mb-6">
                         {title}
                       </h2>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed text-sm md:text-base mb-6">
                         {description}
                       </p>
                     </div>
 
                     {event.pricing.length > 0 && (
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-4">
+                      <div className="mb-6">
+                        <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
                           {lang === 'es' ? 'Precios' : 'Pricing'}
                         </h3>
                         <div className="space-y-3">
@@ -76,16 +78,16 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
                               className="bg-gray-50 rounded-lg p-4 flex justify-between items-center"
                             >
                               <div>
-                                <p className="font-semibold text-gray-800">
+                                <p className="font-semibold text-gray-800 text-sm md:text-base">
                                   {price.category}
                                 </p>
                                 {price.description && (
-                                  <p className="text-sm text-gray-600">
+                                  <p className="text-xs md:text-sm text-gray-600">
                                     {price.description}
                                   </p>
                                 )}
                               </div>
-                              <p className="text-2xl font-bold text-blue-600">
+                              <p className="text-xl md:text-2xl font-bold text-blue-600">
                                 €{price.price}
                               </p>
                             </div>
@@ -93,12 +95,10 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
                         </div>
                       </div>
                     )}
-                  </div>
 
-                  <div className="space-y-6">
                     {questions.length > 0 && (
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-4">
+                      <div className="mb-6">
+                        <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
                           {lang === 'es' ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
                         </h3>
                         <div className="space-y-4">
@@ -107,10 +107,10 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
                               key={q.id}
                               className="bg-gray-50 rounded-lg p-4"
                             >
-                              <p className="font-semibold text-gray-800 mb-2">
+                              <p className="font-semibold text-gray-800 mb-2 text-sm md:text-base">
                                 {q.question}
                               </p>
-                              <p className="text-gray-600 text-sm">
+                              <p className="text-gray-600 text-xs md:text-sm">
                                 {q.answer}
                               </p>
                             </div>
@@ -120,7 +120,7 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
                     )}
 
                     {event.buttons.length > 0 && (
-                      <div className="space-y-3 pt-4">
+                      <div className="space-y-3 mt-auto pt-6">
                         {event.buttons.map((button, index) => (
                           <button
                             key={index}

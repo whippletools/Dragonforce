@@ -93,3 +93,29 @@ export interface School {
 export interface SchoolsResponse {
   schools: School[];
 }
+
+export interface ProgramButton {
+  text: string;
+  action: string;
+  variant: 'primary' | 'secondary';
+}
+
+export interface InternationalProgram {
+  id: number;
+  coverImage: string;
+  title: {
+    es: string;
+    en: string;
+  };
+  description: {
+    es: string;
+    en: string;
+  };
+  gallery: string[];
+  buttons: ProgramButton[];
+  order: number;
+}
+
+export interface InternationalProgramsResponse {
+  programs: InternationalProgram[];
+}

@@ -1,38 +1,31 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type Lang } from '../data/translations';
+import { useInternationalPrograms } from '../hooks/useInternationalPrograms';
+import InternationalModal from '../components/InternationalModal';
+import type { InternationalProgram } from '../types/api';
 
 interface InternationalSectionProps {
   lang: Lang;
 }
 
-const programs = [
-  {
-    id: 1,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/YOUTHFOOTBALLTOUR-819x1024.png',
-    title: 'YOUTH FOOTBALL TOUR',
-  },
-  {
-    id: 2,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/bddaf3be-b4aa-48a8-b94c-4ac4e5a69a07-819x1024.jpg',
-    title: 'WORLD CAMP',
-  },
-  {
-    id: 3,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/67f63b0af12894xw573OXfphuaqQm-1024x512.jpg',
-    title: 'INTERNATIONAL FOOTBALL SCHOOL',
-  },
-  {
-    id: 4,
-    image: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/FCPortoCoachingCLinic-819x1024.png',
-    title: 'FC PORTO COACHING CLINIC',
-  },
-];
-
 const InternationalSection = ({ lang }: InternationalSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { programs, loading, error } = useInternationalPrograms(lang);
+  const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProgramClick = (program: InternationalProgram) => {
+    setSelectedProgram(program);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProgram(null), 300);
+  };
 
   return (
     <section className="py-20 bg-white overflow-hidden">
@@ -46,7 +39,16 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
           </h2>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center py-20">
+            <p className="text-gray-600">Error loading programs</p>
+          </div>
+        ) : (
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
           <button
             onClick={() => {
               const carousel = document.getElementById('international-carousel');
@@ -82,15 +84,26 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className="flex-shrink-0 w-[280px] md:w-[300px] snap-start"
               >
-                <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
+                <div 
+                  className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
+                  onClick={() => handleProgramClick(program)}
+                >
                   <div className="aspect-[3/4] overflow-hidden">
-                    <img src={program.image} alt={program.title} className="w-full h-full object-cover" />
+                    <img src={program.coverImage} alt={program.title[lang]} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </motion.div>
+        )}
+
+        <InternationalModal
+          program={selectedProgram}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          lang={lang}
+        />
       </div>
     </section>
   );

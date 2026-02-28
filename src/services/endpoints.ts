@@ -3,6 +3,7 @@ export const endpoints = {
   qualityCarousel: '/quality-carousel',
   events: '/events',
   schools: '/schools',
+  internationalPrograms: '/international-programs',
   news: '/news',
   products: '/products',
 } as const;
