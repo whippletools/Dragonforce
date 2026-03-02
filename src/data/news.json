@@ -1,0 +1,52 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "slug": "dragon-force-championship-2024",
+      "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=500&fit=crop",
+      "date": "15 Marzo 2024",
+      "dateSort": "2024-03-15",
+      "title": {
+        "es": "Dragon Force gana el Campeonato Regional 2024",
+        "en": "Dragon Force wins Regional Championship 2024"
+      },
+      "excerpt": {
+        "es": "Nuestros equipos juveniles han demostrado un rendimiento excepcional en el campeonato regional, llevándose a casa el trofeo.",
+        "en": "Our youth teams have shown exceptional performance in the regional championship, bringing home the trophy."
+      },
+      "order": 1
+    },
+    {
+      "id": 2,
+      "slug": "new-training-facilities",
+      "image": "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800&h=500&fit=crop",
+      "date": "10 Marzo 2024",
+      "dateSort": "2024-03-10",
+      "title": {
+        "es": "Nuevas instalaciones de entrenamiento inauguradas",
+        "en": "New training facilities inaugurated"
+      },
+      "excerpt": {
+        "es": "Dragon Force inaugura instalaciones de última generación para mejorar el desarrollo de nuestros jóvenes talentos.",
+        "en": "Dragon Force inaugurates state-of-the-art facilities to improve the development of our young talents."
+      },
+      "order": 2
+    },
+    {
+      "id": 3,
+      "slug": "international-partnership",
+      "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=500&fit=crop",
+      "date": "5 Marzo 2024",
+      "dateSort": "2024-03-05",
+      "title": {
+        "es": "Alianza internacional con FC Porto",
+        "en": "International partnership with FC Porto"
+      },
+      "excerpt": {
+        "es": "Dragon Force fortalece su metodología de entrenamiento con la colaboración oficial de FC Porto.",
+        "en": "Dragon Force strengthens its training methodology with the official collaboration of FC Porto."
+      },
+      "order": 3
+    }
+  ]
+}

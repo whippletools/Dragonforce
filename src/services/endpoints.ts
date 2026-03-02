@@ -4,6 +4,7 @@ export const endpoints = {
   events: '/events',
   schools: '/schools',
   internationalPrograms: '/international-programs',
+  trainChampions: '/train-champions',
   news: '/news',
   products: '/products',
 } as const;

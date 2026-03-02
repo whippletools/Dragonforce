@@ -40,27 +40,7 @@ const Footer = ({
   ];
 
   return (
-    <footer className="bg-[#1a1a1a] text-white">
-      {/* Sponsor Section */}
-      <div className="border-b border-white/10">
-        <div className="container mx-auto py-8">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-gray-400 mb-2">{t.footer.sponsor}</p>
-              <a 
-                href="https://retailmind.com/pt/home-pt/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white/10 px-6 py-3 rounded-lg inline-flex items-center gap-2 hover:bg-white/20 transition-colors"
-              >
-                <span className="text-xl font-bold text-white">Retail Mind</span>
-                <ExternalLink size={16} className="text-gray-400" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <footer className="bg-white text-gray-800">
       {/* Main Footer */}
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -72,7 +52,7 @@ const Footer = ({
                 <text x="50" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">DF</text>
               </svg>
               <div>
-                <div className="font-bold text-lg text-white">DRAGON FORCE</div>
+                <div className="font-bold text-lg text-gray-800">DRAGON FORCE</div>
                 <div className="text-xs text-gray-400">FC PORTO</div>
               </div>
             </div>
@@ -83,7 +63,7 @@ const Footer = ({
 
           {/* About Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-300">{t.footer.about}</h4>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.about}</h4>
             <ul className="space-y-3">
               {aboutLinks.map((link, index) => (
                 <li key={index}>
@@ -92,7 +72,7 @@ const Footer = ({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                      className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
                     >
                       {link.label}
                       <ExternalLink size={12} />
@@ -100,7 +80,7 @@ const Footer = ({
                   ) : (
                     <button
                       onClick={link.onClick}
-                      className="text-gray-400 hover:text-white text-sm transition-colors text-left"
+                      className="text-gray-600 hover:text-blue-600 text-sm transition-colors text-left"
                     >
                       {link.label}
                     </button>
@@ -112,7 +92,7 @@ const Footer = ({
 
           {/* Help Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-300">{t.footer.help}</h4>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.help}</h4>
             <ul className="space-y-3">
               {helpLinks.map((link, index) => (
                 <li key={index}>
@@ -121,7 +101,7 @@ const Footer = ({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                      className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
                     >
                       {link.label}
                       <ExternalLink size={12} />
@@ -129,7 +109,7 @@ const Footer = ({
                   ) : (
                     <button
                       onClick={link.onClick}
-                      className="text-gray-400 hover:text-white text-sm transition-colors text-left"
+                      className="text-gray-600 hover:text-blue-600 text-sm transition-colors text-left"
                     >
                       {link.label}
                     </button>
@@ -141,22 +121,22 @@ const Footer = ({
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-300">{t.footer.contact}</h4>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.contact}</h4>
             <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-gray-400">
+              <li className="flex items-center gap-3 text-gray-600">
                 <Mail size={18} className="text-[#1a4f8a]" />
-                <a href="mailto:dragonforce@fcporto.pt" className="text-sm hover:text-white transition-colors">
+                <a href="mailto:dragonforce@fcporto.pt" className="text-sm hover:text-blue-600 transition-colors">
                   dragonforce@fcporto.pt
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-gray-400">
+              <li className="flex items-center gap-3 text-gray-600">
                 <Phone size={18} className="text-[#1a4f8a]" />
-                <a href="tel:+351962029030" className="text-sm hover:text-white transition-colors">
+                <a href="tel:+351962029030" className="text-sm hover:text-blue-600 transition-colors">
                   +351 962 029 030
                 </a>
               </li>
             </ul>
-            <p className="text-gray-500 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               {lang === 'es' ? '(Días laborables de 14:30 a 17:30)' : '(Weekdays from 14:30 to 17:30)'}
             </p>
             <div className="mt-6 flex gap-3">
@@ -165,7 +145,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }} 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#1a4f8a] transition-colors"
+                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
               >
                 <Facebook size={20} />
               </motion.a>
@@ -174,7 +154,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }} 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#1a4f8a] transition-colors"
+                className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
               >
                 <Instagram size={20} />
               </motion.a>
@@ -184,9 +164,9 @@ const Footer = ({
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-gray-200">
         <div className="container mx-auto py-6">
-          <p className="text-gray-400 text-sm text-center">
+          <p className="text-gray-600 text-sm text-center">
             © 2025 FC Porto Dragon Force. {lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
           </p>
         </div>

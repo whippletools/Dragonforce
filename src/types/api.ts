@@ -119,3 +119,50 @@ export interface InternationalProgram {
 export interface InternationalProgramsResponse {
   programs: InternationalProgram[];
 }
+
+// Train Champions Types
+export interface TrainChampionOption {
+  id: number;
+  type: 'play' | 'train';
+  backgroundImage: string;
+  title: {
+    es: string;
+    en: string;
+  };
+  description: {
+    es: string;
+    en: string;
+  };
+  buttonText: {
+    es: string;
+    en: string;
+  };
+  formType: 'preregistration' | 'application';
+  order: number;
+}
+
+export interface TrainChampionsResponse {
+  options: TrainChampionOption[];
+}
+
+// News Types
+export interface NewsArticle {
+  id: number;
+  slug: string;
+  image: string;
+  date: string;
+  dateSort: string;
+  title: {
+    es: string;
+    en: string;
+  };
+  excerpt: {
+    es: string;
+    en: string;
+  };
+  order: number;
+}
+
+export interface NewsResponse {
+  articles: NewsArticle[];
+}

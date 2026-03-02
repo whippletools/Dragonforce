@@ -1,0 +1,42 @@
+{
+  "options": [
+    {
+      "id": 1,
+      "type": "play",
+      "backgroundImage": "https://www.lausinyvicente.com/wp-content/uploads/2023/10/tipos-de-futbol-1200x313.jpg",
+      "title": {
+        "es": "JUEGA COMO NOSOTROS",
+        "en": "PLAY LIKE US"
+      },
+      "description": {
+        "es": "Preinscríbase aquí para la escuela de fútbol Dragon Force más cercana a usted",
+        "en": "Pre-register here for the Dragon Force football school nearest to you"
+      },
+      "buttonText": {
+        "es": "PREINSCRIPCIÓN",
+        "en": "PRE-REGISTRATION"
+      },
+      "formType": "preregistration",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "type": "train",
+      "backgroundImage": "https://www.lausinyvicente.com/wp-content/uploads/2023/10/tipos-de-futbol-1200x313.jpg",
+      "title": {
+        "es": "ENTRENAR CAMPEONES",
+        "en": "TRAIN CHAMPIONS"
+      },
+      "description": {
+        "es": "Solicite aquí para abrir una escuela de fútbol Dragon Force",
+        "en": "Apply here to open a Dragon Force football school"
+      },
+      "buttonText": {
+        "es": "SOLICITUD",
+        "en": "APPLICATION"
+      },
+      "formType": "application",
+      "order": 2
+    }
+  ]
+}

@@ -20,28 +20,20 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 z-50"
-            onClick={onClose}
-          />
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 md:inset-8 lg:inset-16 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'tween', duration: 0.3 }}
+            className="fixed inset-0 bg-white z-50 overflow-hidden"
           >
             <div className="h-full flex flex-col">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
-                aria-label="Close modal"
+                className="absolute top-6 right-6 z-10 p-3 bg-gray-100 hover:bg-gray-200 rounded-full shadow-lg transition-all"
+                aria-label="Close"
               >
-                <X size={24} className="text-gray-800" />
+                <X size={28} className="text-gray-800" />
               </button>
 
               <div className="flex-1 overflow-y-auto">
@@ -141,7 +133,6 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
               </div>
             </div>
           </motion.div>
-        </>
       )}
     </AnimatePresence>
   );
