@@ -41,14 +41,25 @@ const IdentitySection = ({ lang }: IdentitySectionProps) => {
   const cardData = cards[lang];
 
   return (
-    <section className="py-20 bg-white overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-[#1565c0] relative overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center" 
+        style={{ 
+          backgroundImage: 'url(https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/fundo_site.png)',
+          opacity: 0.15
+        }} 
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1565c0]/95 to-[#0d47a1]/95" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="text-center mb-16">
-          <span className="text-sm font-semibold uppercase tracking-wider text-[#1a4f8a] mb-4 block">{t.identity.label}</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">{t.identity.title}</h2>
+          <span className="inline-block border-2 border-white rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-white mb-6">
+            {t.identity.label}
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">{t.identity.title}</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {cardData.map((card, i) => {
             const Icon = icons[i];
             return (
@@ -57,14 +68,13 @@ const IdentitySection = ({ lang }: IdentitySectionProps) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all text-center"
+                className="text-center"
               >
-                <div className="w-16 h-16 rounded-full bg-[#1a4f8a] flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
+                  <Icon className="w-8 h-8 text-[#0d47a1]" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase">{card.title}</h3>
-                <p className="text-gray-600 text-sm">{card.desc}</p>
+                <h3 className="text-base font-bold text-white mb-2 uppercase">{card.title}</h3>
+                <p className="text-white/80 text-sm leading-relaxed">{card.desc}</p>
               </motion.div>
             );
           })}

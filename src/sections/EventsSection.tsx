@@ -1,30 +1,31 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { type Lang } from '../data/translations';
-import { useInternationalPrograms } from '../hooks/useInternationalPrograms';
-import InternationalModal from '../components/InternationalModal';
-import type { InternationalProgram } from '../types/api';
+import { translations, type Lang } from '../data/translations';
+import { useEvents } from '../hooks/useEvents';
+import EventModal from '../components/EventModal';
+import type { EventDetail } from '../types/api';
 
-interface InternationalSectionProps {
+interface EventsSectionProps {
   lang: Lang;
 }
 
-const InternationalSection = ({ lang }: InternationalSectionProps) => {
+const EventsSection = ({ lang }: EventsSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { programs, loading, error } = useInternationalPrograms(lang);
-  const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
+  const t = translations[lang];
+  const { events, loading, error } = useEvents(lang);
+  const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProgramClick = (program: InternationalProgram) => {
-    setSelectedProgram(program);
+  const handleEventClick = (event: EventDetail) => {
+    setSelectedEvent(event);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setTimeout(() => setSelectedProgram(null), 300);
+    setTimeout(() => setSelectedEvent(null), 300);
   };
 
   return (
@@ -32,11 +33,9 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
       <div className="container mx-auto px-4">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="mb-12">
           <span className="inline-block border-2 border-gray-800 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-gray-800 mb-6">
-            {lang === 'es' ? 'MÁS INFORMACIÓN' : 'MORE INFORMATION'}
+            {t.map.label}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
-            {lang === 'es' ? 'INTERNACIONAL' : 'INTERNATIONAL'}
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">{t.map.title}</h2>
         </motion.div>
 
         {loading ? (
@@ -45,28 +44,28 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
           </div>
         ) : error ? (
           <div className="flex items-center justify-center py-20">
-            <p className="text-gray-600">Error loading programs</p>
+            <p className="text-gray-600">Error loading events</p>
           </div>
         ) : (
           <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2 }} className="relative">
           <button
             onClick={() => {
-              const carousel = document.getElementById('international-carousel');
+              const carousel = document.getElementById('events-carousel');
               if (carousel) carousel.scrollLeft -= 340;
             }}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -ml-4"
-            aria-label="Previous program"
+            aria-label="Previous event"
           >
             <ChevronLeft size={24} className="text-gray-800" />
           </button>
 
           <button
             onClick={() => {
-              const carousel = document.getElementById('international-carousel');
+              const carousel = document.getElementById('events-carousel');
               if (carousel) carousel.scrollLeft += 340;
             }}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -mr-4"
-            aria-label="Next program"
+            aria-label="Next event"
           >
             <ChevronRight size={24} className="text-gray-800" />
           </button>
@@ -74,23 +73,21 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
           <div 
             className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide px-2"
             style={{ scrollBehavior: 'smooth' }}
-            id="international-carousel"
+            id="events-carousel"
           >
-            {programs.map((program, i) => (
+            {events.map((event, i) => (
               <motion.div
-                key={program.id}
+                key={event.id}
                 initial={{ opacity: 0, x: 100 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.3 + i * 0.1 }}
-                className="flex-shrink-0 w-[280px] md:w-[300px] snap-start"
+                className="flex-shrink-0 w-[280px] md:w-[320px] snap-start"
               >
                 <div 
                   className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
-                  onClick={() => handleProgramClick(program)}
+                  onClick={() => handleEventClick(event)}
                 >
-                  <div className="aspect-[3/4] overflow-hidden">
-                    <img src={program.coverImage} alt={program.title[lang]} className="w-full h-full object-cover" />
-                  </div>
+                  <img src={event.image} alt={event.title[lang]} className="w-full h-auto object-cover" />
                 </div>
               </motion.div>
             ))}
@@ -98,8 +95,8 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
         </motion.div>
         )}
 
-        <InternationalModal
-          program={selectedProgram}
+        <EventModal 
+          event={selectedEvent}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           lang={lang}
@@ -109,4 +106,4 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
   );
 };
 
-export default InternationalSection;
+export default EventsSection;

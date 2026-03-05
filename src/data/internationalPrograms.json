@@ -1,0 +1,121 @@
+{
+  "programs": [
+    {
+      "id": 1,
+      "coverImage": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/YOUTHFOOTBALLTOUR-819x1024.png",
+      "title": {
+        "es": "YOUTH FOOTBALL TOUR",
+        "en": "YOUTH FOOTBALL TOUR"
+      },
+      "description": {
+        "es": "Experiencia internacional única para jóvenes futbolistas. Viaja, compite y aprende con los mejores equipos de Europa. Incluye entrenamientos de alto nivel, partidos amistosos internacionales y visitas culturales.",
+        "en": "Unique international experience for young footballers. Travel, compete and learn with the best teams in Europe. Includes high-level training, international friendly matches and cultural visits."
+      },
+      "gallery": [
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/YOUTHFOOTBALLTOUR-819x1024.png",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/team-photo-1.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/team-training-1.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/team-match-1.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/team-celebration-1.jpg"
+      ],
+      "buttons": [
+        {
+          "text": "Inscribirse Ahora",
+          "action": "/register/youth-football-tour",
+          "variant": "primary"
+        },
+        {
+          "text": "Ver Itinerario",
+          "action": "/itinerary/youth-football-tour",
+          "variant": "secondary"
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": 2,
+      "coverImage": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/bddaf3be-b4aa-48a8-b94c-4ac4e5a69a07-819x1024.jpg",
+      "title": {
+        "es": "WORLD CAMP",
+        "en": "WORLD CAMP"
+      },
+      "description": {
+        "es": "Campamento internacional de verano con jugadores de todo el mundo. Metodología FC Porto aplicada en un ambiente multicultural. Desarrolla tus habilidades mientras haces amigos internacionales y vives la experiencia Dragon Force.",
+        "en": "International summer camp with players from around the world. FC Porto methodology applied in a multicultural environment. Develop your skills while making international friends and living the Dragon Force experience."
+      },
+      "gallery": [
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/bddaf3be-b4aa-48a8-b94c-4ac4e5a69a07-819x1024.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/world-camp-training.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/world-camp-teams.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/world-camp-activities.jpg"
+      ],
+      "buttons": [
+        {
+          "text": "Reservar Plaza",
+          "action": "/register/world-camp",
+          "variant": "primary"
+        }
+      ],
+      "order": 2
+    },
+    {
+      "id": 3,
+      "coverImage": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/67f63b0af12894xw573OXfphuaqQm-1024x512.jpg",
+      "title": {
+        "es": "INTERNATIONAL FOOTBALL SCHOOL",
+        "en": "INTERNATIONAL FOOTBALL SCHOOL"
+      },
+      "description": {
+        "es": "Programa anual para jugadores internacionales que desean formarse en la metodología FC Porto. Incluye alojamiento, educación académica y entrenamiento profesional. Una oportunidad única de vivir como un futbolista profesional.",
+        "en": "Annual program for international players who want to train in the FC Porto methodology. Includes accommodation, academic education and professional training. A unique opportunity to live like a professional footballer."
+      },
+      "gallery": [
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/67f63b0af12894xw573OXfphuaqQm-1024x512.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ifs-facilities.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ifs-classroom.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ifs-training.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ifs-dormitory.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/ifs-dining.jpg"
+      ],
+      "buttons": [
+        {
+          "text": "Solicitar Información",
+          "action": "/info/international-school",
+          "variant": "primary"
+        },
+        {
+          "text": "Descargar Brochure",
+          "action": "/download/ifs-brochure",
+          "variant": "secondary"
+        }
+      ],
+      "order": 3
+    },
+    {
+      "id": 4,
+      "coverImage": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/FCPortoCoachingCLinic-819x1024.png",
+      "title": {
+        "es": "FC PORTO COACHING CLINIC",
+        "en": "FC PORTO COACHING CLINIC"
+      },
+      "description": {
+        "es": "Clínica especializada para entrenadores que desean aprender la metodología FC Porto. Formación intensiva con entrenadores profesionales del club. Obtén certificación internacional y lleva tu carrera al siguiente nivel.",
+        "en": "Specialized clinic for coaches who want to learn the FC Porto methodology. Intensive training with professional club coaches. Get international certification and take your career to the next level."
+      },
+      "gallery": [
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/FCPortoCoachingCLinic-819x1024.png",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/coaching-session.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/coaching-theory.jpg",
+        "https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/coaching-practice.jpg"
+      ],
+      "buttons": [
+        {
+          "text": "Inscribirse",
+          "action": "/register/coaching-clinic",
+          "variant": "primary"
+        }
+      ],
+      "order": 4
+    }
+  ]
+}

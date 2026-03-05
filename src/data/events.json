@@ -1,0 +1,296 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2026/02/FC26_4x5-Pascoa-819x1024.png",
+      "title": {
+        "es": "Super Camp Pascua",
+        "en": "Easter Super Camp"
+      },
+      "description": {
+        "es": "Programa intensivo de entrenamiento durante las vacaciones de Pascua. Incluye sesiones técnicas, tácticas y actividades recreativas para jóvenes futbolistas.",
+        "en": "Intensive training program during Easter holidays. Includes technical, tactical sessions and recreational activities for young footballers."
+      },
+      "pricing": [
+        {
+          "category": "Alumno Dragon Force",
+          "price": 149,
+          "description": "Precio especial para estudiantes Dragon Force"
+        },
+        {
+          "category": "Público General",
+          "price": 179,
+          "description": "Precio para participantes externos"
+        }
+      ],
+      "questions": {
+        "es": [
+          {
+            "id": 1,
+            "question": "¿Qué edades pueden participar?",
+            "answer": "El programa está diseñado para niños y jóvenes de 6 a 14 años."
+          },
+          {
+            "id": 2,
+            "question": "¿Qué incluye el precio?",
+            "answer": "Incluye todas las sesiones de entrenamiento, kit oficial, seguro deportivo y certificado de participación."
+          },
+          {
+            "id": 3,
+            "question": "¿Cuál es el horario?",
+            "answer": "De lunes a viernes, de 9:00 a 17:00 horas."
+          }
+        ],
+        "en": [
+          {
+            "id": 1,
+            "question": "What ages can participate?",
+            "answer": "The program is designed for children and youth aged 6 to 14 years."
+          },
+          {
+            "id": 2,
+            "question": "What does the price include?",
+            "answer": "Includes all training sessions, official kit, sports insurance and participation certificate."
+          },
+          {
+            "id": 3,
+            "question": "What is the schedule?",
+            "answer": "Monday to Friday, from 9:00 AM to 5:00 PM."
+          }
+        ]
+      },
+      "buttons": [
+        {
+          "text": "Inscribirse Ahora",
+          "action": "/register/super-camp-pascua",
+          "variant": "primary"
+        },
+        {
+          "text": "Más Información",
+          "action": "/info/super-camp-pascua",
+          "variant": "secondary"
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": 2,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2026/01/ST_26_4x5_site-819x1024.png",
+      "title": {
+        "es": "Super Treino",
+        "en": "Super Training"
+      },
+      "description": {
+        "es": "Sesión de entrenamiento de alta intensidad diseñada para optimizar el rendimiento. Incluye desafíos técnicos, físicos y psicológicos con grupos reducidos.",
+        "en": "High-intensity training session designed to optimize performance. Includes technical, physical and psychological challenges with small groups."
+      },
+      "pricing": [
+        {
+          "category": "Sesión Individual",
+          "price": 35,
+          "description": "Una sesión de entrenamiento"
+        },
+        {
+          "category": "Pack 5 Sesiones",
+          "price": 150,
+          "description": "Ahorra €25 con el pack"
+        }
+      ],
+      "questions": {
+        "es": [
+          {
+            "id": 1,
+            "question": "¿Cuánto dura cada sesión?",
+            "answer": "Cada sesión tiene una duración de 2 horas."
+          },
+          {
+            "id": 2,
+            "question": "¿Necesito experiencia previa?",
+            "answer": "Sí, este programa está diseñado para jugadores con nivel intermedio o avanzado."
+          },
+          {
+            "id": 3,
+            "question": "¿Incluye informe de rendimiento?",
+            "answer": "Sí, puedes solicitar el Informe FC Porto Player by Sports Bion por €15 adicionales."
+          }
+        ],
+        "en": [
+          {
+            "id": 1,
+            "question": "How long is each session?",
+            "answer": "Each session lasts 2 hours."
+          },
+          {
+            "id": 2,
+            "question": "Do I need previous experience?",
+            "answer": "Yes, this program is designed for intermediate or advanced level players."
+          },
+          {
+            "id": 3,
+            "question": "Does it include performance report?",
+            "answer": "Yes, you can request the FC Porto Player by Sports Bion Report for an additional €15."
+          }
+        ]
+      },
+      "buttons": [
+        {
+          "text": "Reservar Sesión",
+          "action": "/register/super-treino",
+          "variant": "primary"
+        }
+      ],
+      "order": 2
+    },
+    {
+      "id": 3,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2026/02/LD_16x9_2-819x1024.png",
+      "title": {
+        "es": "Torneio de Leyendas",
+        "en": "Legends Tournament"
+      },
+      "description": {
+        "es": "Competición anual que reúne a las mejores escuelas Dragon Force. Una experiencia única de competición de alto nivel para jóvenes talentos.",
+        "en": "Annual competition bringing together the best Dragon Force schools. A unique high-level competition experience for young talents."
+      },
+      "pricing": [
+        {
+          "category": "Inscripción por Equipo",
+          "price": 450,
+          "description": "Incluye participación completa del equipo"
+        },
+        {
+          "category": "Jugador Individual",
+          "price": 45,
+          "description": "Por jugador adicional"
+        }
+      ],
+      "questions": {
+        "es": [
+          {
+            "id": 1,
+            "question": "¿Cuántos jugadores por equipo?",
+            "answer": "Equipos de 10 jugadores más 2 suplentes."
+          },
+          {
+            "id": 2,
+            "question": "¿Qué categorías hay?",
+            "answer": "Sub-8, Sub-10, Sub-12 y Sub-14."
+          },
+          {
+            "id": 3,
+            "question": "¿Dónde se realiza?",
+            "answer": "En las instalaciones del FC Porto y campos asociados."
+          }
+        ],
+        "en": [
+          {
+            "id": 1,
+            "question": "How many players per team?",
+            "answer": "Teams of 10 players plus 2 substitutes."
+          },
+          {
+            "id": 2,
+            "question": "What categories are there?",
+            "answer": "U-8, U-10, U-12 and U-14."
+          },
+          {
+            "id": 3,
+            "question": "Where does it take place?",
+            "answer": "At FC Porto facilities and associated fields."
+          }
+        ]
+      },
+      "buttons": [
+        {
+          "text": "Inscribir Equipo",
+          "action": "/register/torneio-leyendas",
+          "variant": "primary"
+        },
+        {
+          "text": "Ver Calendario",
+          "action": "/calendar/torneio-leyendas",
+          "variant": "secondary"
+        }
+      ],
+      "order": 3
+    },
+    {
+      "id": 4,
+      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2026/02/BootCamp2-819x1024.png",
+      "title": {
+        "es": "Dragão Foot-Camp",
+        "en": "Dragon Foot-Camp"
+      },
+      "description": {
+        "es": "Campamento de verano completo con entrenamiento intensivo, actividades recreativas y desarrollo integral del jugador. Experiencia inmersiva en la metodología FC Porto.",
+        "en": "Complete summer camp with intensive training, recreational activities and comprehensive player development. Immersive experience in FC Porto methodology."
+      },
+      "pricing": [
+        {
+          "category": "1 Semana",
+          "price": 199,
+          "description": "Programa de 5 días"
+        },
+        {
+          "category": "2 Semanas",
+          "price": 359,
+          "description": "Ahorra €39"
+        },
+        {
+          "category": "Mes Completo",
+          "price": 649,
+          "description": "Mejor precio - Ahorra €147"
+        }
+      ],
+      "questions": {
+        "es": [
+          {
+            "id": 1,
+            "question": "¿Incluye comida?",
+            "answer": "Sí, incluye almuerzo y snacks. También puedes contratar el pack de almuerzo completo."
+          },
+          {
+            "id": 2,
+            "question": "¿Hay transporte?",
+            "answer": "Ofrecemos servicio de transporte opcional desde puntos específicos de la ciudad."
+          },
+          {
+            "id": 3,
+            "question": "¿Qué actividades incluye?",
+            "answer": "Entrenamiento técnico, táctico, físico, juegos recreativos, talleres educativos y torneos internos."
+          }
+        ],
+        "en": [
+          {
+            "id": 1,
+            "question": "Does it include meals?",
+            "answer": "Yes, includes lunch and snacks. You can also hire the complete lunch pack."
+          },
+          {
+            "id": 2,
+            "question": "Is there transportation?",
+            "answer": "We offer optional transportation service from specific city points."
+          },
+          {
+            "id": 3,
+            "question": "What activities does it include?",
+            "answer": "Technical, tactical, physical training, recreational games, educational workshops and internal tournaments."
+          }
+        ]
+      },
+      "buttons": [
+        {
+          "text": "Reservar Plaza",
+          "action": "/register/foot-camp",
+          "variant": "primary"
+        },
+        {
+          "text": "Descargar Programa",
+          "action": "/download/foot-camp-program",
+          "variant": "secondary"
+        }
+      ],
+      "order": 4
+    }
+  ]
+}

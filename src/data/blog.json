@@ -1,0 +1,104 @@
+{
+  "articles": [
+    {
+      "id": "blog-001",
+      "slug": "abertas-inscricoes-2025-2026",
+      "title": {
+        "es": "A partir de este lunes abren las inscripciones para 2025/26",
+        "en": "Starting this Monday, registrations open for 2025/26"
+      },
+      "tag": {
+        "label": "NOTICIAS • DRAGON FORCE",
+        "slug": "noticias-dragon-force"
+      },
+      "heroImage": {
+        "src": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&h=1080&fit=crop",
+        "srcSet": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=480&h=270&fit=crop 480w, https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=768&h=432&fit=crop 768w, https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&h=675&fit=crop 1200w, https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&h=1080&fit=crop 1920w",
+        "alt": "Escuelas de Fútbol Dragon Force",
+        "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD..."
+      },
+      "author": {
+        "name": "Dragon Force",
+        "slug": "dragon-force"
+      },
+      "publishDate": "2025-07-08T00:00:00Z",
+      "readTime": 5,
+      "content": {
+        "blocks": [
+          {
+            "type": "heading",
+            "content": {
+              "level": 2,
+              "text": "Campaña válida hasta 12 de abril con ventajas exclusivas"
+            }
+          },
+          {
+            "type": "paragraph",
+            "content": "Las Escuelas de Fútbol Dragon Force, donde \"nació\" el jugador Rodrigo Mora el 18 de septiembre de 2012, abren las inscripciones para la época 2025/26 la próxima semana, con el período de registro disponible en las secretarías hasta el 19 de julio."
+          },
+          {
+            "type": "paragraph",
+            "content": "Tras una época de gran éxito y crecimiento, la Dragon Force se prepara para dar inicio a una nueva etapa con energía renovada y aún más oportunidades para jóvenes alumnos desarrollar su talento en ambientes de excelencia."
+          },
+          {
+            "type": "paragraph",
+            "content": "Durante la época 2024/25, las Escuelas Dragon Force registraron un aumento del 7,72% en el número de inscripciones, con más de 330 nuevos alumnos en relación al total de la época anterior."
+          },
+          {
+            "type": "heading",
+            "content": {
+              "level": 2,
+              "text": "El éxito del proyecto"
+            }
+          },
+          {
+            "type": "paragraph",
+            "content": "El éxito del proyecto no se midió únicamente por el número de alumnos y las victorias alcanzadas en los diferentes escalones y distritos:"
+          },
+          {
+            "type": "list",
+            "content": [
+              "26% de los atletas de fútbol de formación del FC Porto siguen siendo provenientes de las escuelas Dragon Force;",
+              "Fueron realizados 12 eventos oficiales, que movilizaron más de 6000 participantes en 15 localidades diferentes;",
+              "Destaque para los eventos realizados en el Estádio do Dragão, exclusivos para alumnos Dragon Force, por donde pasaron más de 2600 atletas, en competiciones como la Taça dos Campeões, el Torneo das Lendas y la Little Dragons Cup, con una asistencia total superior a 11.000 espectadores;",
+              "Los Programas de Férias (Navidad, Pascua y Verano) reunieron más de 2200 participantes, con las inscripciones para la edición de verano aún en curso."
+            ],
+            "metadata": {
+              "listType": "ul"
+            }
+          },
+          {
+            "type": "heading",
+            "content": {
+              "level": 2,
+              "text": "Ventajas exclusivas de la campaña"
+            }
+          },
+          {
+            "type": "paragraph",
+            "content": "La campaña de inscripciones incluye ventajas exclusivas para quienes se registren antes del 12 de abril:"
+          },
+          {
+            "type": "list",
+            "content": [
+              "Exención de la tasa de inscripción;",
+              "50% de descuento en la última mensualidad;",
+              "Kit de bienvenida oficial Dragon Force;",
+              "Acceso prioritario a eventos exclusivos."
+            ],
+            "metadata": {
+              "listType": "ul"
+            }
+          }
+        ]
+      },
+      "meta": {
+        "description": {
+          "es": "Las Escuelas de Fútbol Dragon Force abren inscripciones para 2025/26. Campaña con ventajas exclusivas hasta 12 de abril.",
+          "en": "Dragon Force Football Schools open registrations for 2025/26. Campaign with exclusive benefits until April 12."
+        },
+        "keywords": ["dragon force", "inscripciones", "escuelas", "fútbol", "2025/26"]
+      }
+    }
+  ]
+}
