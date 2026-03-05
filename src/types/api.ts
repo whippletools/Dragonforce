@@ -145,13 +145,70 @@ export interface TrainChampionsResponse {
   options: TrainChampionOption[];
 }
 
-// News Types
-export interface NewsArticle {
-  id: number;
+// Blog Detail Types
+export interface BlogTag {
+  label: string;
   slug: string;
-  image: string;
-  date: string;
-  dateSort: string;
+}
+
+export interface BlogHeroImage {
+  src: string;
+  srcSet: string;
+  alt: string;
+  placeholder: string;
+}
+
+export interface BlogAuthor {
+  name: string;
+  avatar?: string;
+  slug: string;
+}
+
+export interface RichTextBlock {
+  type: 'paragraph' | 'heading' | 'list' | 'image' | 'quote' | 'embed';
+  content: string | string[] | { level: 2 | 3 | 4; text: string };
+  metadata?: {
+    src?: string;
+    alt?: string;
+    caption?: string;
+    url?: string;
+    listType?: 'ul' | 'ol';
+  };
+}
+
+export interface RichTextContent {
+  blocks: RichTextBlock[];
+}
+
+export interface BlogArticle {
+  id: string;
+  slug: string;
+  title: {
+    es: string;
+    en: string;
+  };
+  tag: BlogTag;
+  heroImage: BlogHeroImage;
+  author: BlogAuthor;
+  publishDate: string;
+  readTime: number;
+  content: RichTextContent;
+  meta: {
+    description: {
+      es: string;
+      en: string;
+    };
+    keywords: string[];
+  };
+}
+
+export interface BlogResponse {
+  article: BlogArticle;
+}
+
+export interface BlogListItem {
+  id: string;
+  slug: string;
   title: {
     es: string;
     en: string;
@@ -160,9 +217,15 @@ export interface NewsArticle {
     es: string;
     en: string;
   };
-  order: number;
+  tag: BlogTag;
+  heroImage: {
+    src: string;
+    alt: string;
+  };
+  publishDate: string;
+  readTime: number;
 }
 
-export interface NewsResponse {
-  articles: NewsArticle[];
+export interface BlogListResponse {
+  articles: BlogListItem[];
 }
