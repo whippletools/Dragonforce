@@ -16,8 +16,10 @@ export function useEvents(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<EventsResponse>(endpoints.events);
-          const sortedEvents = [...response.data.events].sort((a, b) => a.order - b.order);
+          const response = await apiClient.get(endpoints.events, {
+            params: { lang, limit: 100 },
+          });
+          const sortedEvents = [...response.data.data].sort((a: any, b: any) => a.order - b.order);
           setEvents(sortedEvents);
         } catch (apiError) {
           console.log('API not available, using local data');

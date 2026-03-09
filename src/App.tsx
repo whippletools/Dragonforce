@@ -26,15 +26,15 @@ export type Lang = 'es' | 'en';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
-  const [productSlug, setProductSlug] = useState<string>('');
+  const [productSlug] = useState<string>('');
   const [blogSlug, setBlogSlug] = useState<string>('');
   const [lang, setLang] = useState<Lang>('es');
 
-  const navigateToProduct = (slug: string) => {
-    setProductSlug(slug);
-    setCurrentPage('product');
-    window.scrollTo(0, 0);
-  };
+  // const navigateToProduct = (_slug: string) => {
+  //   setProductSlug(_slug);
+  //   setCurrentPage('product');
+  //   window.scrollTo(0, 0);
+  // };
 
   const navigateToSchools = () => {
     setCurrentPage('schools');

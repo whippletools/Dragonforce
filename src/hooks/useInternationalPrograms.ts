@@ -16,8 +16,10 @@ export function useInternationalPrograms(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<InternationalProgramsResponse>(endpoints.internationalPrograms);
-          const sortedPrograms = [...response.data.programs].sort((a, b) => a.order - b.order);
+          const response = await apiClient.get(endpoints.internationalPrograms, {
+            params: { lang, limit: 100 },
+          });
+          const sortedPrograms = [...response.data.data].sort((a: any, b: any) => a.order - b.order);
           setPrograms(sortedPrograms);
         } catch (apiError) {
           console.log('API not available, using local data');

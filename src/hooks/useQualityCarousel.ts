@@ -16,8 +16,10 @@ export function useQualityCarousel() {
         
         // Intentar cargar desde API, si falla usar JSON local
         try {
-          const response = await apiClient.get<QualityCarouselResponse>(endpoints.qualityCarousel);
-          const sortedImages = [...response.data.images].sort((a, b) => a.order - b.order);
+          const response = await apiClient.get(endpoints.qualityCarousel, {
+            params: { limit: 100 },
+          });
+          const sortedImages = [...response.data.data].sort((a: any, b: any) => a.order - b.order);
           setImages(sortedImages);
         } catch (apiError) {
           console.log('API not available, using local data');
