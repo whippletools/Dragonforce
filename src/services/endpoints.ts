@@ -7,4 +7,6 @@ export const endpoints = {
   trainChampions: '/train-champions',
   news: '/news',
   products: '/products',
+  blog: '/blog',
+  blogList: '/blog-list',
 } as const;

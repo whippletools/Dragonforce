@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
@@ -11,6 +11,7 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <section className="py-20 bg-white overflow-hidden">
@@ -24,24 +25,35 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
                   ? 'El nuevo portal Dragon Force fue diseñado para ser una herramienta de fácil acceso para conocernos mejor y, rápidamente, entrar en nuestro mundo.'
                   : 'The new Dragon Force portal was designed to be an easy-to-access tool to get to know us better and quickly enter our world.'}
               </p>
-              <p>
-                {lang === 'es'
-                  ? 'Aquí podrás encontrar la Escuela de Fútbol Dragon Force más cercana a ti y ver todos los detalles como su ubicación, horarios de entrenamiento y demás servicios.'
-                  : 'Here you can find the Dragon Force Football School closest to you and see all the details such as its location, training schedules and other services.'}
-              </p>
-              <p>
-                {lang === 'es'
-                  ? 'Puedes explorar nuestro catálogo anual de eventos y elegir tu favorito. Con un solo clic, puedes registrarte y reservar tu lugar para una experiencia inolvidable.'
-                  : 'You can explore our annual catalog of events and choose your favorite. With just one click, you can register and reserve your place for an unforgettable experience.'}
-              </p>
+              
+              {isExpanded && (
+                <>
+                  <p>
+                    {lang === 'es'
+                      ? 'Aquí podrás encontrar la Escuela de Fútbol Dragon Force más cercana a ti y ver todos los detalles como su ubicación, horarios de entrenamiento y demás servicios.'
+                      : 'Here you can find the Dragon Force Football School closest to you and see all the details such as its location, training schedules and other services.'}
+                  </p>
+                  <p>
+                    {lang === 'es'
+                      ? 'Puedes explorar nuestro catálogo anual de eventos y elegir tu favorito. Con un solo clic, puedes registrarte y reservar tu lugar para una experiencia inolvidable.'
+                      : 'You can explore our annual catalog of events and choose your favorite. With just one click, you can register and reserve your place for an unforgettable experience.'}
+                  </p>
+                </>
+              )}
             </div>
-            <motion.a 
-              href="#quality" 
-              whileHover={{ y: 5 }} 
+            <motion.button
+              onClick={() => setIsExpanded(!isExpanded)}
+              whileHover={{ y: 5 }}
               className="inline-flex items-center gap-2 mt-10 text-[#1a4f8a] font-semibold text-sm uppercase tracking-wider"
             >
-              <ArrowDown size={18} /> {t.about.cta}
-            </motion.a>
+              <motion.div
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ArrowDown size={18} />
+              </motion.div>
+              {isExpanded ? (lang === 'es' ? 'VER MENOS' : 'SEE LESS') : t.about.cta}
+            </motion.button>
           </motion.div>
         </div>
       </div>
