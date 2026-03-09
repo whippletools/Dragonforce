@@ -16,8 +16,10 @@ export function useNews(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<NewsResponse>(endpoints.news);
-          const sortedArticles = [...response.data.articles].sort((a, b) => 
+          const response = await apiClient.get(endpoints.news, {
+            params: { lang, limit: 100 },
+          });
+          const sortedArticles = [...response.data.data].sort((a: any, b: any) => 
             new Date(b.dateSort).getTime() - new Date(a.dateSort).getTime()
           );
           setArticles(sortedArticles);

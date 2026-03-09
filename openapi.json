@@ -1,0 +1,3143 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api": {
+      "get": {
+        "operationId": "AppController_getHome",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "operationId": "UsersController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "operationId": "UsersController_me",
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "operationId": "UsersController_logout",
+        "parameters": [
+          {
+            "name": "authorization",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      },
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/{id}/password": {
+      "patch": {
+        "operationId": "UsersController_changePassword",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/hero-slider": {
+      "post": {
+        "operationId": "SliderHeroController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSliderHeroDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SliderHero"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear slide del hero",
+        "tags": [
+          "hero-slider"
+        ]
+      },
+      "get": {
+        "operationId": "SliderHeroController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SliderHero"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar slides del hero",
+        "tags": [
+          "hero-slider"
+        ]
+      }
+    },
+    "/api/hero-slider/{id}": {
+      "get": {
+        "operationId": "SliderHeroController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SliderHero"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener slide por ID",
+        "tags": [
+          "hero-slider"
+        ]
+      },
+      "patch": {
+        "operationId": "SliderHeroController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSliderHeroDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SliderHero"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar slide",
+        "tags": [
+          "hero-slider"
+        ]
+      },
+      "delete": {
+        "operationId": "SliderHeroController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar slide (soft delete)",
+        "tags": [
+          "hero-slider"
+        ]
+      }
+    },
+    "/api/slider-image": {
+      "post": {
+        "operationId": "SliderImageController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSliderImageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "SliderImage"
+        ]
+      },
+      "get": {
+        "operationId": "SliderImageController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "SliderImage"
+        ]
+      }
+    },
+    "/api/slider-image/{id}": {
+      "get": {
+        "operationId": "SliderImageController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "SliderImage"
+        ]
+      },
+      "patch": {
+        "operationId": "SliderImageController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSliderImageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "SliderImage"
+        ]
+      },
+      "delete": {
+        "operationId": "SliderImageController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "SliderImage"
+        ]
+      }
+    },
+    "/api/footer-help-section": {
+      "post": {
+        "operationId": "FooterHelpSectionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFooterHelpSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "FooterHelpSection"
+        ]
+      },
+      "get": {
+        "operationId": "FooterHelpSectionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "FooterHelpSection"
+        ]
+      }
+    },
+    "/api/footer-help-section/{id}": {
+      "get": {
+        "operationId": "FooterHelpSectionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "FooterHelpSection"
+        ]
+      },
+      "patch": {
+        "operationId": "FooterHelpSectionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFooterHelpSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "FooterHelpSection"
+        ]
+      },
+      "delete": {
+        "operationId": "FooterHelpSectionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "FooterHelpSection"
+        ]
+      }
+    },
+    "/api/news": {
+      "post": {
+        "operationId": "NewsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/News"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear noticia",
+        "tags": [
+          "news"
+        ]
+      },
+      "get": {
+        "operationId": "NewsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/News"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar noticias con paginación e idioma",
+        "tags": [
+          "news"
+        ]
+      }
+    },
+    "/api/news/{id}": {
+      "get": {
+        "operationId": "NewsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/News"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener noticia por ID",
+        "tags": [
+          "news"
+        ]
+      },
+      "patch": {
+        "operationId": "NewsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNewsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/News"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar noticia",
+        "tags": [
+          "news"
+        ]
+      },
+      "delete": {
+        "operationId": "NewsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar noticia (soft delete)",
+        "tags": [
+          "news"
+        ]
+      }
+    },
+    "/api/events": {
+      "post": {
+        "operationId": "EventsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear evento con pricing, questions y buttons",
+        "tags": [
+          "events"
+        ]
+      },
+      "get": {
+        "operationId": "EventsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Event"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar eventos con paginación e idioma",
+        "tags": [
+          "events"
+        ]
+      }
+    },
+    "/api/events/{id}": {
+      "get": {
+        "operationId": "EventsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener evento por ID con relaciones",
+        "tags": [
+          "events"
+        ]
+      },
+      "patch": {
+        "operationId": "EventsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar evento",
+        "tags": [
+          "events"
+        ]
+      },
+      "delete": {
+        "operationId": "EventsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar evento (soft delete)",
+        "tags": [
+          "events"
+        ]
+      }
+    },
+    "/api/schools": {
+      "post": {
+        "operationId": "SchoolsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSchoolDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/School"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear escuela",
+        "tags": [
+          "schools"
+        ]
+      },
+      "get": {
+        "operationId": "SchoolsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/School"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar escuelas con paginación e idioma",
+        "tags": [
+          "schools"
+        ]
+      }
+    },
+    "/api/schools/{id}": {
+      "get": {
+        "operationId": "SchoolsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/School"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener escuela por ID",
+        "tags": [
+          "schools"
+        ]
+      },
+      "patch": {
+        "operationId": "SchoolsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSchoolDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/School"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar escuela",
+        "tags": [
+          "schools"
+        ]
+      },
+      "delete": {
+        "operationId": "SchoolsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar escuela (soft delete)",
+        "tags": [
+          "schools"
+        ]
+      }
+    },
+    "/api/quality-carousel": {
+      "post": {
+        "operationId": "QualityCarouselController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQualityImageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QualityImage"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear imagen del carrusel de calidad",
+        "tags": [
+          "quality-carousel"
+        ]
+      },
+      "get": {
+        "operationId": "QualityCarouselController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/QualityImage"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar imágenes del carrusel de calidad",
+        "tags": [
+          "quality-carousel"
+        ]
+      }
+    },
+    "/api/quality-carousel/{id}": {
+      "get": {
+        "operationId": "QualityCarouselController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QualityImage"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener imagen del carrusel por ID",
+        "tags": [
+          "quality-carousel"
+        ]
+      },
+      "patch": {
+        "operationId": "QualityCarouselController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQualityImageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QualityImage"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar imagen del carrusel",
+        "tags": [
+          "quality-carousel"
+        ]
+      },
+      "delete": {
+        "operationId": "QualityCarouselController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar imagen del carrusel (soft delete)",
+        "tags": [
+          "quality-carousel"
+        ]
+      }
+    },
+    "/api/train-champions": {
+      "post": {
+        "operationId": "TrainChampionsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTrainChampionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainChampion"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear opción de entrenamiento",
+        "tags": [
+          "train-champions"
+        ]
+      },
+      "get": {
+        "operationId": "TrainChampionsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/TrainChampion"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar opciones de entrenamiento",
+        "tags": [
+          "train-champions"
+        ]
+      }
+    },
+    "/api/train-champions/{id}": {
+      "get": {
+        "operationId": "TrainChampionsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainChampion"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener opción de entrenamiento por ID",
+        "tags": [
+          "train-champions"
+        ]
+      },
+      "patch": {
+        "operationId": "TrainChampionsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTrainChampionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainChampion"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar opción de entrenamiento",
+        "tags": [
+          "train-champions"
+        ]
+      },
+      "delete": {
+        "operationId": "TrainChampionsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar opción de entrenamiento (soft delete)",
+        "tags": [
+          "train-champions"
+        ]
+      }
+    },
+    "/api/international-programs": {
+      "post": {
+        "operationId": "InternationalProgramsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInternationalProgramDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternationalProgram"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Crear programa internacional",
+        "tags": [
+          "international-programs"
+        ]
+      },
+      "get": {
+        "operationId": "InternationalProgramsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Número de página",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Elementos por página",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": false,
+            "in": "query",
+            "description": "Idioma (es | en)",
+            "schema": {
+              "default": "es",
+              "type": "string",
+              "enum": [
+                "es",
+                "en"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta paginada exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InternationalProgram"
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "number",
+                              "example": 1
+                            },
+                            "limit": {
+                              "type": "number",
+                              "example": 10
+                            },
+                            "total": {
+                              "type": "number",
+                              "example": 50
+                            },
+                            "totalPages": {
+                              "type": "number",
+                              "example": 5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Listar programas internacionales",
+        "tags": [
+          "international-programs"
+        ]
+      }
+    },
+    "/api/international-programs/{id}": {
+      "get": {
+        "operationId": "InternationalProgramsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternationalProgram"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Obtener programa internacional por ID",
+        "tags": [
+          "international-programs"
+        ]
+      },
+      "patch": {
+        "operationId": "InternationalProgramsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInternationalProgramDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternationalProgram"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Actualizar programa internacional",
+        "tags": [
+          "international-programs"
+        ]
+      },
+      "delete": {
+        "operationId": "InternationalProgramsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Eliminar programa internacional (soft delete)",
+        "tags": [
+          "international-programs"
+        ]
+      }
+    },
+    "/api/upload": {
+      "post": {
+        "operationId": "UploadController_uploadFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Subir archivo (imagen, video o PDF)",
+        "tags": [
+          "upload"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Dragon Force API",
+    "description": "API para gestionar la plataforma Dragon Force FC Porto",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "hero-slider",
+      "description": "Gestión de slides del hero"
+    },
+    {
+      "name": "news",
+      "description": "Gestión de noticias"
+    },
+    {
+      "name": "events",
+      "description": "Gestión de eventos"
+    },
+    {
+      "name": "schools",
+      "description": "Gestión de escuelas"
+    },
+    {
+      "name": "international-programs",
+      "description": "Gestión de programas internacionales"
+    },
+    {
+      "name": "quality-carousel",
+      "description": "Gestión del carrusel de calidad"
+    },
+    {
+      "name": "train-champions",
+      "description": "Gestión de opciones de entrenamiento"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "LoginUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateSliderHeroDto": {
+        "type": "object",
+        "properties": {
+          "mediaType": {
+            "type": "string",
+            "example": "video"
+          },
+          "mediaUrl": {
+            "type": "string",
+            "example": "https://youtu.be/L3374C3OyrY"
+          },
+          "positionHorizontal": {
+            "type": "string",
+            "example": "center"
+          },
+          "positionVertical": {
+            "type": "string",
+            "example": "center"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "EVENTOS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "EVENTS"
+          },
+          "body_es": {
+            "type": "string",
+            "example": "Entra en un universo donde la Alegría..."
+          },
+          "body_en": {
+            "type": "string",
+            "example": "Enter a universe where Joy trains..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "VER CATÁLOGO 25/26"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "VIEW CATALOG 25/26"
+          },
+          "buttonAction": {
+            "type": "string",
+            "example": "/catalog"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "mediaType",
+          "mediaUrl",
+          "title_es",
+          "title_en",
+          "body_es",
+          "body_en",
+          "buttonText_es",
+          "buttonText_en",
+          "buttonAction"
+        ]
+      },
+      "SliderHero": {
+        "type": "object",
+        "properties": {
+          "mediaType": {
+            "type": "string",
+            "example": "video",
+            "enum": [
+              "image",
+              "video"
+            ]
+          },
+          "mediaUrl": {
+            "type": "string",
+            "example": "https://youtu.be/L3374C3OyrY"
+          },
+          "positionHorizontal": {
+            "type": "string",
+            "example": "center",
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ]
+          },
+          "positionVertical": {
+            "type": "string",
+            "example": "center",
+            "enum": [
+              "top",
+              "center",
+              "bottom"
+            ]
+          },
+          "title_es": {
+            "type": "string",
+            "example": "EVENTOS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "EVENTS"
+          },
+          "body_es": {
+            "type": "string",
+            "example": "Entra en un universo donde la Alegría..."
+          },
+          "body_en": {
+            "type": "string",
+            "example": "Enter a universe where Joy trains..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "VER CATÁLOGO 25/26"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "VIEW CATALOG 25/26"
+          },
+          "buttonAction": {
+            "type": "string",
+            "example": "/catalog"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "mediaType",
+          "mediaUrl",
+          "positionHorizontal",
+          "positionVertical",
+          "title_es",
+          "title_en",
+          "body_es",
+          "body_en",
+          "buttonText_es",
+          "buttonText_en",
+          "buttonAction",
+          "order"
+        ]
+      },
+      "UpdateSliderHeroDto": {
+        "type": "object",
+        "properties": {
+          "mediaType": {
+            "type": "string",
+            "example": "video"
+          },
+          "mediaUrl": {
+            "type": "string",
+            "example": "https://youtu.be/L3374C3OyrY"
+          },
+          "positionHorizontal": {
+            "type": "string",
+            "example": "center"
+          },
+          "positionVertical": {
+            "type": "string",
+            "example": "center"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "EVENTOS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "EVENTS"
+          },
+          "body_es": {
+            "type": "string",
+            "example": "Entra en un universo donde la Alegría..."
+          },
+          "body_en": {
+            "type": "string",
+            "example": "Enter a universe where Joy trains..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "VER CATÁLOGO 25/26"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "VIEW CATALOG 25/26"
+          },
+          "buttonAction": {
+            "type": "string",
+            "example": "/catalog"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateSliderImageDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateSliderImageDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateFooterHelpSectionDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateFooterHelpSectionDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateNewsDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "example": "dragon-force-championship-2024"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://images.unsplash.com/photo.jpg"
+          },
+          "date": {
+            "type": "string",
+            "example": "15 Marzo 2024"
+          },
+          "dateSort": {
+            "type": "string",
+            "example": "2024-03-15"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Dragon Force gana el Campeonato Regional 2024"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Dragon Force wins Regional Championship 2024"
+          },
+          "excerpt_es": {
+            "type": "string",
+            "example": "Nuestros equipos juveniles han demostrado..."
+          },
+          "excerpt_en": {
+            "type": "string",
+            "example": "Our youth teams have shown exceptional..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "slug",
+          "image",
+          "date",
+          "dateSort",
+          "title_es",
+          "title_en",
+          "excerpt_es",
+          "excerpt_en"
+        ]
+      },
+      "News": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "example": "dragon-force-championship-2024"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://images.unsplash.com/photo.jpg"
+          },
+          "date": {
+            "type": "string",
+            "example": "15 Marzo 2024"
+          },
+          "dateSort": {
+            "type": "string",
+            "example": "2024-03-15"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Dragon Force gana el Campeonato Regional 2024"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Dragon Force wins Regional Championship 2024"
+          },
+          "excerpt_es": {
+            "type": "string",
+            "example": "Nuestros equipos juveniles han demostrado..."
+          },
+          "excerpt_en": {
+            "type": "string",
+            "example": "Our youth teams have shown exceptional..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "slug",
+          "image",
+          "date",
+          "dateSort",
+          "title_es",
+          "title_en",
+          "excerpt_es",
+          "excerpt_en",
+          "order"
+        ]
+      },
+      "UpdateNewsDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "example": "dragon-force-championship-2024"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://images.unsplash.com/photo.jpg"
+          },
+          "date": {
+            "type": "string",
+            "example": "15 Marzo 2024"
+          },
+          "dateSort": {
+            "type": "string",
+            "example": "2024-03-15"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Dragon Force gana el Campeonato Regional 2024"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Dragon Force wins Regional Championship 2024"
+          },
+          "excerpt_es": {
+            "type": "string",
+            "example": "Nuestros equipos juveniles han demostrado..."
+          },
+          "excerpt_en": {
+            "type": "string",
+            "example": "Our youth teams have shown exceptional..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateEventPricingDto": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "example": "Alumno Dragon Force"
+          },
+          "price": {
+            "type": "number",
+            "example": 149
+          },
+          "description": {
+            "type": "string",
+            "example": "Precio especial para estudiantes"
+          }
+        },
+        "required": [
+          "category",
+          "price"
+        ]
+      },
+      "CreateEventQuestionDto": {
+        "type": "object",
+        "properties": {
+          "question_es": {
+            "type": "string",
+            "example": "¿Qué edades pueden participar?"
+          },
+          "question_en": {
+            "type": "string",
+            "example": "What ages can participate?"
+          },
+          "answer_es": {
+            "type": "string",
+            "example": "El programa está diseñado para niños..."
+          },
+          "answer_en": {
+            "type": "string",
+            "example": "The program is designed for children..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "question_es",
+          "question_en",
+          "answer_es",
+          "answer_en"
+        ]
+      },
+      "CreateEventButtonDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Inscribirse Ahora"
+          },
+          "action": {
+            "type": "string",
+            "example": "/register/super-camp-pascua"
+          },
+          "variant": {
+            "type": "string",
+            "example": "primary"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "text",
+          "action",
+          "variant"
+        ]
+      },
+      "CreateEventDto": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Super Camp Pascua"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Easter Super Camp"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Programa intensivo de entrenamiento..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Intensive training program..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventPricingDto"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventQuestionDto"
+            }
+          },
+          "buttons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventButtonDto"
+            }
+          }
+        },
+        "required": [
+          "image",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "pricing",
+          "questions",
+          "buttons"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Super Camp Pascua"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Easter Super Camp"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Programa intensivo de entrenamiento..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Intensive training program..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "image",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "order"
+        ]
+      },
+      "UpdateEventDto": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "Super Camp Pascua"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "Easter Super Camp"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Programa intensivo de entrenamiento..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Intensive training program..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventPricingDto"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventQuestionDto"
+            }
+          },
+          "buttons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateEventButtonDto"
+            }
+          }
+        }
+      },
+      "CreateSchoolDto": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "name_es": {
+            "type": "string",
+            "example": "COLEGIO IBÉRICO DE GAIA"
+          },
+          "name_en": {
+            "type": "string",
+            "example": "IBERIAN SCHOOL OF GAIA"
+          },
+          "location": {
+            "type": "string",
+            "example": "(GAIA)"
+          },
+          "pdfUrl": {
+            "type": "string",
+            "example": "/pdfs/schools/colegio-iberico-gaia.pdf"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "image",
+          "name_es",
+          "name_en",
+          "location",
+          "pdfUrl"
+        ]
+      },
+      "School": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "name_es": {
+            "type": "string",
+            "example": "COLEGIO IBÉRICO DE GAIA"
+          },
+          "name_en": {
+            "type": "string",
+            "example": "IBERIAN SCHOOL OF GAIA"
+          },
+          "location": {
+            "type": "string",
+            "example": "(GAIA)"
+          },
+          "pdfUrl": {
+            "type": "string",
+            "example": "/pdfs/schools/colegio-iberico-gaia.pdf"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "image",
+          "name_es",
+          "name_en",
+          "location",
+          "pdfUrl",
+          "order"
+        ]
+      },
+      "UpdateSchoolDto": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "name_es": {
+            "type": "string",
+            "example": "COLEGIO IBÉRICO DE GAIA"
+          },
+          "name_en": {
+            "type": "string",
+            "example": "IBERIAN SCHOOL OF GAIA"
+          },
+          "location": {
+            "type": "string",
+            "example": "(GAIA)"
+          },
+          "pdfUrl": {
+            "type": "string",
+            "example": "/pdfs/schools/colegio-iberico-gaia.pdf"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateQualityImageDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "alt": {
+            "type": "string",
+            "example": "Dragon Force Quality - Training Session"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "url",
+          "alt"
+        ]
+      },
+      "QualityImage": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "alt": {
+            "type": "string",
+            "example": "Dragon Force Quality - Training Session"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "url",
+          "alt",
+          "order"
+        ]
+      },
+      "UpdateQualityImageDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "alt": {
+            "type": "string",
+            "example": "Dragon Force Quality - Training Session"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateTrainChampionDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "play"
+          },
+          "backgroundImage": {
+            "type": "string",
+            "example": "https://example.com/bg.jpg"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "JUEGA COMO NOSOTROS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "PLAY LIKE US"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Preinscríbase aquí..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Pre-register here..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "PREINSCRIPCIÓN"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "PRE-REGISTRATION"
+          },
+          "formType": {
+            "type": "string",
+            "example": "preregistration"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "type",
+          "backgroundImage",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "buttonText_es",
+          "buttonText_en",
+          "formType"
+        ]
+      },
+      "TrainChampion": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "play",
+            "enum": [
+              "play",
+              "train"
+            ]
+          },
+          "backgroundImage": {
+            "type": "string",
+            "example": "https://example.com/bg.jpg"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "JUEGA COMO NOSOTROS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "PLAY LIKE US"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Preinscríbase aquí para la escuela..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Pre-register here for the Dragon Force..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "PREINSCRIPCIÓN"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "PRE-REGISTRATION"
+          },
+          "formType": {
+            "type": "string",
+            "example": "preregistration",
+            "enum": [
+              "preregistration",
+              "application"
+            ]
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "type",
+          "backgroundImage",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "buttonText_es",
+          "buttonText_en",
+          "formType",
+          "order"
+        ]
+      },
+      "UpdateTrainChampionDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "play"
+          },
+          "backgroundImage": {
+            "type": "string",
+            "example": "https://example.com/bg.jpg"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "JUEGA COMO NOSOTROS"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "PLAY LIKE US"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Preinscríbase aquí..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Pre-register here..."
+          },
+          "buttonText_es": {
+            "type": "string",
+            "example": "PREINSCRIPCIÓN"
+          },
+          "buttonText_en": {
+            "type": "string",
+            "example": "PRE-REGISTRATION"
+          },
+          "formType": {
+            "type": "string",
+            "example": "preregistration"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateProgramGalleryImageDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/gallery.jpg"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "CreateProgramButtonDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Inscribirse Ahora"
+          },
+          "action": {
+            "type": "string",
+            "example": "/register/youth-football-tour"
+          },
+          "variant": {
+            "type": "string",
+            "example": "primary"
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "text",
+          "action",
+          "variant"
+        ]
+      },
+      "CreateInternationalProgramDto": {
+        "type": "object",
+        "properties": {
+          "coverImage": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/cover.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Experiencia internacional única..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Unique international experience..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateProgramGalleryImageDto"
+            }
+          },
+          "buttons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateProgramButtonDto"
+            }
+          }
+        },
+        "required": [
+          "coverImage",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "gallery",
+          "buttons"
+        ]
+      },
+      "InternationalProgram": {
+        "type": "object",
+        "properties": {
+          "coverImage": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/image.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Experiencia internacional única..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Unique international experience..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "coverImage",
+          "title_es",
+          "title_en",
+          "description_es",
+          "description_en",
+          "order"
+        ]
+      },
+      "UpdateInternationalProgramDto": {
+        "type": "object",
+        "properties": {
+          "coverImage": {
+            "type": "string",
+            "example": "https://dragonforce.fcporto.pt/cover.png"
+          },
+          "title_es": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "title_en": {
+            "type": "string",
+            "example": "YOUTH FOOTBALL TOUR"
+          },
+          "description_es": {
+            "type": "string",
+            "example": "Experiencia internacional única..."
+          },
+          "description_en": {
+            "type": "string",
+            "example": "Unique international experience..."
+          },
+          "order": {
+            "type": "number",
+            "example": 1
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateProgramGalleryImageDto"
+            }
+          },
+          "buttons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateProgramButtonDto"
+            }
+          }
+        }
+      }
+    }
+  }
+}

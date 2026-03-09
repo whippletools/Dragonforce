@@ -16,8 +16,10 @@ export function useTrainChampions(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<TrainChampionsResponse>(endpoints.trainChampions);
-          const sortedOptions = [...response.data.options].sort((a, b) => a.order - b.order);
+          const response = await apiClient.get(endpoints.trainChampions, {
+            params: { lang, limit: 100 },
+          });
+          const sortedOptions = [...response.data.data].sort((a: any, b: any) => a.order - b.order);
           setOptions(sortedOptions);
         } catch (apiError) {
           console.log('API not available, using local data');

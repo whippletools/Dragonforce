@@ -16,8 +16,10 @@ export function useSchools(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<SchoolsResponse>(endpoints.schools);
-          const sortedSchools = [...response.data.schools].sort((a, b) => a.order - b.order);
+          const response = await apiClient.get(endpoints.schools, {
+            params: { lang, limit: 100 },
+          });
+          const sortedSchools = [...response.data.data].sort((a: any, b: any) => a.order - b.order);
           setSchools(sortedSchools);
         } catch (apiError) {
           console.log('API not available, using local data');

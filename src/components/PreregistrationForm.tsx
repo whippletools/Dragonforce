@@ -9,7 +9,7 @@ interface PreregistrationFormProps {
   lang: Lang;
 }
 
-const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps) => {
+const PreregistrationForm = ({ isOpen, onClose, lang: _lang }: PreregistrationFormProps) => {
   const [selectedSchool, setSelectedSchool] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
