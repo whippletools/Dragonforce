@@ -229,3 +229,25 @@ export interface BlogListItem {
 export interface BlogListResponse {
   articles: BlogListItem[];
 }
+
+// News Types
+export interface NewsArticle {
+  id: number;
+  slug: string;
+  image: string;
+  date: string;
+  dateSort: string;
+  title: {
+    es: string;
+    en: string;
+  };
+  excerpt: {
+    es: string;
+    en: string;
+  };
+  order: number;
+}
+
+export interface NewsResponse {
+  articles: NewsArticle[];
+}
