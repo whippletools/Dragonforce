@@ -10,6 +10,19 @@ export const apiClient = axios.create({
   },
 });
 
+// Interceptor de request: agrega el idioma automáticamente
+apiClient.interceptors.request.use(
+  (config) => {
+    const lang = localStorage.getItem('lang') || 'es';
+    config.params = {
+      ...config.params,
+      lang,
+    };
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
