@@ -27,14 +27,11 @@ const Header = ({ onNavigateHome, onNavigateSchools, lang, setLang }: HeaderProp
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
-            <svg width="50" height="50" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="#1a4f8a" />
-              <text x="50" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold" fontFamily="Montserrat">DF</text>
-            </svg>
-            <div className="hidden sm:block">
-              <div className={`font-bold text-lg leading-tight ${isScrolled ? 'text-[#1a4f8a]' : 'text-white'}`}>DRAGON FORCE</div>
-              <div className={`text-xs ${isScrolled ? 'text-gray-600' : 'text-white/80'}`}>FC PORTO</div>
-            </div>
+            <img
+              src="https://dragonforce.fcporto.pt/wp-content/uploads/2025/03/logodf2.png"
+              alt="Dragon Force FC Porto"
+              className="w-24 h-24 object-contain"
+            />
           </button>
 
           <nav className="hidden lg:flex items-center gap-8">
