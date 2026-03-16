@@ -4,6 +4,7 @@ import { translations, type Lang } from '../data/translations';
 
 interface FooterProps {
   lang: Lang;
+  onNavigateHome?: () => void;
   onNavigateRecruitment?: () => void;
   onNavigateInternship?: () => void;
   onNavigateOpenSchool?: () => void;
@@ -14,6 +15,7 @@ interface FooterProps {
 
 const Footer = ({ 
   lang, 
+  onNavigateHome,
   onNavigateRecruitment, 
   onNavigateInternship, 
   onNavigateOpenSchool,
@@ -24,37 +26,35 @@ const Footer = ({
   const t = translations[lang];
 
   const aboutLinks = [
-    { label: t.footer.links.history, href: 'https://www.fcporto.pt/pt/dragon-force/o-projeto', external: true },
-    { label: t.footer.links.helpShine, onClick: onNavigateRecruitment },
-    { label: t.footer.links.develop, onClick: onNavigateInternship },
-    { label: t.footer.links.formChampions, onClick: onNavigateOpenSchool },
+    { label: t.footer.links.history, external: false, href: undefined, onClick: onNavigateHome },
+    { label: t.footer.links.helpShine, external: false, href: undefined, onClick: onNavigateRecruitment },
+    { label: t.footer.links.develop, external: false, href: undefined, onClick: onNavigateInternship },
+    { label: t.footer.links.formChampions, external: false, href: undefined, onClick: onNavigateOpenSchool },
   ];
 
   const helpLinks = [
-    { label: t.footer.links.regulations, href: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/09/DFN.-123.11-REGULAMENTO-GERAL-DRAGON-FORCE_25_26.pdf', external: true },
-    { label: t.footer.links.complaints, href: 'https://www.livroreclamacoes.pt/Inicio/', external: true },
-    { label: t.footer.links.terms, onClick: onNavigateTerms },
-    { label: t.footer.links.privacy, href: 'https://www.fcporto.pt/pt/privacidade', external: true },
-    { label: t.footer.links.cookies, onClick: onNavigateCookies },
-    { label: t.footer.links.quality, onClick: onNavigateQuality },
+    { label: t.footer.links.regulations, external: true, href: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/09/DFN.-123.11-REGULAMENTO-GERAL-DRAGON-FORCE_25_26.pdf', onClick: undefined },
+    { label: t.footer.links.complaints, external: true, href: 'https://www.livroreclamacoes.pt/Inicio/', onClick: undefined },
+    { label: t.footer.links.terms, external: false, href: undefined, onClick: onNavigateTerms },
+    { label: t.footer.links.privacy, external: true, href: 'https://www.fcporto.pt/pt/privacidade', onClick: undefined },
+    { label: t.footer.links.cookies, external: false, href: undefined, onClick: onNavigateCookies },
+    { label: t.footer.links.quality, external: false, href: undefined, onClick: onNavigateQuality },
   ];
 
   return (
-    <footer className="bg-white text-gray-800">
+    <footer className="bg-gray-50 text-gray-800">
+      <div className="h-6 bg-gradient-to-b from-white to-gray-50" />
       {/* Main Footer */}
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <svg width="50" height="50" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" fill="#1a4f8a" />
-                <text x="50" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">DF</text>
-              </svg>
-              <div>
-                <div className="font-bold text-lg text-gray-800">DRAGON FORCE</div>
-                <div className="text-xs text-gray-400">FC PORTO</div>
-              </div>
+              <img
+                src="https://dragonforce.fcporto.pt/wp-content/uploads/2025/03/logodf2.png"
+                alt="Dragon Force FC Porto"
+                className="w-24 h-24 object-contain"
+              />
             </div>
             <p className="text-gray-400 text-sm">
               {lang === 'es' ? 'Preparar Campeones para la Vida.' : 'Preparing Champions for Life.'}

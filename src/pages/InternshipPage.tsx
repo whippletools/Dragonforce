@@ -40,11 +40,11 @@ const InternshipPage = ({ lang, onBack }: InternshipPageProps) => {
 
   if (submitted) {
     return (
-      <div className="pt-20 min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="pt-24 min-h-screen bg-white">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl shadow-lg p-12 text-center max-w-md mx-4"
+          className="text-center max-w-2xl mx-auto py-12 px-4"
         >
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Send size={40} className="text-green-600" />
@@ -66,7 +66,7 @@ const InternshipPage = ({ lang, onBack }: InternshipPageProps) => {
   }
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-24 min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8">
         <button 
           onClick={onBack} 
@@ -78,7 +78,7 @@ const InternshipPage = ({ lang, onBack }: InternshipPageProps) => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl mx-auto"
+          className="max-w-5xl"
         >
           {/* Header */}
           <div className="text-center mb-10">
@@ -92,7 +92,7 @@ const InternshipPage = ({ lang, onBack }: InternshipPageProps) => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8 border border-gray-100 rounded-lg">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Name */}
               <div className="md:col-span-2">

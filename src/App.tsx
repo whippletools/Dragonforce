@@ -134,6 +134,7 @@ function App() {
       </main>
       <Footer 
         lang={lang}
+        onNavigateHome={navigateToHome}
         onNavigateRecruitment={navigateToRecruitment}
         onNavigateInternship={navigateToInternship}
         onNavigateOpenSchool={navigateToOpenSchool}

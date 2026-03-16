@@ -87,7 +87,22 @@ const EventsSection = ({ lang }: EventsSectionProps) => {
                   className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
                   onClick={() => handleEventClick(event)}
                 >
-                  <img src={event.image} alt={event.title[lang]} className="w-full h-auto object-cover" />
+                  <div className="aspect-[4/5] overflow-hidden bg-gray-100">
+                    <img 
+                      src={event.image} 
+                      alt={event.title[lang]} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.parentElement?.classList.add('flex', 'items-center', 'justify-center');
+                        const fallback = document.createElement('div');
+                        fallback.className = 'text-gray-400 text-sm text-center p-4';
+                        fallback.textContent = event.title[lang];
+                        target.parentElement?.appendChild(fallback);
+                      }}
+                    />
+                  </div>
                 </div>
               </motion.div>
             ))}

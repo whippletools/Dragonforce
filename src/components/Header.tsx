@@ -30,7 +30,10 @@ const Header = ({ onNavigateHome, onNavigateSchools, lang, setLang }: HeaderProp
             <img
               src="https://dragonforce.fcporto.pt/wp-content/uploads/2025/03/logodf2.png"
               alt="Dragon Force FC Porto"
-              className="w-24 h-24 object-contain"
+              className="w-24 h-24 object-contain transition-all duration-300"
+              style={{
+                filter: isScrolled ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' : 'none'
+              }}
             />
           </button>
 
