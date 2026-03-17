@@ -1,44 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SliderHero } from './entities/slider-hero.entity';
+import { CreateSliderHeroDto } from './dto/create-slider-hero.dto';
+import { UpdateSliderHeroDto } from './dto/update-slider-hero.dto';
+import { PaginationDto, PaginatedResult } from '../common/dto/pagination.dto';
+import { Language } from '../common/enums/language.enum';
+
+const TRANSLATED_FIELDS = ['title', 'body', 'buttonText'];
 
 @Injectable()
 export class SliderHeroService {
   constructor(
     @InjectRepository(SliderHero)
-    private readonly sliderHeroRepository: Repository<SliderHero>,
+    private readonly repo: Repository<SliderHero>,
   ) {}
 
-  create(data: Partial<SliderHero>) {
-    return this.sliderHeroRepository.save(data);
+  async create(dto: CreateSliderHeroDto): Promise<SliderHero> {
+    const entity = this.repo.create(dto);
+    return this.repo.save(entity);
   }
 
-  findAll() {
-    return this.sliderHeroRepository.find();
+  async findAll(query: PaginationDto): Promise<PaginatedResult<any>> {
+    const { page, limit, lang } = query;
+    const [data, total] = await this.repo.findAndCount({
+      order: { order: 'ASC' },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return {
+      data: data.map((slide) => this.transformSlide(slide, lang)),
+      meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    };
   }
 
-  findOne(id: number) {
-    return this.sliderHeroRepository.findOne({ where: { id } });
+  async findOne(id: number, lang?: string): Promise<any> {
+    const entity = await this.repo.findOne({ where: { id } });
+    if (!entity) throw new NotFoundException(`SliderHero #${id} not found`);
+    if (lang) return this.transformSlide(entity, lang as Language);
+    return entity;
   }
 
-  async update(id: number, data: Partial<SliderHero>) {
-  const hero = await this.sliderHeroRepository.findOne({
-    where: { id },
-  });
-
-  if (!hero) {
-    throw new Error('Hero not found');
+  async update(id: number, dto: UpdateSliderHeroDto): Promise<any> {
+    await this.findOne(id);
+    await this.repo.update(id, dto);
+    return this.findOne(id);
   }
 
-  Object.assign(hero, data);
+  async remove(id: number): Promise<void> {
+    await this.findOne(id);
+    await this.repo.softDelete(id);
+  }
 
-  // Generamos fecha válida en el servidor
-  hero.update_at = new Date();
-
-  return this.sliderHeroRepository.save(hero);
-}
-  remove(id: number) {
-    return this.sliderHeroRepository.delete(id);
+  private transformSlide(slide: SliderHero, lang: Language): any {
+    const {
+      title_es, title_en, body_es, body_en,
+      buttonText_es, buttonText_en, positionHorizontal, positionVertical,
+      ...rest
+    } = slide;
+    return {
+      ...rest,
+      position: { horizontal: positionHorizontal, vertical: positionVertical },
+      content: {
+        title: lang === Language.EN ? title_en : title_es,
+        body: lang === Language.EN ? body_en : body_es,
+        buttonText: lang === Language.EN ? buttonText_en : buttonText_es,
+        buttonAction: slide.buttonAction,
+      },
+    };
   }
 }

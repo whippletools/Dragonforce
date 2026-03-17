@@ -1,38 +1,54 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { BaseEntity } from '../../common/entities/base.entity';
 
 @Entity({ name: 'slider_hero' })
-export class SliderHero {
+export class SliderHero extends BaseEntity {
+  @ApiProperty({ example: 'video', enum: ['image', 'video'] })
+  @Column({ type: 'varchar', length: 20 })
+  mediaType: string;
 
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ApiProperty({ example: 'https://youtu.be/L3374C3OyrY' })
+  @Column({ type: 'varchar', length: 500 })
+  mediaUrl: string;
 
-  // BLOB en PostgreSQL = bytea
-  @Column({ type: 'bytea', nullable: true })
-  video: Buffer;
+  @ApiProperty({ example: 'center', enum: ['left', 'center', 'right'] })
+  @Column({ type: 'varchar', length: 20, default: 'center' })
+  positionHorizontal: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  title: string;
+  @ApiProperty({ example: 'center', enum: ['top', 'center', 'bottom'] })
+  @Column({ type: 'varchar', length: 20, default: 'center' })
+  positionVertical: string;
 
-  @Column({ type: 'varchar', length: 200 })
-  description: string;
+  @ApiProperty({ example: 'EVENTOS' })
+  @Column({ type: 'varchar', length: 255 })
+  title_es: string;
 
-  @Column({ type: 'varchar', length: 45 })
-  button: string;
+  @ApiProperty({ example: 'EVENTS' })
+  @Column({ type: 'varchar', length: 255 })
+  title_en: string;
 
-  // TINYINT → mejor usar boolean
-  @Column({ type: 'boolean', default: true })
-  is_active: boolean;
+  @ApiProperty({ example: 'Entra en un universo donde la Alegría...' })
+  @Column({ type: 'text' })
+  body_es: string;
 
-  @Column({ type: 'timestamp', nullable: true })
-  create_at: Date;
+  @ApiProperty({ example: 'Enter a universe where Joy trains...' })
+  @Column({ type: 'text' })
+  body_en: string;
 
-  @Column({ type: 'timestamp', nullable: true })
-  update_at: Date;
+  @ApiProperty({ example: 'VER CATÁLOGO 25/26' })
+  @Column({ type: 'varchar', length: 255 })
+  buttonText_es: string;
 
-  @Column({ type: 'timestamp', nullable: true })
-  delete_at: Date;
+  @ApiProperty({ example: 'VIEW CATALOG 25/26' })
+  @Column({ type: 'varchar', length: 255 })
+  buttonText_en: string;
+
+  @ApiProperty({ example: '/catalog' })
+  @Column({ type: 'varchar', length: 500 })
+  buttonAction: string;
+
+  @ApiProperty({ example: 1 })
+  @Column({ type: 'int', default: 0 })
+  order: number;
 }
