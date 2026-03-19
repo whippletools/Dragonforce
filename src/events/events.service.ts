@@ -20,7 +20,7 @@ export class EventsService {
   }
 
   async findAll(query: PaginationDto): Promise<PaginatedResult<any>> {
-    const { page, limit, lang } = query;
+    const { page, limit, lang, raw } = query;
     const [data, total] = await this.repo.findAndCount({
       order: { order: 'ASC' },
       skip: (page - 1) * limit,
@@ -28,7 +28,7 @@ export class EventsService {
       relations: ['pricing', 'questions', 'buttons'],
     });
     return {
-      data: data.map((event) => this.transformEvent(event, lang)),
+      data: raw === 'true' ? data : data.map((event) => this.transformEvent(event, lang)),
       meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
     };
   }

@@ -23,6 +23,10 @@ export class PaginationDto {
   @IsOptional()
   @IsEnum(Language)
   lang: Language = Language.ES;
+
+  @ApiPropertyOptional({ description: 'Devolver los datos crudos sin transformación (ej: raw=true)' })
+  @IsOptional()
+  raw?: string;
 }
 
 export class PaginatedResult<T> {

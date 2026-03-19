@@ -5,7 +5,7 @@ import { UpdateFooterHelpSectionDto } from './dto/update-footer-help-section.dto
 
 @Controller('footer-help-section')
 export class FooterHelpSectionController {
-  constructor(private readonly footerHelpSectionService: FooterHelpSectionService) {}
+  constructor(private readonly footerHelpSectionService: FooterHelpSectionService) { }
 
   @Post()
   create(@Body() createFooterHelpSectionDto: CreateFooterHelpSectionDto) {
@@ -17,6 +17,10 @@ export class FooterHelpSectionController {
     return this.footerHelpSectionService.findAll();
   }
 
+  @Get('formatted')
+  findAllFormatted() {
+    return this.footerHelpSectionService.findAllFormatted();
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.footerHelpSectionService.findOne(+id);

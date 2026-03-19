@@ -14,7 +14,7 @@ export class SliderHeroService {
   constructor(
     @InjectRepository(SliderHero)
     private readonly repo: Repository<SliderHero>,
-  ) {}
+  ) { }
 
   async create(dto: CreateSliderHeroDto): Promise<SliderHero> {
     const entity = this.repo.create(dto);
@@ -22,14 +22,14 @@ export class SliderHeroService {
   }
 
   async findAll(query: PaginationDto): Promise<PaginatedResult<any>> {
-    const { page, limit, lang } = query;
+    const { page, limit, lang, raw } = query;
     const [data, total] = await this.repo.findAndCount({
       order: { order: 'ASC' },
       skip: (page - 1) * limit,
       take: limit,
     });
     return {
-      data: data.map((slide) => this.transformSlide(slide, lang)),
+      data: raw === 'true' ? data : data.map((slide) => this.transformSlide(slide, lang)),
       meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
     };
   }

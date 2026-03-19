@@ -13,12 +13,6 @@ export class FooterHelpSection {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 45, nullable: true })
-  button: string;
-
-  @Column({ type: 'varchar', length: 45, nullable: true })
-  position: string;
-
   @Column({ type: 'varchar', length: 100, nullable: true })
   title: string;
 

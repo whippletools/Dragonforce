@@ -22,14 +22,14 @@ export class NewsService {
   }
 
   async findAll(query: PaginationDto): Promise<PaginatedResult<any>> {
-    const { page, limit, lang } = query;
+    const { page, limit, lang, raw } = query;
     const [data, total] = await this.repo.findAndCount({
       order: { order: 'ASC' },
       skip: (page - 1) * limit,
       take: limit,
     });
     return {
-      data: transformLanguageArray(data, lang, TRANSLATED_FIELDS),
+      data: raw === 'true' ? data : transformLanguageArray(data, lang, TRANSLATED_FIELDS),
       meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
     };
   }

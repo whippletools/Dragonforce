@@ -12,7 +12,7 @@ export class InternationalProgramsService {
   constructor(
     @InjectRepository(InternationalProgram)
     private readonly repo: Repository<InternationalProgram>,
-  ) {}
+  ) { }
 
   async create(dto: CreateInternationalProgramDto): Promise<InternationalProgram> {
     const entity = this.repo.create(dto);
@@ -20,7 +20,7 @@ export class InternationalProgramsService {
   }
 
   async findAll(query: PaginationDto): Promise<PaginatedResult<any>> {
-    const { page, limit, lang } = query;
+    const { page, limit, lang, raw } = query;
     const [data, total] = await this.repo.findAndCount({
       order: { order: 'ASC' },
       skip: (page - 1) * limit,
@@ -28,7 +28,7 @@ export class InternationalProgramsService {
       relations: ['gallery', 'buttons'],
     });
     return {
-      data: data.map((p) => this.transformProgram(p, lang)),
+      data: raw === 'true' ? data : data.map((p) => this.transformProgram(p, lang)),
       meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
     };
   }
