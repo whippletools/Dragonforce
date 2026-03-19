@@ -116,7 +116,6 @@ const EventModal = ({ event, isOpen, onClose, lang }: EventModalProps) => {
                         {event.buttons.map((button, index) => (
                           <button
                             key={index}
-                            onClick={() => console.log('Navigate to:', button.action)}
                             className={`w-full py-4 px-6 rounded-lg font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-300 ${
                               button.variant === 'primary'
                                 ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'

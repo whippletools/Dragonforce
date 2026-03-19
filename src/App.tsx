@@ -19,9 +19,11 @@ import OpenSchoolPage from './pages/OpenSchoolPage';
 import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
 import QualityPage from './pages/QualityPage';
+import InternationalProgramPage from './pages/InternationalProgramPage';
+import type { InternationalProgram } from './types/api';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'cookies' | 'quality';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'cookies' | 'quality' | 'internationalProgram';
 export type Lang = 'es' | 'en';
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
   const [productSlug] = useState<string>('');
   const [blogSlug, setBlogSlug] = useState<string>('');
   const [lang, setLang] = useState<Lang>('es');
+  const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
 
   // const navigateToProduct = (_slug: string) => {
   //   setProductSlug(_slug);
@@ -82,6 +85,12 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToInternationalProgram = (program: InternationalProgram) => {
+    setSelectedProgram(program);
+    setCurrentPage('internationalProgram');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header 
@@ -100,7 +109,7 @@ function App() {
             <EventsSection lang={lang} />
             <SchoolsSection lang={lang} />
             <TrainChampionsSection lang={lang} />
-            <InternationalSection lang={lang} />
+            <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} />
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
         )}
@@ -130,6 +139,9 @@ function App() {
         )}
         {currentPage === 'quality' && (
           <QualityPage lang={lang} onBack={navigateToHome} />
+        )}
+        {currentPage === 'internationalProgram' && selectedProgram && (
+          <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToHome} />
         )}
       </main>
       <Footer 

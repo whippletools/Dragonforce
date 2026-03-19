@@ -21,7 +21,6 @@ export function useBlogDetail(slug: string, lang: Lang) {
           const response = await apiClient.get<BlogResponse>(`${endpoints.blog}/${slug}`);
           setArticle(response.data.article);
         } catch (apiError) {
-          console.log('API not available, using local data');
           await new Promise(resolve => setTimeout(resolve, 300));
           
           const data = blogData as { articles: BlogArticle[] };

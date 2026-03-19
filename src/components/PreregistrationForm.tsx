@@ -14,7 +14,6 @@ const PreregistrationForm = ({ isOpen, onClose, lang: _lang }: PreregistrationFo
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted');
   };
 
   return (

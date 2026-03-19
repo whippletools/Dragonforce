@@ -24,7 +24,6 @@ export function useNews(lang: Lang) {
           );
           setArticles(sortedArticles);
         } catch (apiError) {
-          console.log('API not available, using local data');
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = newsData as NewsResponse;
           const sortedArticles = [...data.articles].sort((a, b) => 

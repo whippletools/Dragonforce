@@ -135,7 +135,6 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
                 transition={{ delay: 0.6 }} 
                 whileHover={{ scale: 1.05 }} 
                 className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
-                onClick={() => console.log('Navigate to:', content.buttonAction)}
               >
                 {content.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>
