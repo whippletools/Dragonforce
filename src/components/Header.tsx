@@ -28,7 +28,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, lang, setLang }: HeaderProp
         <div className="flex items-center justify-between h-20">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
             <img
-              src="https://dragonforce.fcporto.pt/wp-content/uploads/2025/03/logodf2.png"
+              src={isScrolled ? "/images/imgi_1_Ativo-1@10x-1024x585.png" : "/images/logodf2.png"}
               alt="Dragon Force FC Porto"
               className="w-24 h-24 object-contain transition-all duration-300"
               style={{

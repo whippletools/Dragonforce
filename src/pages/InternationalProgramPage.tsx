@@ -32,6 +32,11 @@ const InternationalProgramPage = ({ program, lang, onBack }: InternationalProgra
   };
 
   const handleButtonClick = (action: string) => {
+    if (action.startsWith('http')) {
+      window.open(action, '_blank');
+    } else {
+      console.log('Action:', action);
+    }
   };
 
   return (
