@@ -16,17 +16,22 @@ export function useNews(lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get(endpoints.news, {
+          const response = await apiClient.get<NewsResponse>(endpoints.news, {
             params: { lang, limit: 100 },
           });
-          const sortedArticles = [...response.data.data].sort((a: any, b: any) => 
+          const sortedArticles = [...response.data.data].sort((a: NewsArticle, b: NewsArticle) => 
             new Date(b.dateSort).getTime() - new Date(a.dateSort).getTime()
           );
           setArticles(sortedArticles);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
-          const data = newsData as NewsResponse;
-          const sortedArticles = [...data.articles].sort((a, b) => 
+          // Fallback: convertir JSON local a estructura del backend
+          const fallbackArticles: NewsArticle[] = newsData.articles.map((article: any) => ({
+            ...article,
+            title: article.title[lang] || article.title.es,
+            excerpt: article.excerpt[lang] || article.excerpt.es,
+          }));
+          const sortedArticles = [...fallbackArticles].sort((a, b) => 
             new Date(b.dateSort).getTime() - new Date(a.dateSort).getTime()
           );
           setArticles(sortedArticles);

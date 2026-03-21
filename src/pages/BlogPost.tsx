@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Facebook, Twitter, Linkedin } from 'lucide-react';
-import { translations, getNewsArticle, type Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
+import { useNewsArticle } from '../hooks/useNewsArticle';
 
 interface BlogPostProps {
   slug: string;
@@ -10,9 +11,17 @@ interface BlogPostProps {
 
 const BlogPost = ({ slug, lang, onBack }: BlogPostProps) => {
   const t = translations[lang];
-  const article = getNewsArticle(slug, lang);
+  const { article, loading, error } = useNewsArticle(slug, lang);
 
-  if (!article) {
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center pt-20 bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
+      </div>
+    );
+  }
+
+  if (error || !article) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20 bg-gray-50">
         <div className="text-center">
@@ -25,8 +34,9 @@ const BlogPost = ({ slug, lang, onBack }: BlogPostProps) => {
     );
   }
 
-  // Split content by paragraphs for rendering
-  const paragraphs = article.content.split('\n\n').filter(p => p.trim() !== '');
+  // Backend solo tiene excerpt, no content. Usar excerpt como contenido.
+  const content = article.excerpt || '';
+  const paragraphs = content.split('\n\n').filter((p: string) => p.trim() !== '');
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
@@ -83,7 +93,7 @@ const BlogPost = ({ slug, lang, onBack }: BlogPostProps) => {
 
               {/* Content paragraphs */}
               <div className="prose prose-lg max-w-none">
-                {paragraphs.map((paragraph, index) => (
+                {paragraphs.map((paragraph: string, index: number) => (
                   <p key={index} className="text-gray-700 leading-relaxed mb-6">
                     {paragraph}
                   </p>

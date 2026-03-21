@@ -20,16 +20,18 @@ import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
 import QualityPage from './pages/QualityPage';
 import InternationalProgramPage from './pages/InternationalProgramPage';
+import EventPage from './pages/EventPage';
 import type { InternationalProgram } from './types/api';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'cookies' | 'quality' | 'internationalProgram';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'cookies' | 'quality' | 'internationalProgram' | 'event';
 export type Lang = 'es' | 'en';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [productSlug] = useState<string>('');
   const [blogSlug, setBlogSlug] = useState<string>('');
+  const [eventId, setEventId] = useState<number>(0);
   const [lang, setLang] = useState<Lang>('es');
   const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
 
@@ -91,6 +93,12 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToEvent = (id: number) => {
+    setEventId(id);
+    setCurrentPage('event');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header 
@@ -106,7 +114,7 @@ function App() {
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
             <IdentitySection lang={lang} />
-            <EventsSection lang={lang} />
+            <EventsSection lang={lang} onNavigateEvent={navigateToEvent} />
             <SchoolsSection lang={lang} />
             <TrainChampionsSection lang={lang} />
             <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} />
@@ -121,6 +129,9 @@ function App() {
         )}
         {currentPage === 'blog' && (
           <BlogPost slug={blogSlug} lang={lang} onBack={navigateToHome} />
+        )}
+        {currentPage === 'event' && (
+          <EventPage eventId={eventId} lang={lang} onBack={navigateToHome} />
         )}
         {currentPage === 'recruitment' && (
           <RecruitmentPage lang={lang} onBack={navigateToHome} />

@@ -1,31 +1,22 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
-import EventModal from '../components/EventModal';
-import type { EventDetail } from '../types/api';
 
 interface EventsSectionProps {
   lang: Lang;
+  onNavigateEvent?: (eventId: number) => void;
 }
 
-const EventsSection = ({ lang }: EventsSectionProps) => {
+const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
   const { events, loading, error } = useEvents(lang);
-  const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleEventClick = (event: EventDetail) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedEvent(null), 300);
+  const handleEventClick = (eventId: number) => {
+    onNavigateEvent?.(eventId);
   };
 
   return (
@@ -85,12 +76,12 @@ const EventsSection = ({ lang }: EventsSectionProps) => {
               >
                 <div 
                   className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
-                  onClick={() => handleEventClick(event)}
+                  onClick={() => handleEventClick(event.id)}
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-gray-100">
                     <img 
                       src={event.image} 
-                      alt={event.title[lang]} 
+                      alt={event.title} 
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -98,7 +89,7 @@ const EventsSection = ({ lang }: EventsSectionProps) => {
                         target.parentElement?.classList.add('flex', 'items-center', 'justify-center');
                         const fallback = document.createElement('div');
                         fallback.className = 'text-gray-400 text-sm text-center p-4';
-                        fallback.textContent = event.title[lang];
+                        fallback.textContent = event.title;
                         target.parentElement?.appendChild(fallback);
                       }}
                     />
@@ -109,13 +100,6 @@ const EventsSection = ({ lang }: EventsSectionProps) => {
           </div>
         </motion.div>
         )}
-
-        <EventModal 
-          event={selectedEvent}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          lang={lang}
-        />
       </div>
     </section>
   );

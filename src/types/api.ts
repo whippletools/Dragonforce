@@ -37,8 +37,9 @@ export interface QualityCarouselResponse {
 }
 
 export interface EventPricing {
+  id: number;
   category: string;
-  price: number;
+  price: string;
   description?: string;
 }
 
@@ -46,36 +47,36 @@ export interface EventQuestion {
   id: number;
   question: string;
   answer: string;
+  order: number;
 }
 
 export interface EventButton {
+  id: number;
   text: string;
   action: string;
   variant: 'primary' | 'secondary';
+  order: number;
 }
 
 export interface EventDetail {
   id: number;
   image: string;
-  title: {
-    es: string;
-    en: string;
-  };
-  description: {
-    es: string;
-    en: string;
-  };
+  title: string;
+  description: string;
   pricing: EventPricing[];
-  questions: {
-    es: EventQuestion[];
-    en: EventQuestion[];
-  };
+  questions: EventQuestion[];
   buttons: EventButton[];
   order: number;
 }
 
 export interface EventsResponse {
-  events: EventDetail[];
+  data: EventDetail[];
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 export interface School {
@@ -230,24 +231,24 @@ export interface BlogListResponse {
   articles: BlogListItem[];
 }
 
-// News Types
+// News Types - Backend structure
 export interface NewsArticle {
   id: number;
   slug: string;
   image: string;
   date: string;
   dateSort: string;
-  title: {
-    es: string;
-    en: string;
-  };
-  excerpt: {
-    es: string;
-    en: string;
-  };
   order: number;
+  title: string;
+  excerpt: string;
 }
 
 export interface NewsResponse {
-  articles: NewsArticle[];
+  data: NewsArticle[];
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }
