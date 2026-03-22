@@ -82,10 +82,7 @@ export interface EventsResponse {
 export interface School {
   id: number;
   image: string;
-  name: {
-    es: string;
-    en: string;
-  };
+  name: string;
   location: string;
   pdfUrl: string;
   order: number;

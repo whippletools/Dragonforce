@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
-import type { Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
 import { useHeroSlider } from '../hooks/useHeroSlider';
 
 interface HeroSliderProps {
@@ -24,6 +24,7 @@ const isYouTubeUrl = (url: string): boolean => {
 const HeroSlider = ({ lang }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error } = useHeroSlider(lang);
+  const t = translations[lang];
 
   const nextSlide = useCallback(() => {
     if (slides.length > 0) {
@@ -65,7 +66,7 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
   }
 
   const slideData = slides[current];
-  const content = slideData.content[lang];
+  const content = slideData?.content?.[lang] || translations[lang].hero.slide1;
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -107,7 +108,7 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
         <button
           onClick={prevSlide}
           className="absolute left-4 md:left-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label="Previous slide"
+          aria-label={t.accessibility.previousSlide}
         >
           <ChevronLeft size={40} className="text-white" strokeWidth={2} />
         </button>
@@ -115,7 +116,7 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
         <button
           onClick={nextSlide}
           className="absolute right-4 md:right-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label="Next slide"
+          aria-label={t.accessibility.nextSlide}
         >
           <ChevronRight size={40} className="text-white" strokeWidth={2} />
         </button>

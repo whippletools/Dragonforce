@@ -29,9 +29,11 @@ export const useFooter = (lang: Lang) => {
     const fetchFooterData = async () => {
       try {
         setLoading(true);
+        console.log('Fetching footer data from:', '/footer-v2', 'with lang:', lang);
         const response = await apiClient.get('/footer-v2', {
           params: { lang }
         });
+        console.log('Footer API response:', response.data);
         setData(response.data);
       } catch (err) {
         console.error('Error fetching footer data:', err);

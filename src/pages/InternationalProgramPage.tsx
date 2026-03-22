@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
-import { type Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
 import type { InternationalProgram } from '../types/api';
 
 interface InternationalProgramPageProps {
@@ -13,6 +13,7 @@ interface InternationalProgramPageProps {
 const InternationalProgramPage = ({ program, lang, onBack }: InternationalProgramPageProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+  const t = translations[lang];
   const allImages = [program.coverImage, ...program.gallery];
   
   // Filter out failed images
@@ -86,14 +87,14 @@ const InternationalProgramPage = ({ program, lang, onBack }: InternationalProgra
                   <button
                     onClick={prevImage}
                     className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all"
-                    aria-label="Previous image"
+                    aria-label={t.accessibility.previousImage}
                   >
                     <ChevronLeft size={24} className="text-gray-800" />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all"
-                    aria-label="Next image"
+                    aria-label={t.accessibility.nextImage}
                   >
                     <ChevronRight size={24} className="text-gray-800" />
                   </button>

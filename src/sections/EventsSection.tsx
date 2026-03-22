@@ -45,7 +45,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
               if (carousel) carousel.scrollLeft -= 340;
             }}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -ml-4"
-            aria-label="Previous event"
+            aria-label={t.accessibility.previousEvent}
           >
             <ChevronLeft size={24} className="text-gray-800" />
           </button>
@@ -56,7 +56,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
               if (carousel) carousel.scrollLeft += 340;
             }}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -mr-4"
-            aria-label="Next event"
+            aria-label={t.accessibility.nextEvent}
           >
             <ChevronRight size={24} className="text-gray-800" />
           </button>

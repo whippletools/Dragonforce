@@ -1,10 +1,13 @@
 import type { RichTextBlock, RichTextContent } from '../types/api';
+import { translations, type Lang } from '../data/translations';
 
 interface RichTextRendererProps {
   content: RichTextContent;
+  lang?: Lang;
 }
 
-const RichTextRenderer = ({ content }: RichTextRendererProps) => {
+const RichTextRenderer = ({ content, lang = 'es' }: RichTextRendererProps) => {
+  const t = translations[lang];
   const renderBlock = (block: RichTextBlock, index: number) => {
     switch (block.type) {
       case 'paragraph':
@@ -82,7 +85,7 @@ const RichTextRenderer = ({ content }: RichTextRendererProps) => {
                 rel="noopener noreferrer"
                 className="text-[#1a4f8a] hover:text-blue-700 underline font-medium"
               >
-                {typeof block.content === 'string' ? block.content : 'Ver más'}
+                {typeof block.content === 'string' ? block.content : t.common.seeMore}
               </a>
             ) : (
               <span className="text-gray-700">
