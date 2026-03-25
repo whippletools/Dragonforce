@@ -16,8 +16,9 @@ const InternationalModal = ({ program, isOpen, onClose, lang }: InternationalMod
 
   if (!program) return null;
 
-  const title = program.title[lang];
-  const description = program.description[lang];
+  // Handle both backend format (string) and frontend format (object with languages)
+  const title = typeof program.title === 'string' ? program.title : program.title[lang];
+  const description = typeof program.description === 'string' ? program.description : program.description[lang];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % program.gallery.length);

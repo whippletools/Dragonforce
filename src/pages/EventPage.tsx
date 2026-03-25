@@ -3,7 +3,7 @@ import { ArrowLeft, HelpCircle, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
-import type { EventDetail, EventQuestion } from '../types/api';
+import type { EventDetail } from '../types/api';
 
 interface EventPageProps {
   eventId: number;

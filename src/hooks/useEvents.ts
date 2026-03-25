@@ -44,7 +44,7 @@ export function useEvents(lang: Lang) {
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
           // Fallback: convertir JSON local a estructura del backend
-          const fallbackEvents: EventDetail[] = (eventsData as any).events.map((event: any, index: number) => ({
+          const fallbackEvents: EventDetail[] = (eventsData as any).events.map((event: any, _index: number) => ({
             id: event.id,
             image: event.image,
             title: event.title[lang] || event.title.es,

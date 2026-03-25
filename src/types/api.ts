@@ -102,11 +102,11 @@ export interface ProgramButton {
 export interface InternationalProgram {
   id: number;
   coverImage: string;
-  title: {
+  title: string | {
     es: string;
     en: string;
   };
-  description: {
+  description: string | {
     es: string;
     en: string;
   };
