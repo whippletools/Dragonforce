@@ -15,14 +15,15 @@ export interface Slide {
   mediaType: 'image' | 'video';
   mediaUrl: string;
   position: Position;
-  content: {
-    es: SlideContent;
-    en: SlideContent;
-  };
+  title: string;
+  body: string;
+  buttonText: string;
+  buttonAction: string;
+  order: number;
 }
 
 export interface HeroSliderResponse {
-  slides: Slide[];
+  data: Slide[];
 }
 
 export interface QualityImage {
@@ -37,8 +38,9 @@ export interface QualityCarouselResponse {
 }
 
 export interface EventPricing {
+  id: number;
   category: string;
-  price: number;
+  price: string;
   description?: string;
 }
 
@@ -46,45 +48,42 @@ export interface EventQuestion {
   id: number;
   question: string;
   answer: string;
+  order: number;
 }
 
 export interface EventButton {
+  id: number;
   text: string;
   action: string;
   variant: 'primary' | 'secondary';
+  order: number;
 }
 
 export interface EventDetail {
   id: number;
   image: string;
-  title: {
-    es: string;
-    en: string;
-  };
-  description: {
-    es: string;
-    en: string;
-  };
+  title: string;
+  description: string;
   pricing: EventPricing[];
-  questions: {
-    es: EventQuestion[];
-    en: EventQuestion[];
-  };
+  questions: EventQuestion[];
   buttons: EventButton[];
   order: number;
 }
 
 export interface EventsResponse {
-  events: EventDetail[];
+  data: EventDetail[];
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 export interface School {
   id: number;
   image: string;
-  name: {
-    es: string;
-    en: string;
-  };
+  name: string;
   location: string;
   pdfUrl: string;
   order: number;
@@ -103,11 +102,11 @@ export interface ProgramButton {
 export interface InternationalProgram {
   id: number;
   coverImage: string;
-  title: {
+  title: string | {
     es: string;
     en: string;
   };
-  description: {
+  description: string | {
     es: string;
     en: string;
   };
@@ -230,24 +229,24 @@ export interface BlogListResponse {
   articles: BlogListItem[];
 }
 
-// News Types
+// News Types - Backend structure
 export interface NewsArticle {
   id: number;
   slug: string;
   image: string;
   date: string;
   dateSort: string;
-  title: {
-    es: string;
-    en: string;
-  };
-  excerpt: {
-    es: string;
-    en: string;
-  };
   order: number;
+  title: string;
+  excerpt: string;
 }
 
 export interface NewsResponse {
-  articles: NewsArticle[];
+  data: NewsArticle[];
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }

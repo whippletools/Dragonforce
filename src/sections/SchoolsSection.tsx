@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { type Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api-df.lab.tupla.dev/';
 
 interface SchoolsSectionProps {
   lang: Lang;
@@ -12,18 +14,16 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const { schools, loading, error } = useSchools(lang);
+  const t = translations[lang];
 
   const getFullPdfUrl = (pdfUrl: string) => {
     if (pdfUrl.startsWith('http')) {
       return pdfUrl;
     }
-    return pdfUrl.startsWith('/') ? pdfUrl : `/pdfs/schools/${pdfUrl}`;
-  };
-
-  const handlePdfClick = (e: React.MouseEvent<HTMLAnchorElement>, pdfUrl: string) => {
-    e.stopPropagation();
-    const fullUrl = getFullPdfUrl(pdfUrl);
-    window.open(fullUrl, '_blank', 'noopener,noreferrer');
+    if (pdfUrl.startsWith('/')) {
+      return `${BASE_URL}${pdfUrl}`;
+    }
+    return `${BASE_URL}/pdfs/schools/${pdfUrl}`;
   };
 
   return (
@@ -31,10 +31,10 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
       <div className="container mx-auto px-4">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="mb-12">
           <span className="inline-block border-2 border-gray-800 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-gray-800 mb-6">
-            {lang === 'es' ? 'MÁS INFORMACIÓN' : 'MORE INFORMATION'}
+            {t.schools.moreInfo}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
-            {lang === 'es' ? 'ESCUELAS DE FÚTBOL' : 'FOOTBALL SCHOOLS'}
+            {t.schools.title}
           </h2>
         </motion.div>
 
@@ -54,7 +54,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
               if (carousel) carousel.scrollLeft -= 400;
             }}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -ml-4"
-            aria-label="Previous school"
+            aria-label={t.accessibility.previousSchool}
           >
             <ChevronLeft size={24} className="text-gray-800" />
           </button>
@@ -65,7 +65,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
               if (carousel) carousel.scrollLeft += 400;
             }}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-all -mr-4"
-            aria-label="Next school"
+            aria-label={t.accessibility.nextSchool}
           >
             <ChevronRight size={24} className="text-gray-800" />
           </button>
@@ -83,25 +83,28 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className="flex-shrink-0 w-full md:w-[calc(33.333%-16px)] snap-start"
               >
-                <div className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
+                <div 
+                  className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow group"
+                  onClick={() => window.open(getFullPdfUrl(school.pdfUrl), '_blank', 'noopener,noreferrer')}
+                >
                   <div className="aspect-[16/10] overflow-hidden">
                     <img 
                       src={school.image} 
-                      alt={school.name[lang]} 
+                      alt={school.name} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
-                    <h3 className="text-white font-bold text-xl mb-1">{school.name[lang]}</h3>
+                    <h3 className="text-white font-bold text-xl mb-1">{school.name}</h3>
                     <p className="text-white/90 text-sm">{school.location}</p>
                     <a 
                       href={getFullPdfUrl(school.pdfUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => handlePdfClick(e, school.pdfUrl)}
-                      className="mt-4 text-white text-sm font-medium hover:underline inline-block"
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-4 inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-md text-sm font-medium transition-all w-fit"
                     >
-                      {lang === 'es' ? 'Más información' : 'More information'}
+                      {t.schools.moreInfo} <ChevronRight size={16} />
                     </a>
                   </div>
                 </div>

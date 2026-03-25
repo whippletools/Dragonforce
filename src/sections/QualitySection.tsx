@@ -12,7 +12,7 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
-  const { images, loading, error } = useQualityCarousel();
+  const { images, loading, error } = useQualityCarousel(lang);
 
   return (
     <section id="quality" className="py-20 bg-[#f5f5f5] overflow-hidden">

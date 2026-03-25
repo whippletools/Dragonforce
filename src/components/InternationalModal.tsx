@@ -16,8 +16,9 @@ const InternationalModal = ({ program, isOpen, onClose, lang }: InternationalMod
 
   if (!program) return null;
 
-  const title = program.title[lang];
-  const description = program.description[lang];
+  // Handle both backend format (string) and frontend format (object with languages)
+  const title = typeof program.title === 'string' ? program.title : program.title[lang];
+  const description = typeof program.description === 'string' ? program.description : program.description[lang];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % program.gallery.length);
@@ -120,7 +121,6 @@ const InternationalModal = ({ program, isOpen, onClose, lang }: InternationalMod
                       {program.buttons.map((button, index) => (
                         <button
                           key={index}
-                          onClick={() => console.log('Navigate to:', button.action)}
                           className={`w-full py-4 px-6 rounded-lg font-bold text-sm md:text-base uppercase tracking-wider transition-all duration-300 ${
                             button.variant === 'primary'
                               ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'

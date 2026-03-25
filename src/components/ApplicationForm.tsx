@@ -28,7 +28,7 @@ const ApplicationForm = ({ isOpen, onClose, lang }: ApplicationFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Application submitted:', formData);
+   
   };
 
   return (

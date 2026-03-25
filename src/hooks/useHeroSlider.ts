@@ -5,6 +5,24 @@ import heroSliderData from '../data/heroSlider.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api-df.lab.tupla.dev/';
+
+// Helper to complete relative image URLs
+const completeImageUrl = (url: string): string => {
+  if (!url) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+  return `${BASE_URL}${cleanUrl}`;
+};
+
+// Process slide to complete media URL
+const processSlideImages = (slide: Slide): Slide => {
+  return {
+    ...slide,
+    mediaUrl: completeImageUrl(slide.mediaUrl),
+  };
+};
+
 export function useHeroSlider(lang: Lang) {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,19 +37,25 @@ export function useHeroSlider(lang: Lang) {
           const response = await apiClient.get(endpoints.heroSlider, {
             params: { lang, limit: 100 },
           });
-          const apiSlides = response.data.data.map((s: any) => ({
-            id: s.id,
-            mediaType: s.mediaType,
-            mediaUrl: s.mediaUrl,
-            position: s.position,
-            content: { [lang]: s.content },
-          }));
+          const apiSlides = response.data.data
+            .map((s: any) => ({
+              id: s.id,
+              mediaType: s.mediaType,
+              mediaUrl: s.mediaUrl,
+              position: s.position,
+              title: s.title,
+              body: s.body,
+              buttonText: s.buttonText,
+              buttonAction: s.buttonAction,
+              order: s.order,
+            }))
+            .map(processSlideImages);
           setSlides(apiSlides);
         } catch (apiError) {
-          console.log('API not available, using local data');
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = heroSliderData as HeroSliderResponse;
-          setSlides(data.slides);
+          const processedSlides = data.data.map(processSlideImages);
+          setSlides(processedSlides);
         }
 
         setError(null);

@@ -82,7 +82,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
                   <div className="aspect-[16/10] overflow-hidden">
                     <img 
                       src={article.image} 
-                      alt={article.title[lang]} 
+                      alt={article.title} 
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                     />
                   </div>
@@ -92,10 +92,10 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
                       <span className="font-medium">{article.date}</span>
                     </div>
                     <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-[#1a4f8a] transition-colors">
-                      {article.title[lang]}
+                      {article.title}
                     </h3>
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {article.excerpt[lang]}
+                      {article.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-2 text-[#1a4f8a] font-medium text-sm">
                       {t.news.read} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

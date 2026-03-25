@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
-import type { Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
 import { useHeroSlider } from '../hooks/useHeroSlider';
 
 interface HeroSliderProps {
@@ -24,6 +24,7 @@ const isYouTubeUrl = (url: string): boolean => {
 const HeroSlider = ({ lang }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error } = useHeroSlider(lang);
+  const t = translations[lang];
 
   const nextSlide = useCallback(() => {
     if (slides.length > 0) {
@@ -65,7 +66,26 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
   }
 
   const slideData = slides[current];
-  const content = slideData.content[lang];
+
+  // Get position classes based on slide position settings
+  const getPositionClasses = () => {
+    const horizontal = slideData.position?.horizontal || 'center';
+    const vertical = slideData.position?.vertical || 'center';
+    
+    const horizontalClasses = {
+      left: 'items-start text-left',
+      center: 'items-center text-center',
+      right: 'items-end text-right'
+    };
+    
+    const verticalClasses = {
+      top: 'justify-start pt-32',
+      center: 'justify-center',
+      bottom: 'justify-end pb-32'
+    };
+    
+    return `${horizontalClasses[horizontal as keyof typeof horizontalClasses]} ${verticalClasses[vertical as keyof typeof verticalClasses]}`;
+  };
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -103,41 +123,41 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-10 h-full flex items-center justify-center">
+        <div className={`relative z-10 h-full flex flex-col px-4 ${getPositionClasses()}`}>
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label="Previous slide"
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+          aria-label={t.accessibility.previousSlide}
         >
           <ChevronLeft size={40} className="text-white" strokeWidth={2} />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute right-4 md:right-8 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label="Next slide"
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+          aria-label={t.accessibility.nextSlide}
         >
           <ChevronRight size={40} className="text-white" strokeWidth={2} />
         </button>
 
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto max-w-4xl">
           <AnimatePresence mode="wait">
-            <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="max-w-4xl mx-auto">
+            <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="">
               <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                {content.title}
+                {slideData.title}
               </motion.h1>
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4">
-                {content.body}
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4 max-w-3xl mx-auto">
+                {slideData.body}
               </motion.p>
               <motion.button 
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.6 }} 
                 whileHover={{ scale: 1.05 }} 
+                onClick={() => window.location.href = slideData.buttonAction || '#'}
                 className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
-                onClick={() => console.log('Navigate to:', content.buttonAction)}
               >
-                {content.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
+                {slideData.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>
             </motion.div>
           </AnimatePresence>

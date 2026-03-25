@@ -1,31 +1,20 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type Lang } from '../data/translations';
 import { useInternationalPrograms } from '../hooks/useInternationalPrograms';
-import InternationalModal from '../components/InternationalModal';
 import type { InternationalProgram } from '../types/api';
+import { getLocalizedText } from '../utils/localization';
 
 interface InternationalSectionProps {
   lang: Lang;
+  onNavigateProgram: (program: InternationalProgram) => void;
 }
 
-const InternationalSection = ({ lang }: InternationalSectionProps) => {
+const InternationalSection = ({ lang, onNavigateProgram }: InternationalSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const { programs, loading, error } = useInternationalPrograms(lang);
-  const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleProgramClick = (program: InternationalProgram) => {
-    setSelectedProgram(program);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedProgram(null), 300);
-  };
 
   return (
     <section className="py-20 bg-white overflow-hidden">
@@ -86,10 +75,10 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
               >
                 <div 
                   className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
-                  onClick={() => handleProgramClick(program)}
+                  onClick={() => onNavigateProgram(program)}
                 >
                   <div className="aspect-[3/4] overflow-hidden">
-                    <img src={program.coverImage} alt={program.title[lang]} className="w-full h-full object-cover" />
+                    <img src={program.coverImage} alt={getLocalizedText(program.title, lang)} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </motion.div>
@@ -97,13 +86,6 @@ const InternationalSection = ({ lang }: InternationalSectionProps) => {
           </div>
         </motion.div>
         )}
-
-        <InternationalModal
-          program={selectedProgram}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          lang={lang}
-        />
       </div>
     </section>
   );
