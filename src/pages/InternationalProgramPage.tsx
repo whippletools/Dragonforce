@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import type { InternationalProgram } from '../types/api';
+import { getLocalizedText } from '../utils/localization';
 
 interface InternationalProgramPageProps {
   program: InternationalProgram;
@@ -68,7 +69,7 @@ const InternationalProgramPage = ({ program, lang, onBack }: InternationalProgra
               {validImages.length > 0 ? (
                 <img
                   src={validImages[safeIndex]}
-                  alt={program.title[lang] || 'Program image'}
+                  alt={getLocalizedText(program.title, lang) || 'Program image'}
                   className="w-full h-full object-cover"
                   onError={() => {
                     const originalIndex = allImages.indexOf(validImages[safeIndex]);
@@ -118,11 +119,11 @@ const InternationalProgramPage = ({ program, lang, onBack }: InternationalProgra
             className="flex flex-col"
           >
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              {program.title[lang] || program.title.es || program.title.en || 'Programa Internacional'}
+              {getLocalizedText(program.title, lang) || 'Programa Internacional'}
             </h1>
 
             <p className="text-gray-600 leading-relaxed text-lg mb-8">
-              {program.description[lang] || program.description.es || program.description.en || ''}
+              {getLocalizedText(program.description, lang) || ''}
             </p>
 
             {/* Action Buttons - At the bottom like reference */}

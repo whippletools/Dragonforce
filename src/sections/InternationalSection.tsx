@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type Lang } from '../data/translations';
 import { useInternationalPrograms } from '../hooks/useInternationalPrograms';
 import type { InternationalProgram } from '../types/api';
+import { getLocalizedText } from '../utils/localization';
 
 interface InternationalSectionProps {
   lang: Lang;
@@ -77,7 +78,7 @@ const InternationalSection = ({ lang, onNavigateProgram }: InternationalSectionP
                   onClick={() => onNavigateProgram(program)}
                 >
                   <div className="aspect-[3/4] overflow-hidden">
-                    <img src={program.coverImage} alt={program.title[lang]} className="w-full h-full object-cover" />
+                    <img src={program.coverImage} alt={getLocalizedText(program.title, lang)} className="w-full h-full object-cover" />
                   </div>
                 </div>
               </motion.div>
