@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api-df.lab.tupla.dev/';
+
 interface SchoolsSectionProps {
   lang: Lang;
 }
@@ -18,13 +20,10 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
     if (pdfUrl.startsWith('http')) {
       return pdfUrl;
     }
-    return pdfUrl.startsWith('/') ? pdfUrl : `/pdfs/schools/${pdfUrl}`;
-  };
-
-  const handlePdfClick = (e: React.MouseEvent<HTMLAnchorElement>, pdfUrl: string) => {
-    e.stopPropagation();
-    const fullUrl = getFullPdfUrl(pdfUrl);
-    window.open(fullUrl, '_blank', 'noopener,noreferrer');
+    if (pdfUrl.startsWith('/')) {
+      return `${BASE_URL}${pdfUrl}`;
+    }
+    return `${BASE_URL}/pdfs/schools/${pdfUrl}`;
   };
 
   return (
@@ -84,7 +83,10 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className="flex-shrink-0 w-full md:w-[calc(33.333%-16px)] snap-start"
               >
-                <div className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
+                <div 
+                  className="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow group"
+                  onClick={() => window.open(getFullPdfUrl(school.pdfUrl), '_blank', 'noopener,noreferrer')}
+                >
                   <div className="aspect-[16/10] overflow-hidden">
                     <img 
                       src={school.image} 
@@ -99,10 +101,10 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                       href={getFullPdfUrl(school.pdfUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => handlePdfClick(e, school.pdfUrl)}
-                      className="mt-4 text-white text-sm font-medium hover:underline inline-block"
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-4 inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-md text-sm font-medium transition-all w-fit"
                     >
-                      {t.schools.moreInfo}
+                      {t.schools.moreInfo} <ChevronRight size={16} />
                     </a>
                   </div>
                 </div>
