@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { QualityCarouselResponse, QualityImage } from '../types/api';
+import type { Lang } from '../data/translations';
 import qualityCarouselData from '../data/qualityCarousel.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
@@ -22,7 +23,7 @@ const processQualityImages = (image: QualityImage): QualityImage => {
   };
 };
 
-export function useQualityCarousel() {
+export function useQualityCarousel(lang: Lang) {
   const [images, setImages] = useState<QualityImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +36,7 @@ export function useQualityCarousel() {
         // Intentar cargar desde API, si falla usar JSON local
         try {
           const response = await apiClient.get(endpoints.qualityCarousel, {
-            params: { limit: 100 },
+            params: { lang, limit: 100 },
           });
           const sortedImages = [...response.data.data]
             .sort((a: any, b: any) => a.order - b.order)
@@ -60,7 +61,7 @@ export function useQualityCarousel() {
     };
 
     loadImages();
-  }, []);
+  }, [lang]);
 
   return {
     images,

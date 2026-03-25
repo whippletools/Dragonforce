@@ -18,7 +18,9 @@ export function useBlogDetail(slug: string, lang: Lang) {
         setLoading(true);
         
         try {
-          const response = await apiClient.get<BlogResponse>(`${endpoints.blog}/${slug}`);
+          const response = await apiClient.get<BlogResponse>(`${endpoints.blog}/${slug}`, {
+            params: { lang }
+          });
           setArticle(response.data.article);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));

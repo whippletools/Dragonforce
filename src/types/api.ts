@@ -15,14 +15,15 @@ export interface Slide {
   mediaType: 'image' | 'video';
   mediaUrl: string;
   position: Position;
-  content: {
-    es: SlideContent;
-    en: SlideContent;
-  };
+  title: string;
+  body: string;
+  buttonText: string;
+  buttonAction: string;
+  order: number;
 }
 
 export interface HeroSliderResponse {
-  slides: Slide[];
+  data: Slide[];
 }
 
 export interface QualityImage {

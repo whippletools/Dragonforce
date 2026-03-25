@@ -43,14 +43,18 @@ export function useHeroSlider(lang: Lang) {
               mediaType: s.mediaType,
               mediaUrl: s.mediaUrl,
               position: s.position,
-              content: { [lang]: s.content },
+              title: s.title,
+              body: s.body,
+              buttonText: s.buttonText,
+              buttonAction: s.buttonAction,
+              order: s.order,
             }))
             .map(processSlideImages);
           setSlides(apiSlides);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = heroSliderData as HeroSliderResponse;
-          const processedSlides = data.slides.map(processSlideImages);
+          const processedSlides = data.data.map(processSlideImages);
           setSlides(processedSlides);
         }
 
