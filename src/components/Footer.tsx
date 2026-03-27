@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Facebook, Instagram, Mail, Phone, ExternalLink } from 'lucide-react';
-import { translations, type Lang } from '../data/translations';
+import { type Lang } from '../data/translations';
 import { useFooter } from '../hooks/useFooter';
 
 // Iconos para redes sociales
@@ -17,6 +17,17 @@ const TikTokIcon = () => (
 );
 
 socialIcons.tiktok = TikTokIcon;
+
+// Mapeo de keys a handlers de navegación
+const navigationHandlers: Record<string, string> = {
+  history: 'onNavigateHome',
+  helpShine: 'onNavigateRecruitment',
+  develop: 'onNavigateInternship',
+  formChampions: 'onNavigateOpenSchool',
+  terms: 'onNavigateTerms',
+  cookies: 'onNavigateCookies',
+  quality: 'onNavigateQuality',
+};
 
 interface FooterProps {
   lang: Lang;
@@ -39,46 +50,30 @@ const Footer = ({
   onNavigateCookies,
   onNavigateQuality
 }: FooterProps) => {
-  const t = translations[lang];
-  const { data: footerData, loading, error } = useFooter(lang);
+  const { data: footerData } = useFooter(lang);
 
-  // "Sobre nosotros" siempre usa datos estáticos
-  const aboutLinks = [
-    { label: t.footer.links.history, external: false, href: undefined, onClick: onNavigateHome },
-    { label: t.footer.links.helpShine, external: false, href: undefined, onClick: onNavigateRecruitment },
-    { label: t.footer.links.develop, external: false, href: undefined, onClick: onNavigateInternship },
-    { label: t.footer.links.formChampions, external: false, href: undefined, onClick: onNavigateOpenSchool },
-  ];
+  // Handlers disponibles
+  const handlers: Record<string, (() => void) | undefined> = {
+    onNavigateHome,
+    onNavigateRecruitment,
+    onNavigateInternship,
+    onNavigateOpenSchool,
+    onNavigateTerms,
+    onNavigateCookies,
+    onNavigateQuality,
+  };
 
-  // "Ayuda" usa datos del API o fallback
-  const helpLinks = footerData?.help?.map(link => ({
-    label: link.title,
-    external: link.url.startsWith('http'),
-    href: link.url,
-    onClick: undefined
-  })) || [
-    { label: t.footer.links.regulations, external: true, href: 'https://dragonforce.fcporto.pt/wp-content/uploads/2025/09/DFN.-123.11-REGULAMENTO-GERAL-DRAGON-FORCE_25_26.pdf', onClick: undefined },
-    { label: t.footer.links.complaints, external: true, href: 'https://www.livroreclamacoes.pt/Inicio/', onClick: undefined },
-    { label: t.footer.links.terms, external: false, href: undefined, onClick: onNavigateTerms },
-    { label: t.footer.links.privacy, external: true, href: 'https://www.fcporto.pt/pt/privacidade', onClick: undefined },
-    { label: t.footer.links.cookies, external: false, href: undefined, onClick: onNavigateCookies },
-    { label: t.footer.links.quality, external: false, href: undefined, onClick: onNavigateQuality },
-  ];
+  // Procesar links de About
+  const aboutLinks = footerData.about.links.map(link => ({
+    ...link,
+    onClick: handlers[navigationHandlers[link.key]]
+  }));
 
-  if (loading) {
-    return (
-      <footer className="bg-gray-50 text-gray-800">
-        <div className="h-6 bg-gradient-to-b from-white to-gray-50" />
-        <div className="container mx-auto py-12 lg:py-16">
-          <div className="text-center">Loading footer...</div>
-        </div>
-      </footer>
-    );
-  }
-
-  if (error) {
-    console.warn('Footer API error, using fallback data:', error);
-  }
+  // Procesar links de Help
+  const helpLinks = footerData.help.links.map(link => ({
+    ...link,
+    onClick: link.external ? undefined : handlers[navigationHandlers[link.key]]
+  }));
 
   return (
     <footer className="bg-gray-50 text-gray-800">
@@ -90,25 +85,25 @@ const Footer = ({
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/images/imgi_1_Ativo-1@10x-1024x585.png"
+                src={footerData.brand.logo}
                 alt="Dragon Force FC Porto"
                 className="w-24 h-24 object-contain"
               />
             </div>
             <p className="text-gray-400 text-sm">
-              {lang === 'es' ? 'Preparar Campeones para la Vida.' : 'Preparing Champions for Life.'}
+              {footerData.brand.slogan}
             </p>
           </div>
 
           {/* About Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.about}</h4>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{footerData.about.title}</h4>
             <ul className="space-y-3">
-              {aboutLinks.map((link: any, index: number) => (
+              {aboutLinks.map((link, index) => (
                 <li key={index}>
                   {link.external ? (
                     <a 
-                      href={link.href}
+                      href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
@@ -131,13 +126,13 @@ const Footer = ({
 
           {/* Help Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.help}</h4>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{footerData.help.title}</h4>
             <ul className="space-y-3">
-              {helpLinks.map((link: any, index: number) => (
+              {helpLinks.map((link, index) => (
                 <li key={index}>
                   {link.external ? (
                     <a 
-                      href={link.href}
+                      href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
@@ -160,98 +155,51 @@ const Footer = ({
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{t.footer.contact}</h4>
-            {footerData?.contact ? (
-              <>
-                <ul className="space-y-4">
-                  <li className="flex items-center gap-3 text-gray-600">
-                    <Mail size={18} className="text-[#1a4f8a]" />
-                    <a href={`mailto:${footerData.contact.email}`} className="text-sm hover:text-blue-600 transition-colors">
-                      {footerData.contact.email}
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-600">
-                    <Phone size={18} className="text-[#1a4f8a]" />
-                    <a href={`tel:${footerData.contact.phone}`} className="text-sm hover:text-blue-600 transition-colors">
-                      {footerData.contact.phone}
-                    </a>
-                  </li>
-                  {footerData.contact.address && (
-                    <li className="flex items-center gap-3 text-gray-600">
-                      <Phone size={18} className="text-[#1a4f8a]" />
-                      <span className="text-sm">{footerData.contact.address}</span>
-                    </li>
-                  )}
-                </ul>
-                {footerData.contact.schedule && (
-                  <p className="text-gray-600 text-xs mt-2">
-                    {footerData.contact.schedule}
-                  </p>
-                )}
-              </>
-            ) : (
-              // Fallback a datos estáticos
-              <>
-                <ul className="space-y-4">
-                  <li className="flex items-center gap-3 text-gray-600">
-                    <Mail size={18} className="text-[#1a4f8a]" />
-                    <a href="mailto:dragonforce@fcporto.pt" className="text-sm hover:text-blue-600 transition-colors">
-                      dragonforce@fcporto.pt
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-600">
-                    <Phone size={18} className="text-[#1a4f8a]" />
-                    <a href="tel:+351962029030" className="text-sm hover:text-blue-600 transition-colors">
-                      +351 962 029 030
-                    </a>
-                  </li>
-                </ul>
-                <p className="text-gray-600 text-xs mt-2">
-                  {lang === 'es' ? '(Días laborables de 14:30 a 17:30)' : '(Weekdays from 14:30 to 17:30)'}
-                </p>
-              </>
+            <h4 className="text-sm font-semibold uppercase mb-4 text-gray-800">{footerData.contact.title}</h4>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3 text-gray-600">
+                <Mail size={18} className="text-[#1a4f8a]" />
+                <a href={`mailto:${footerData.contact.email}`} className="text-sm hover:text-blue-600 transition-colors">
+                  {footerData.contact.email}
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-gray-600">
+                <Phone size={18} className="text-[#1a4f8a]" />
+                <a href={`tel:${footerData.contact.phone.replace(/\s/g, '')}`} className="text-sm hover:text-blue-600 transition-colors">
+                  {footerData.contact.phone}
+                </a>
+              </li>
+              {footerData.contact.address && (
+                <li className="flex items-center gap-3 text-gray-600">
+                  <Phone size={18} className="text-[#1a4f8a]" />
+                  <span className="text-sm">{footerData.contact.address}</span>
+                </li>
+              )}
+            </ul>
+            {footerData.contact.schedule && (
+              <p className="text-gray-600 text-xs mt-2">
+                {footerData.contact.schedule}
+              </p>
             )}
-            {footerData?.social_media && (
-              <div className="mt-6 flex gap-3">
-                {footerData.social_media.map((social: any, index: number) => {
-                  const IconComponent = socialIcons[social.icon] || TikTokIcon;
-                  return (
-                    <motion.a 
-                      key={index}
-                      href={social.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }} 
-                      className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
-                    >
-                      <IconComponent size={20} />
-                    </motion.a>
-                  );
-                })}
-              </div>
-            ) || (
-              // Fallback redes sociales estáticas
-              <div className="mt-6 flex gap-3">
-                <motion.a 
-                  href="https://facebook.com" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }} 
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
-                >
-                  <Facebook size={20} />
-                </motion.a>
-                <motion.a 
-                  href="https://instagram.com" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }} 
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
-                >
-                  <Instagram size={20} />
-                </motion.a>
-              </div>
-            )}
+            
+            {/* Social Media */}
+            <div className="mt-6 flex gap-3">
+              {footerData.socialMedia.map((social, index) => {
+                const IconComponent = socialIcons[social.icon] || TikTokIcon;
+                return (
+                  <motion.a 
+                    key={index}
+                    href={social.url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1 }} 
+                    className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
+                  >
+                    <IconComponent size={20} />
+                  </motion.a>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -260,7 +208,7 @@ const Footer = ({
       <div className="border-t border-gray-200">
         <div className="container mx-auto py-6">
           <p className="text-gray-600 text-sm text-center">
-            © 2025 FC Porto Dragon Force. {lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
+            {footerData.copyright}
           </p>
         </div>
       </div>

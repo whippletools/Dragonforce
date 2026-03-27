@@ -4,6 +4,16 @@ import type { Lang } from '../data/translations';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
+const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
+
+// Helper to complete relative image URLs
+const completeImageUrl = (url: string): string => {
+  if (!url) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+  return `${BASE_URL}${cleanUrl}`;
+};
+
 export function useNewsArticle(slug: string, lang: Lang) {
   const [article, setArticle] = useState<NewsArticle | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +31,10 @@ export function useNewsArticle(slug: string, lang: Lang) {
           });
           const foundArticle = response.data.data.find(a => a.slug === slug);
           if (foundArticle) {
-            setArticle(foundArticle);
+            setArticle({
+              ...foundArticle,
+              image: completeImageUrl(foundArticle.image)
+            });
           } else {
             setError('Article not found');
           }
