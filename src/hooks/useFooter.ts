@@ -1,51 +1,74 @@
-import { useState, useEffect } from 'react';
-import { apiClient } from '../services/api';
+import footerData from '../data/footer.json';
 import { type Lang } from '../data/translations';
 
 export interface FooterData {
-  help?: Array<{
+  about: {
     title: string;
-    url: string;
-  }>;
-  contact?: {
+    links: Array<{
+      label: string;
+      url: string;
+      external: boolean;
+      key: string;
+    }>;
+  };
+  help: {
+    title: string;
+    links: Array<{
+      key: string;
+      label: string;
+      url: string;
+      external: boolean;
+    }>;
+  };
+  contact: {
+    title: string;
     email: string;
     phone: string;
     schedule: string;
     address: string;
   };
-  social_media?: Array<{
+  socialMedia: Array<{
     name: string;
     icon: string;
     url: string;
   }>;
+  brand: {
+    logo: string;
+    slogan: string;
+  };
+  copyright: string;
 }
 
 export const useFooter = (lang: Lang) => {
-  const [data, setData] = useState<FooterData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const data: FooterData = {
+    about: {
+      title: footerData.about.title[lang],
+      links: footerData.about.links.map(link => ({
+        ...link,
+        label: link.label[lang]
+      }))
+    },
+    help: {
+      title: footerData.help.title[lang],
+      links: footerData.help.links.map(link => ({
+        ...link,
+        label: link.label[lang]
+      }))
+    },
+    contact: {
+      title: footerData.contact.title[lang],
+      email: footerData.contact.email,
+      phone: footerData.contact.phone,
+      schedule: footerData.contact.schedule[lang],
+      address: footerData.contact.address
+    },
+    socialMedia: footerData.socialMedia,
+    brand: {
+      logo: footerData.brand.logo,
+      slogan: footerData.brand.slogan[lang]
+    },
+    copyright: footerData.copyright[lang]
+  };
 
-  useEffect(() => {
-    const fetchFooterData = async () => {
-      try {
-        setLoading(true);
-        console.log('Fetching footer data from:', '/footer-v2', 'with lang:', lang);
-        const response = await apiClient.get('/footer-v2', {
-          params: { lang }
-        });
-        console.log('Footer API response:', response.data);
-        setData(response.data);
-      } catch (err) {
-        console.error('Error fetching footer data:', err);
-        setError('Failed to load footer data');
-        // Si falla, dejar datos como null (ocultar campos)
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFooterData();
-  }, [lang]);
-
-  return { data, loading, error };
+  return { data, loading: false, error: null };
 };

@@ -4,7 +4,7 @@ import type { Lang } from '../data/translations';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api-df.lab.tupla.dev/';
+const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
 
 // Helper to complete relative image URLs
 const completeImageUrl = (url: string): string => {
