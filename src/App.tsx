@@ -16,6 +16,7 @@ import BlogPost from './pages/BlogPost';
 import RecruitmentPage from './pages/RecruitmentPage';
 import InternshipPage from './pages/InternshipPage';
 import OpenSchoolPage from './pages/OpenSchoolPage';
+import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
 import QualityPage from './pages/QualityPage';
@@ -24,7 +25,7 @@ import EventPage from './pages/EventPage';
 import type { InternationalProgram } from './types/api';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'cookies' | 'quality' | 'internationalProgram' | 'event';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event';
 export type Lang = 'es' | 'en';
 
 function App() {
@@ -74,6 +75,11 @@ function App() {
 
   const navigateToTerms = () => {
     setCurrentPage('terms');
+    window.scrollTo(0, 0);
+  };
+
+  const navigateToPrivacy = () => {
+    setCurrentPage('privacy');
     window.scrollTo(0, 0);
   };
 
@@ -145,6 +151,9 @@ function App() {
         {currentPage === 'terms' && (
           <TermsPage lang={lang} onBack={navigateToHome} />
         )}
+        {currentPage === 'privacy' && (
+          <PrivacyPage lang={lang} onBack={navigateToHome} />
+        )}
         {currentPage === 'cookies' && (
           <CookiesPage lang={lang} onBack={navigateToHome} />
         )}
@@ -162,6 +171,7 @@ function App() {
         onNavigateInternship={navigateToInternship}
         onNavigateOpenSchool={navigateToOpenSchool}
         onNavigateTerms={navigateToTerms}
+        onNavigatePrivacy={navigateToPrivacy}
         onNavigateCookies={navigateToCookies}
         onNavigateQuality={navigateToQuality}
       />

@@ -25,6 +25,7 @@ const navigationHandlers: Record<string, string> = {
   develop: 'onNavigateInternship',
   formChampions: 'onNavigateOpenSchool',
   terms: 'onNavigateTerms',
+  privacy: 'onNavigatePrivacy',
   cookies: 'onNavigateCookies',
   quality: 'onNavigateQuality',
 };
@@ -36,6 +37,7 @@ interface FooterProps {
   onNavigateInternship?: () => void;
   onNavigateOpenSchool?: () => void;
   onNavigateTerms?: () => void;
+  onNavigatePrivacy?: () => void;
   onNavigateCookies?: () => void;
   onNavigateQuality?: () => void;
 }
@@ -47,6 +49,7 @@ const Footer = ({
   onNavigateInternship, 
   onNavigateOpenSchool,
   onNavigateTerms,
+  onNavigatePrivacy,
   onNavigateCookies,
   onNavigateQuality
 }: FooterProps) => {
@@ -59,6 +62,7 @@ const Footer = ({
     onNavigateInternship,
     onNavigateOpenSchool,
     onNavigateTerms,
+    onNavigatePrivacy,
     onNavigateCookies,
     onNavigateQuality,
   };
@@ -130,7 +134,7 @@ const Footer = ({
             <ul className="space-y-3">
               {helpLinks.map((link, index) => (
                 <li key={index}>
-                  {link.external ? (
+                  {link.external || link.url.startsWith('/pdfs/') ? (
                     <a 
                       href={link.url}
                       target="_blank"
