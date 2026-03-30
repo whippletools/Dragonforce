@@ -1,0 +1,113 @@
+{
+  "about": {
+    "title": {
+      "es": "SOBRE NOSOTROS",
+      "en": "ABOUT US"
+    },
+    "links": [
+      {
+        "key": "history",
+        "label": { "es": "Historia", "en": "History" },
+        "url": "/historia",
+        "external": false
+      },
+      {
+        "key": "helpShine",
+        "label": { "es": "Ayúdanos a brillar", "en": "Help us shine" },
+        "url": "/reclutamiento",
+        "external": false
+      },
+      {
+        "key": "develop",
+        "label": { "es": "Desarrollate", "en": "Develop yourself" },
+        "url": "/practicas",
+        "external": false
+      },
+      {
+        "key": "formChampions",
+        "label": { "es": "Forma Campeones", "en": "Form Champions" },
+        "url": "/abrir-escuela",
+        "external": false
+      }
+    ]
+  },
+  "help": {
+    "title": {
+      "es": "AYUDA",
+      "en": "HELP"
+    },
+    "links": [
+      {
+        "key": "regulations",
+        "label": { "es": "Reglamento", "en": "Regulations" },
+        "url": "/pdfs/DFN-123.11-Reglamento-General-Dragon-Force-25-26-ES-contacto-actualizado.pdf",
+        "external": false
+      },
+      {
+        "key": "terms",
+        "label": { "es": "Términos y Condiciones", "en": "Terms & Conditions" },
+        "url": "/terminos",
+        "external": false
+      },
+      {
+        "key": "privacy",
+        "label": { "es": "Política de Privacidad", "en": "Privacy Policy" },
+        "url": "/privacidad",
+        "external": false
+      },
+      {
+        "key": "cookies",
+        "label": { "es": "Política de Cookies", "en": "Cookie Policy" },
+        "url": "/cookies",
+        "external": false
+      },
+      {
+        "key": "quality",
+        "label": { "es": "Política de Calidad", "en": "Quality Policy" },
+        "url": "/calidad",
+        "external": false
+      }
+    ]
+  },
+  "contact": {
+    "title": {
+      "es": "CONTACTO",
+      "en": "CONTACT"
+    },
+    "email": "fcportodragonforcemty@gmail.com",
+    "phone": "81 2656 6280",
+    "schedule": {
+      "es": "",
+      "en": ""
+    },
+    "address": ""
+  },
+  "socialMedia": [
+    {
+      "name": "Facebook",
+      "icon": "facebook",
+      "url": "https://facebook.com"
+    },
+    {
+      "name": "Instagram",
+      "icon": "instagram",
+      "url": "https://instagram.com"
+    },
+    {
+      "name": "TikTok",
+      "icon": "tiktok",
+      "url": "https://tiktok.com"
+    }
+  ],
+  "brand": {
+    "logo": "/images/imgi_1_Ativo-1@10x-1024x585.png",
+    "slogan": {
+      "es": "Preparar Campeones para la Vida.",
+      "en": "Preparing Champions for Life."
+    }
+  },
+  "copyright": {
+    "es": "© 2025 FC Porto Dragon Force. Todos los derechos reservados.",
+    "en": "© 2025 FC Porto Dragon Force. All rights reserved."
+  }
+}
