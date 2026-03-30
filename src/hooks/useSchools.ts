@@ -37,11 +37,14 @@ export function useSchools(lang: Lang) {
           const response = await apiClient.get(endpoints.schools, {
             params: { lang, limit: 100 },
           });
-          const sortedSchools = [...response.data]
+          console.log('API response:', response.data);
+          const sortedSchools = [...response.data.data]
             .sort((a: any, b: any) => a.order - b.order)
             .map(processSchoolImages);
+          console.log('Processed schools:', sortedSchools);
           setSchools(sortedSchools);
         } catch (apiError) {
+          console.error('API error:', apiError);
           // Fallback a JSON local
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = schoolsData as unknown as { schools: any[] };
