@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Cookie, Shield, BarChart3, Target, Settings } from 'lucide-react';
+import { ArrowLeft, Cookie } from 'lucide-react';
 import { type Lang } from '../data/translations';
 
 interface CookiesPageProps {
@@ -12,7 +12,6 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
 
   const cookieTypes = [
     {
-      icon: <Shield size={24} className="text-green-600" />,
       title: isSpanish ? 'Necesarias/Técnicas' : 'Essential/Technical',
       desc: isSpanish 
         ? 'Esenciales para el funcionamiento del sitio. No requieren consentimiento.'
@@ -20,7 +19,6 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
       bgColor: 'bg-green-50'
     },
     {
-      icon: <BarChart3 size={24} className="text-blue-600" />,
       title: isSpanish ? 'Análisis' : 'Analytics',
       desc: isSpanish
         ? 'Nos permiten analizar tráfico y comportamiento para mejorar nuestros servicios.'
@@ -28,7 +26,6 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
       bgColor: 'bg-blue-50'
     },
     {
-      icon: <Target size={24} className="text-purple-600" />,
       title: isSpanish ? 'Marketing' : 'Marketing',
       desc: isSpanish
         ? 'Para personalizar contenido y anuncios. Requieren su consentimiento.'
@@ -36,7 +33,6 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
       bgColor: 'bg-purple-50'
     },
     {
-      icon: <Settings size={24} className="text-orange-600" />,
       title: isSpanish ? 'Preferencias' : 'Preferences',
       desc: isSpanish
         ? 'Permiten recordar sus preferencias y configuraciones.'
@@ -133,7 +129,6 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
                     transition={{ delay: index * 0.1 }}
                     className={`${type.bgColor} rounded-xl p-5`}
                   >
-                    <div className="mb-3">{type.icon}</div>
                     <h3 className="font-bold text-gray-800 mb-2">{type.title}</h3>
                     <p className="text-gray-600 text-sm">{type.desc}</p>
                   </motion.div>
@@ -162,6 +157,8 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
           </div>
         </motion.div>
       </div>
+      {/* Spacer before footer */}
+      <div className="h-12" />
     </div>
   );
 };

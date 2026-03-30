@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Award, Target, Users, Heart, Globe } from 'lucide-react';
+import { ArrowLeft, Award } from 'lucide-react';
 import { type Lang } from '../data/translations';
 
 interface QualityPageProps {
@@ -12,25 +12,21 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
 
   const objectives = [
     {
-      icon: <Heart size={24} className="text-red-600" />,
       text: isSpanish 
         ? 'Garantizar la satisfacción de los estudiantes, padres/tutores, socios y empleados'
         : 'Guarantee the satisfaction of students, parents/guardians, partners and employees'
     },
     {
-      icon: <Award size={24} className="text-yellow-600" />,
       text: isSpanish
         ? 'Posicionar y consolidar la academia de fútbol Dragon Force como la mejor'
         : 'Position and consolidate Dragon Force football academy as the best'
     },
     {
-      icon: <Globe size={24} className="text-blue-600" />,
       text: isSpanish
         ? 'Ampliar el concepto a nivel nacional e internacional'
         : 'Expand the concept nationally and internationally'
     },
     {
-      icon: <Target size={24} className="text-green-600" />,
       text: isSpanish
         ? 'Mantener altos estándares de calidad y responsabilidad social'
         : 'Maintain high standards of quality and social responsibility'
@@ -81,8 +77,7 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
 
             {/* Objetivos de Calidad */}
             <div className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                <Users size={24} className="text-[#1a4f8a]" />
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 {isSpanish ? 'Objetivos de Calidad' : 'Quality Objectives'}
               </h2>
               
@@ -95,7 +90,6 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
                     transition={{ delay: index * 0.1 }}
                     className="flex items-start gap-3 p-5 bg-gray-50 rounded-xl"
                   >
-                    <div className="flex-shrink-0">{obj.icon}</div>
                     <span className="text-gray-700">{obj.text}</span>
                   </motion.div>
                 ))}
@@ -117,6 +111,8 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
           </div>
         </motion.div>
       </div>
+      {/* Spacer before footer */}
+      <div className="h-12" />
     </div>
   );
 };

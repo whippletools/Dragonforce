@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, FileText, Shield, Users, Globe, Scale, Lock, CreditCard, AlertCircle } from 'lucide-react';
+import { ArrowLeft, FileText } from 'lucide-react';
 import { type Lang } from '../data/translations';
 
 interface TermsPageProps {
@@ -13,7 +13,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
   const sections = [
     {
       id: 'alcance',
-      icon: Globe,
       title: isSpanish ? '1. Alcance y Definiciones' : '1. Scope and Definitions',
       content: isSpanish ? (
         <>
@@ -52,7 +51,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'propiedad',
-      icon: Shield,
       title: isSpanish ? '2. Propiedad del Sitio Web' : '2. Website Ownership',
       content: isSpanish ? (
         <>
@@ -76,7 +74,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'privacidad',
-      icon: Lock,
       title: isSpanish ? '3. Privacidad y Protección de Datos' : '3. Privacy and Data Protection',
       content: isSpanish ? (
         <>
@@ -103,7 +100,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'propiedad-intelectual',
-      icon: FileText,
       title: isSpanish ? '4. Propiedad Intelectual' : '4. Intellectual Property',
       content: isSpanish ? (
         <>
@@ -127,7 +123,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'responsabilidad',
-      icon: Scale,
       title: isSpanish ? '5. Responsabilidad' : '5. Liability',
       content: isSpanish ? (
         <>
@@ -154,7 +149,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'servicios',
-      icon: Users,
       title: isSpanish ? '6. Funcionalidades y Servicios del Portal' : '6. Portal Features and Services',
       content: isSpanish ? (
         <>
@@ -186,7 +180,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'cancelaciones',
-      icon: AlertCircle,
       title: isSpanish ? '7. Política de Cancelaciones y Reembolsos' : '7. Cancellation and Refund Policy',
       content: isSpanish ? (
         <>
@@ -210,7 +203,6 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
     },
     {
       id: 'finales',
-      icon: CreditCard,
       title: isSpanish ? '8. Disposiciones Finales' : '8. Final Provisions',
       content: isSpanish ? (
         <>
@@ -313,45 +305,22 @@ const TermsPage = ({ lang, onBack }: TermsPageProps) => {
 
             {/* Sections */}
             <div className="space-y-12">
-              {sections.map((section) => {
-                const IconComponent = section.icon;
-                return (
-                  <section key={section.id} id={section.id} className="scroll-mt-24">
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#1a4f8a]/10 rounded-lg flex items-center justify-center">
-                        <IconComponent size={20} className="text-[#1a4f8a]" />
-                      </div>
-                      {section.title}
-                    </h2>
-                    <div className="text-gray-700 leading-relaxed pl-13">
-                      {section.content}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-
-            {/* Footer Note */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
-              <div className="bg-blue-50 p-6 rounded-xl">
-                <h3 className="font-bold text-[#1a4f8a] mb-2">
-                  {isSpanish ? 'Contacto' : 'Contact'}
-                </h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  {isSpanish 
-                    ? 'Para cualquier duda sobre estos Términos y Condiciones:' 
-                    : 'For any questions about these Terms and Conditions:'}
-                </p>
-                <div className="text-sm text-gray-600">
-                  <p>Email: <strong>fcportodragonforcemty@gmail.com</strong></p>
-                  <p>{isSpanish ? 'Teléfono' : 'Phone'}: <strong>81 2656 6280</strong></p>
-                  <p>Monterrey, Nuevo León, México</p>
-                </div>
-              </div>
+              {sections.map((section) => (
+                <section key={section.id} id={section.id} className="scroll-mt-24">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
+                    {section.title}
+                  </h2>
+                  <div className="text-gray-700 leading-relaxed">
+                    {section.content}
+                  </div>
+                </section>
+              ))}
             </div>
           </div>
         </motion.div>
       </div>
+      {/* Spacer before footer */}
+      <div className="h-12" />
     </div>
   );
 };

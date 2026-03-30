@@ -81,7 +81,7 @@ const Footer = ({
 
   return (
     <footer className="bg-gray-50 text-gray-800">
-      <div className="h-6 bg-gradient-to-b from-white to-gray-50" />
+      <div className="h-12 bg-gradient-to-b from-white to-gray-50" />
       {/* Main Footer */}
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -134,7 +134,7 @@ const Footer = ({
             <ul className="space-y-3">
               {helpLinks.map((link, index) => (
                 <li key={index}>
-                  {link.external || link.url.startsWith('/pdfs/') ? (
+                  {link.key === 'regulations' ? (
                     <a 
                       href={link.url}
                       target="_blank"

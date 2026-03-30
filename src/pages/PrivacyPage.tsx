@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Shield, Lock, Eye, Users, FileText, Cookie, Baby } from 'lucide-react';
+import { ArrowLeft, Shield } from 'lucide-react';
 import { type Lang } from '../data/translations';
 
 interface PrivacyPageProps {
@@ -13,7 +13,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
   const sections = [
     {
       id: 'intro',
-      icon: Shield,
       title: isSpanish ? '1. Introducción y Alcance' : '1. Introduction and Scope',
       content: isSpanish ? (
         <>
@@ -37,7 +36,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'entidades',
-      icon: Users,
       title: isSpanish ? '2. Entidades Responsables' : '2. Responsible Entities',
       content: isSpanish ? (
         <>
@@ -67,7 +65,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'procesamiento',
-      icon: Eye,
       title: isSpanish ? '3. ¿Quién Procesa sus Datos?' : '3. Who Processes Your Data?',
       content: isSpanish ? (
         <>
@@ -94,7 +91,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'datos',
-      icon: FileText,
       title: isSpanish ? '4. ¿Qué Datos Recopilamos y Por Qué?' : '4. What Data We Collect and Why?',
       content: isSpanish ? (
         <>
@@ -131,7 +127,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'fundamento',
-      icon: Shield,
       title: isSpanish ? '5. Fundamento Legal' : '5. Legal Basis',
       content: isSpanish ? (
         <>
@@ -155,7 +150,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'comunicacion',
-      icon: Users,
       title: isSpanish ? '6. Comunicación y Marketing' : '6. Communication and Marketing',
       content: isSpanish ? (
         <>
@@ -179,7 +173,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'compartir',
-      icon: Eye,
       title: isSpanish ? '7. ¿Con Quién Compartimos sus Datos?' : '7. Who Do We Share Your Data With?',
       content: isSpanish ? (
         <>
@@ -208,7 +201,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'videovigilancia',
-      icon: Eye,
       title: isSpanish ? '8. Videovigilancia' : '8. Video Surveillance',
       content: isSpanish ? (
         <>
@@ -262,7 +254,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'derechos',
-      icon: Shield,
       title: isSpanish ? '10. Sus Derechos (ARCO)' : '10. Your Rights (ARCO)',
       content: isSpanish ? (
         <>
@@ -294,7 +285,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'cookies',
-      icon: Cookie,
       title: isSpanish ? '11. Cookies' : '11. Cookies',
       content: isSpanish ? (
         <>
@@ -320,7 +310,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'menores',
-      icon: Baby,
       title: isSpanish ? '12. Menores de Edad' : '12. Minors',
       content: isSpanish ? (
         <>
@@ -352,7 +341,6 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
     },
     {
       id: 'cambios',
-      icon: FileText,
       title: isSpanish ? '13. Cambios a esta Política' : '13. Changes to This Policy',
       content: isSpanish ? (
         <>
@@ -441,45 +429,22 @@ const PrivacyPage = ({ lang, onBack }: PrivacyPageProps) => {
 
             {/* Sections */}
             <div className="space-y-12">
-              {sections.map((section) => {
-                const IconComponent = section.icon;
-                return (
-                  <section key={section.id} id={section.id} className="scroll-mt-24">
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#1a4f8a]/10 rounded-lg flex items-center justify-center">
-                        <IconComponent size={20} className="text-[#1a4f8a]" />
-                      </div>
-                      {section.title}
-                    </h2>
-                    <div className="text-gray-700 leading-relaxed pl-13">
-                      {section.content}
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-
-            {/* Footer Note */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
-              <div className="bg-blue-50 p-6 rounded-xl">
-                <h3 className="font-bold text-[#1a4f8a] mb-2">
-                  {isSpanish ? 'Contacto de Privacidad' : 'Privacy Contact'}
-                </h3>
-                <p className="text-gray-700 text-sm mb-2">
-                  {isSpanish 
-                    ? 'Para ejercer sus derechos ARCO o consultas sobre privacidad:' 
-                    : 'To exercise your ARCO rights or privacy inquiries:'}
-                </p>
-                <div className="text-sm text-gray-600">
-                  <p>Email: <strong>fcportodragonforcemty@gmail.com</strong></p>
-                  <p>{isSpanish ? 'Teléfono' : 'Phone'}: <strong>81 2656 6280</strong></p>
-                  <p>Monterrey, Nuevo León, México</p>
-                </div>
-              </div>
+              {sections.map((section) => (
+                <section key={section.id} id={section.id} className="scroll-mt-24">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6">
+                    {section.title}
+                  </h2>
+                  <div className="text-gray-700 leading-relaxed">
+                    {section.content}
+                  </div>
+                </section>
+              ))}
             </div>
           </div>
         </motion.div>
       </div>
+      {/* Spacer before footer */}
+      <div className="h-12" />
     </div>
   );
 };
