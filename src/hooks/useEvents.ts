@@ -11,8 +11,11 @@ const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tu
 const completeImageUrl = (url: string): string => {
   if (!url) return url;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  
+  const baseUrl = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
   const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  return `${BASE_URL}${cleanUrl}`;
+  
+  return `${baseUrl}${cleanUrl}`;
 };
 
 // Process event to complete image URLs

@@ -4,7 +4,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
+const BASE_URL_CONFIG = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
+const BASE_URL = BASE_URL_CONFIG.endsWith('/') ? BASE_URL_CONFIG : `${BASE_URL_CONFIG}/`;
 
 interface SchoolsSectionProps {
   lang: Lang;
@@ -20,10 +21,14 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
     if (pdfUrl.startsWith('http')) {
       return pdfUrl;
     }
-    if (pdfUrl.startsWith('/')) {
-      return `${BASE_URL}${pdfUrl}`;
+    const cleanUrl = pdfUrl.startsWith('/') ? pdfUrl.slice(1) : pdfUrl;
+    
+    // For PDFs, they seem to be in a specific folder in the fallback logic
+    // but the backend might return the full relative path
+    if (cleanUrl.includes('pdfs/schools')) {
+        return `${BASE_URL}${cleanUrl}`;
     }
-    return `${BASE_URL}/pdfs/schools/${pdfUrl}`;
+    return `${BASE_URL}pdfs/schools/${cleanUrl}`;
   };
 
   return (
