@@ -5,18 +5,7 @@ import eventsData from '../data/events.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-
-// Helper to complete relative image URLs
-const completeImageUrl = (url: string): string => {
-  if (!url) return url;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  
-  const baseUrl = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  
-  return `${baseUrl}${cleanUrl}`;
-};
+import { completeImageUrl } from '../config';
 
 // Process event to complete image URLs
 const processEventImages = (event: EventDetail): EventDetail => {

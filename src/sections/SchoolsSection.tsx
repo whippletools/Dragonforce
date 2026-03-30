@@ -4,8 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
 
-const BASE_URL_CONFIG = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-const BASE_URL = BASE_URL_CONFIG.endsWith('/') ? BASE_URL_CONFIG : `${BASE_URL_CONFIG}/`;
+import { UPLOADS_BASE_URL as BASE_URL } from '../config';
 
 interface SchoolsSectionProps {
   lang: Lang;

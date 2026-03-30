@@ -5,15 +5,7 @@ import trainChampionsData from '../data/trainChampions.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-
-// Helper to complete relative image URLs
-const completeImageUrl = (url: string): string => {
-  if (!url) return url;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  return `${BASE_URL}${cleanUrl}`;
-};
+import { completeImageUrl } from '../config';
 
 // Transformar datos del backend al formato del frontend
 const transformBackendToFrontend = (data: any): TrainChampionOption => {
