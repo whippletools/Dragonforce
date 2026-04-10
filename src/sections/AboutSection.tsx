@@ -13,6 +13,9 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
   const t = translations[lang];
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Contenido expandible adicional
+  const hasExpandableContent = false;
+
   return (
     <section className="py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
@@ -22,38 +25,41 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
             <div className="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
               <p>
                 {lang === 'es'
-                  ? 'El nuevo portal Dragon Force fue diseñado para ser una herramienta de fácil acceso para conocernos mejor y, rápidamente, entrar en nuestro mundo.'
-                  : 'The new Dragon Force portal was designed to be an easy-to-access tool to get to know us better and quickly enter our world.'}
+                  ? 'Dragon Force forma equipos y jugadores a la imagen del Club FC Porto, siguiendo una filosofía de trabajo enfocada en la excelencia deportiva. Su modelo se basa en una metodología innovadora que valora el fútbol de alto nivel y estructura cada etapa del proceso dentro de una formación integral, orientada al desarrollo técnico, táctico, físico y personal de cada jugador. Además, opera bajo procesos certificados de calidad con reconocimiento internacional, lo que garantiza una preparación sólida, ordenada y alineada con estándares de alto rendimiento.'
+                  : 'Dragon Force trains teams and players in the image of FC Porto Club, following a work philosophy focused on sporting excellence. Its model is based on an innovative methodology that values high-level football and structures each stage of the process within a comprehensive training program, oriented towards the technical, tactical, physical and personal development of each player. Additionally, it operates under certified quality processes with international recognition, ensuring solid, organized preparation aligned with high performance standards.'}
               </p>
               
-              {isExpanded && (
+              {isExpanded && hasExpandableContent && (
                 <>
                   <p>
                     {lang === 'es'
-                      ? 'Aquí podrás encontrar la Escuela de Fútbol Dragon Force más cercana a ti y ver todos los detalles como su ubicación, horarios de entrenamiento y demás servicios.'
-                      : 'Here you can find the Dragon Force Football School closest to you and see all the details such as its location, training schedules and other services.'}
+                      ? 'Nuestro compromiso es formar no solo grandes futbolistas, sino también personas íntegras. Cada entrenamiento está diseñado para potenciar habilidades técnicas y tácticas, fortalecer el carácter y promover valores como el respeto, la disciplina y el trabajo en equipo.'
+                      : 'Our commitment is to train not only great footballers, but also people of integrity. Each training session is designed to enhance technical and tactical skills, strengthen character and promote values such as respect, discipline and teamwork.'}
                   </p>
                   <p>
                     {lang === 'es'
-                      ? 'Puedes explorar nuestro catálogo anual de eventos y elegir tu favorito. Con un solo clic, puedes registrarte y reservar tu lugar para una experiencia inolvidable.'
-                      : 'You can explore our annual catalog of events and choose your favorite. With just one click, you can register and reserve your place for an unforgettable experience.'}
+                      ? 'Únete a la familia Dragon Force y descubre un camino hacia la excelencia futbolística respaldado por la experiencia y el prestigio del FC Porto.'
+                      : 'Join the Dragon Force family and discover a path to football excellence backed by the experience and prestige of FC Porto.'}
                   </p>
                 </>
               )}
             </div>
-            <motion.button
-              onClick={() => setIsExpanded(!isExpanded)}
-              whileHover={{ y: 5 }}
-              className="inline-flex items-center gap-2 mt-10 text-[#1a4f8a] font-semibold text-sm uppercase tracking-wider"
-            >
-              <motion.div
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+            
+            {hasExpandableContent && (
+              <motion.button
+                onClick={() => setIsExpanded(!isExpanded)}
+                whileHover={{ y: 5 }}
+                className="inline-flex items-center gap-2 mt-10 text-[#1a4f8a] font-semibold text-sm uppercase tracking-wider"
               >
-                <ArrowDown size={18} />
-              </motion.div>
-              {isExpanded ? (lang === 'es' ? 'VER MENOS' : 'SEE LESS') : t.about.cta}
-            </motion.button>
+                <motion.div
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ArrowDown size={18} />
+                </motion.div>
+                {isExpanded ? (lang === 'es' ? 'VER MENOS' : 'SEE LESS') : t.about.cta}
+              </motion.button>
+            )}
           </motion.div>
         </div>
       </div>
