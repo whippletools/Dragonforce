@@ -6,6 +6,9 @@ import { useHeroSlider } from '../hooks/useHeroSlider';
 
 interface HeroSliderProps {
   lang: Lang;
+  onNavigateEvents: () => void;
+  onNavigateSchools: () => void;
+  onNavigateInternational: () => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
@@ -21,7 +24,7 @@ const isYouTubeUrl = (url: string): boolean => {
   return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
-const HeroSlider = ({ lang }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error } = useHeroSlider(lang);
   const t = translations[lang];
@@ -154,7 +157,29 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.6 }} 
                 whileHover={{ scale: 1.05 }} 
-                onClick={() => window.location.href = slideData.buttonAction || '#'}
+                onClick={() => {
+                  const buttonText = slideData.buttonText?.toLowerCase() || '';
+                  const buttonAction = slideData.buttonAction || '';
+                  
+                  // Ver catálogo / Ver eventos → Eventos
+                  if (buttonText.includes('catálogo') || buttonText.includes('catalog') || buttonAction.includes('event')) {
+                    onNavigateEvents();
+                  }
+                  // Ver escuelas → Escuelas
+                  else if (buttonText.includes('escuel') || buttonText.includes('school') || buttonAction.includes('school')) {
+                    onNavigateSchools();
+                  }
+                  // Saber más / Más información → Internacional
+                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
+                    onNavigateInternational();
+                  }
+                  else {
+                    // Fallback: intentar abrir URL si no coincide con ninguna
+                    if (buttonAction && buttonAction !== '#') {
+                      window.open(buttonAction, '_blank');
+                    }
+                  }
+                }}
                 className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
               >
                 {slideData.buttonText} <ChevronRight size={20} strokeWidth={2.5} />

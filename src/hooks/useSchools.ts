@@ -7,11 +7,15 @@ import { endpoints } from '../services/endpoints';
 
 import { completeImageUrl } from '../config';
 
-// Process school to complete image URL
-const processSchoolImages = (school: School): School => {
+// Process school to complete image and PDF URLs
+const processSchoolData = (school: School): School => {
+  // Try to fix PDF path - backend might store PDFs in /uploads/pdfs/ instead of /pdfs/
+  const fixedPdfUrl = school.pdfUrl?.replace('/pdfs/', '/uploads/pdfs/');
+  
   return {
     ...school,
     image: completeImageUrl(school.image),
+    pdfUrl: completeImageUrl(fixedPdfUrl || school.pdfUrl),
   };
 };
 
@@ -32,7 +36,7 @@ export function useSchools(lang: Lang) {
           console.log('API response:', response.data);
           const sortedSchools = [...response.data.data]
             .sort((a: any, b: any) => a.order - b.order)
-            .map(processSchoolImages);
+            .map(processSchoolData);
           console.log('Processed schools:', sortedSchools);
           setSchools(sortedSchools);
         } catch (apiError) {
@@ -47,7 +51,7 @@ export function useSchools(lang: Lang) {
             location: school.location,
             pdfUrl: school.pdfUrl,
             order: school.order
-          })).map(processSchoolImages);
+          })).map(processSchoolData);
           const sortedSchools = [...fallbackSchools]
             .sort((a, b) => a.order - b.order);
           setSchools(sortedSchools);

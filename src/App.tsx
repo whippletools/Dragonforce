@@ -22,10 +22,13 @@ import CookiesPage from './pages/CookiesPage';
 import QualityPage from './pages/QualityPage';
 import InternationalProgramPage from './pages/InternationalProgramPage';
 import EventPage from './pages/EventPage';
+import PreinscriptionPage from './pages/PreinscriptionPage';
+import ApplicationPage from './pages/ApplicationPage';
 import type { InternationalProgram } from './types/api';
+import { CartProvider } from './context/CartContext';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event' | 'preinscription' | 'application';
 export type Lang = 'es' | 'en';
 
 function App() {
@@ -43,8 +46,13 @@ function App() {
   // };
 
   const navigateToSchools = () => {
-    setCurrentPage('schools');
-    window.scrollTo(0, 0);
+    setCurrentPage('home');
+    setTimeout(() => {
+      const element = document.getElementById('escuelas');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const navigateToBlog = (slug: string) => {
@@ -105,24 +113,68 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToInternationalSection = () => {
+    setCurrentPage('home');
+    setTimeout(() => {
+      const element = document.getElementById('internacional');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const navigateToEventsSection = () => {
+    setCurrentPage('home');
+    setTimeout(() => {
+      const element = document.getElementById('eventos');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const navigateToPreinscription = () => {
+    setCurrentPage('preinscription');
+    window.scrollTo(0, 0);
+  };
+
+  const navigateToApplication = () => {
+    setCurrentPage('application');
+    window.scrollTo(0, 0);
+  };
+
   return (
+    <CartProvider>
     <div className="min-h-screen bg-white">
       <Header 
         onNavigateHome={navigateToHome}
         onNavigateSchools={navigateToSchools}
+        onNavigateInternational={navigateToInternationalSection}
+        onNavigateEvents={navigateToEventsSection}
         lang={lang}
         setLang={setLang}
       />
       <main>
         {currentPage === 'home' && (
           <>
-            <HeroSlider lang={lang} />
+            <HeroSlider 
+              lang={lang} 
+              onNavigateEvents={navigateToEventsSection}
+              onNavigateSchools={navigateToSchools}
+              onNavigateInternational={navigateToInternationalSection}
+            />
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
             <IdentitySection lang={lang} />
             <EventsSection lang={lang} onNavigateEvent={navigateToEvent} />
-            <SchoolsSection lang={lang} />
-            <TrainChampionsSection lang={lang} />
+            <div id="escuelas">
+              <SchoolsSection lang={lang} />
+            </div>
+            <TrainChampionsSection 
+              lang={lang} 
+              onNavigatePreinscription={navigateToPreinscription}
+              onNavigateApplication={navigateToApplication}
+            />
             <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} />
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
@@ -163,6 +215,12 @@ function App() {
         {currentPage === 'internationalProgram' && selectedProgram && (
           <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToHome} />
         )}
+        {currentPage === 'preinscription' && (
+          <PreinscriptionPage lang={lang} onBack={navigateToHome} />
+        )}
+        {currentPage === 'application' && (
+          <ApplicationPage lang={lang} onBack={navigateToHome} />
+        )}
       </main>
       <Footer 
         lang={lang}
@@ -176,6 +234,7 @@ function App() {
         onNavigateQuality={navigateToQuality}
       />
     </div>
+    </CartProvider>
   );
 }
 

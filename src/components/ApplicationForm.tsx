@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { Lang } from '../data/translations';
+import { useCart } from '../context/CartContext';
 
 interface ApplicationFormProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ const ApplicationForm = ({ isOpen, onClose, lang }: ApplicationFormProps) => {
     location: '',
     motivation: ''
   });
+  const { addItem } = useCart();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -28,7 +30,21 @@ const ApplicationForm = ({ isOpen, onClose, lang }: ApplicationFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-   
+    
+    // Add to cart
+    addItem({
+      type: 'application',
+      title: lang === 'es' 
+        ? `Solicitud - ${formData.fullName}` 
+        : `Application - ${formData.fullName}`,
+      data: {
+        ...formData,
+        submittedAt: new Date().toISOString()
+      }
+    });
+
+    // Close form
+    onClose();
   };
 
   return (

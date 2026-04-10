@@ -17,7 +17,7 @@ const InternationalSection = ({ lang, onNavigateProgram }: InternationalSectionP
   const { programs, loading, error } = useInternationalPrograms(lang);
 
   return (
-    <section className="py-20 bg-white overflow-hidden">
+    <section id="internacional" className="py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="mb-12">
           <span className="inline-block border-2 border-gray-800 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-gray-800 mb-6">

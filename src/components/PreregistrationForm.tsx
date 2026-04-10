@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { Lang } from '../data/translations';
+import { useCart } from '../context/CartContext';
 
 interface PreregistrationFormProps {
   isOpen: boolean;
@@ -9,11 +10,37 @@ interface PreregistrationFormProps {
   lang: Lang;
 }
 
-const PreregistrationForm = ({ isOpen, onClose, lang: _lang }: PreregistrationFormProps) => {
+const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps) => {
   const [selectedSchool, setSelectedSchool] = useState('');
+  const { addItem } = useCart();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Get school name from value
+    const schoolNames: Record<string, string> = {
+      'dragoes-sandinenses': 'Dragões Sandinenses',
+      'gondomar': 'Gondomar',
+      'maia': 'Maia',
+      'trofa': 'Trofa',
+      'porto': 'Colegio Internacional de Porto'
+    };
+
+    // Add to cart
+    addItem({
+      type: 'preregistration',
+      title: lang === 'es' 
+        ? `Preinscripción - ${schoolNames[selectedSchool]}` 
+        : `Pre-registration - ${schoolNames[selectedSchool]}`,
+      data: {
+        school: selectedSchool,
+        schoolName: schoolNames[selectedSchool],
+        submittedAt: new Date().toISOString()
+      }
+    });
+
+    // Close form
+    onClose();
   };
 
   return (

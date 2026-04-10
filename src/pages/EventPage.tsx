@@ -3,6 +3,7 @@ import { ArrowLeft, HelpCircle, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
+import { useCart } from '../context/CartContext';
 import type { EventDetail } from '../types/api';
 
 interface EventPageProps {
@@ -14,6 +15,7 @@ interface EventPageProps {
 const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
   const t = translations[lang];
   const { events, loading, error } = useEvents(lang);
+  const { addItem } = useCart();
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
   const event = events.find((e: EventDetail) => Number(e.id) === Number(eventId));
@@ -127,6 +129,23 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
                   <button
                     key={button.id}
                     onClick={() => {
+                      // Add event to cart
+                      addItem({
+                        type: 'event',
+                        title: lang === 'es' 
+                          ? `Evento: ${event.title}` 
+                          : `Event: ${event.title}`,
+                        data: {
+                          eventId: event.id,
+                          eventTitle: event.title,
+                          buttonText: button.text,
+                          buttonAction: button.action,
+                          price: event.pricing?.[0]?.price || 0,
+                          submittedAt: new Date().toISOString()
+                        }
+                      });
+                      
+                      // Also open external link if present
                       if (button.action.startsWith('http') || button.action.startsWith('/')) {
                         window.open(button.action, '_blank');
                       }

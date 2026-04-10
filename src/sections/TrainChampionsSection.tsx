@@ -3,25 +3,23 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type Lang } from '../data/translations';
 import { useTrainChampions } from '../hooks/useTrainChampions';
-import PreregistrationForm from '../components/PreregistrationForm';
-import ApplicationForm from '../components/ApplicationForm';
 
 interface TrainChampionsSectionProps {
   lang: Lang;
+  onNavigatePreinscription: () => void;
+  onNavigateApplication: () => void;
 }
 
-const TrainChampionsSection = ({ lang }: TrainChampionsSectionProps) => {
+const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateApplication }: TrainChampionsSectionProps) => {
   const ref = useRef(null);
   const { options, loading, error } = useTrainChampions(lang);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPreregistrationOpen, setIsPreregistrationOpen] = useState(false);
-  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
 
   const handleButtonClick = (formType: 'preregistration' | 'application') => {
     if (formType === 'preregistration') {
-      setIsPreregistrationOpen(true);
+      onNavigatePreinscription();
     } else {
-      setIsApplicationOpen(true);
+      onNavigateApplication();
     }
   };
 
@@ -123,20 +121,7 @@ const TrainChampionsSection = ({ lang }: TrainChampionsSectionProps) => {
           )}
         </div>
       </section>
-
-      <PreregistrationForm
-        isOpen={isPreregistrationOpen}
-        onClose={() => setIsPreregistrationOpen(false)}
-        lang={lang}
-      />
-
-      <ApplicationForm
-        isOpen={isApplicationOpen}
-        onClose={() => setIsApplicationOpen(false)}
-        lang={lang}
-      />
     </>
-
   );
 };
 

@@ -4,8 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
 
-import { UPLOADS_BASE_URL as BASE_URL } from '../config';
-
 interface SchoolsSectionProps {
   lang: Lang;
 }
@@ -16,18 +14,11 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
   const { schools, loading, error } = useSchools(lang);
   const t = translations[lang];
 
+  // PDF URLs now come complete from the useSchools hook
+  // This function just logs for debugging and returns the URL
   const getFullPdfUrl = (pdfUrl: string) => {
-    if (pdfUrl.startsWith('http')) {
-      return pdfUrl;
-    }
-    const cleanUrl = pdfUrl.startsWith('/') ? pdfUrl.slice(1) : pdfUrl;
-    
-    // For PDFs, they seem to be in a specific folder in the fallback logic
-    // but the backend might return the full relative path
-    if (cleanUrl.includes('pdfs/schools')) {
-        return `${BASE_URL}${cleanUrl}`;
-    }
-    return `${BASE_URL}pdfs/schools/${cleanUrl}`;
+    console.log('Opening PDF URL:', pdfUrl);
+    return pdfUrl;
   };
 
   return (
