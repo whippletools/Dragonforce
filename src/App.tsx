@@ -143,6 +143,32 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const navigateToNewsSection = () => {
+    setCurrentPage('home');
+    setTimeout(() => {
+      const element = document.getElementById('noticias');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Si no hay ID específico, ir a calidad o noticias
+        const news = document.getElementById('quality');
+        if (news) news.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const navigateToTrainChampionsSection = () => {
+    setCurrentPage('home');
+    setTimeout(() => {
+      const element = document.querySelector('.train-champions');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight * 0.6, behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <CartProvider>
     <div className="min-h-screen bg-white">
@@ -180,16 +206,16 @@ function App() {
           </>
         )}
         {currentPage === 'product' && (
-          <ProductPage slug={productSlug} lang={lang} onBack={navigateToHome} />
+          <ProductPage slug={productSlug} lang={lang} onBack={navigateToTrainChampionsSection} />
         )}
         {currentPage === 'schools' && (
-          <SchoolsPage lang={lang} onBack={navigateToHome} />
+          <SchoolsPage lang={lang} onBack={navigateToSchools} />
         )}
         {currentPage === 'blog' && (
-          <BlogPost slug={blogSlug} lang={lang} onBack={navigateToHome} />
+          <BlogPost slug={blogSlug} lang={lang} onBack={navigateToNewsSection} />
         )}
         {currentPage === 'event' && (
-          <EventPage eventId={eventId} lang={lang} onBack={navigateToHome} />
+          <EventPage eventId={eventId} lang={lang} onBack={navigateToEventsSection} />
         )}
         {currentPage === 'recruitment' && (
           <RecruitmentPage lang={lang} onBack={navigateToHome} />
@@ -210,16 +236,22 @@ function App() {
           <CookiesPage lang={lang} onBack={navigateToHome} />
         )}
         {currentPage === 'quality' && (
-          <QualityPage lang={lang} onBack={navigateToHome} />
+          <QualityPage lang={lang} onBack={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              const element = document.getElementById('quality');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }} />
         )}
         {currentPage === 'internationalProgram' && selectedProgram && (
-          <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToHome} />
+          <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToInternationalSection} />
         )}
         {currentPage === 'preinscription' && (
-          <PreinscriptionPage lang={lang} onBack={navigateToHome} />
+          <PreinscriptionPage lang={lang} onBack={navigateToTrainChampionsSection} />
         )}
         {currentPage === 'application' && (
-          <ApplicationPage lang={lang} onBack={navigateToHome} />
+          <ApplicationPage lang={lang} onBack={navigateToTrainChampionsSection} />
         )}
       </main>
       <Footer 

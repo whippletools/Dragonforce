@@ -41,15 +41,16 @@ const IdentitySection = ({ lang }: IdentitySectionProps) => {
   const cardData = cards[lang];
 
   return (
-    <section className="py-20 bg-[#1565c0] relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden">
+      {/* Imagen de fondo */}
       <div 
         className="absolute inset-0 bg-cover bg-center" 
         style={{ 
-          backgroundImage: 'url(https://dragonforce.fcporto.pt/wp-content/uploads/2025/04/fundo_site.png)',
-          opacity: 0.15
+          backgroundImage: 'url(/images/67031804.jpg)',
         }} 
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1565c0]/95 to-[#0d47a1]/95" />
+      {/* Overlay azul para legibilidad del texto */}
+      <div className="absolute inset-0 bg-[#1565c0]/85" />
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="text-center mb-16">

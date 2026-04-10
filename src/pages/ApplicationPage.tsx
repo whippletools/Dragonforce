@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Lang } from '../data/translations';
-import { useCart } from '../context/CartContext';
 
 interface ApplicationPageProps {
   lang: Lang;
@@ -18,7 +17,7 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
     location: '',
     motivation: ''
   });
-  const { addItem, openCart } = useCart();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -30,20 +29,8 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Add to cart
-    addItem({
-      type: 'application',
-      title: lang === 'es' 
-        ? `Solicitud - ${formData.fullName}` 
-        : `Application - ${formData.fullName}`,
-      data: {
-        ...formData,
-        submittedAt: new Date().toISOString()
-      }
-    });
-
-    // Open cart panel
-    openCart();
+    // TODO: Enviar datos al backend
+    setIsSubmitted(true);
   };
 
   return (

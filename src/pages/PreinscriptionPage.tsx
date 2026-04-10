@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Lang } from '../data/translations';
-import { useCart } from '../context/CartContext';
 
 interface PreinscriptionPageProps {
   lang: Lang;
@@ -11,35 +10,13 @@ interface PreinscriptionPageProps {
 
 const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
   const [selectedSchool, setSelectedSchool] = useState('');
-  const { addItem, openCart } = useCart();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Get school name from value
-    const schoolNames: Record<string, string> = {
-      'dragoes-sandinenses': 'Dragões Sandinenses',
-      'gondomar': 'Gondomar',
-      'maia': 'Maia',
-      'trofa': 'Trofa',
-      'porto': 'Colegio Internacional de Porto'
-    };
-
-    // Add to cart
-    addItem({
-      type: 'preregistration',
-      title: lang === 'es' 
-        ? `Preinscripción - ${schoolNames[selectedSchool]}` 
-        : `Pre-registration - ${schoolNames[selectedSchool]}`,
-      data: {
-        school: selectedSchool,
-        schoolName: schoolNames[selectedSchool],
-        submittedAt: new Date().toISOString()
-      }
-    });
-
-    // Open cart panel
-    openCart();
+    // TODO: Enviar datos al backend
+    setIsSubmitted(true);
   };
 
   return (

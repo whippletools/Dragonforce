@@ -61,6 +61,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
+            {/* Botón de carrito oculto temporalmente
             <button
               onClick={openCart}
               className={`relative p-2 rounded-full transition-colors ${isScrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/20'}`}
@@ -73,6 +74,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
                 </span>
               )}
             </button>
+            */}
             <div className="relative">
               <button onClick={() => setIsLangOpen(!isLangOpen)} className={`flex items-center gap-1 font-medium text-sm ${isScrolled ? 'text-gray-700' : 'text-white'}`}>
                 {lang.toUpperCase()} <ChevronDown size={16} className={isLangOpen ? 'rotate-180' : ''} />

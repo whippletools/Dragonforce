@@ -71,7 +71,7 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
                       className="flex-shrink-0 w-full md:w-[350px] snap-start"
                     >
                       <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-                        <img src={img.url} alt={img.alt} className="w-full h-full object-cover" />
+                        <img src={img.url} alt={img.alt} className="w-full h-full object-contain bg-gray-100" />
                       </div>
                     </motion.div>
                   ))}
