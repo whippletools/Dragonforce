@@ -9,13 +9,10 @@ import { completeImageUrl } from '../config';
 
 // Process school to complete image and PDF URLs
 const processSchoolData = (school: School): School => {
-  // Try to fix PDF path - backend might store PDFs in /uploads/pdfs/ instead of /pdfs/
-  const fixedPdfUrl = school.pdfUrl?.replace('/pdfs/', '/uploads/pdfs/');
-  
   return {
     ...school,
     image: completeImageUrl(school.image),
-    pdfUrl: completeImageUrl(fixedPdfUrl || school.pdfUrl),
+    pdfUrl: completeImageUrl(school.pdfUrl),
   };
 };
 

@@ -17,7 +17,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const { items, itemCount, removeItem, isOpen, openCart, closeCart } = useCart();
+  const { items, removeItem, isOpen, closeCart } = useCart();
   const t = translations[lang];
 
   useEffect(() => {

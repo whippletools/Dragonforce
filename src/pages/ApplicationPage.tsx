@@ -17,8 +17,7 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
     location: '',
     motivation: ''
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
@@ -30,7 +29,6 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
     e.preventDefault();
     
     // TODO: Enviar datos al backend
-    setIsSubmitted(true);
   };
 
   return (
