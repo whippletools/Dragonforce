@@ -25,10 +25,27 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // TODO: Enviar datos al backend
+    // BACKEND CONNECTION POINT
+    // Aquí es donde los datos se capturan para enviar al backend
+    const payload = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      designation: formData.designation,
+      location: formData.location,
+      motivation: formData.motivation,
+      submittedAt: new Date().toISOString(),
+      formType: 'school_application'
+    };
+    
+    console.log('Datos del formulario listos para enviar al backend:', payload);
+    
+    // TODO: Aquí iría la llamada al backend, por ejemplo:
+    // await apiClient.post('/api/school-applications', payload);
+    // o fetch('https://tu-api.com/applications', { method: 'POST', body: JSON.stringify(payload) })
   };
 
   return (
@@ -161,9 +178,9 @@ const ApplicationPage = ({ lang, onBack }: ApplicationPageProps) => {
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-bold text-sm uppercase tracking-wider hover:bg-gray-800 transition-all duration-300"
+              className="w-full bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white py-4 px-6 rounded-xl font-bold text-lg hover:shadow-lg transition-all duration-300"
             >
-              {lang === 'es' ? 'AGREGAR AL CARRITO' : 'ADD TO CART'}
+              {lang === 'es' ? 'ENVIAR SOLICITUD' : 'SUBMIT APPLICATION'}
             </button>
           </div>
         </form>
