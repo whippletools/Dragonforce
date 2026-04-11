@@ -67,11 +67,13 @@ const Footer = ({
     onNavigateQuality,
   };
 
-  // Procesar links de About
-  const aboutLinks = footerData.about.links.map(link => ({
-    ...link,
-    onClick: handlers[navigationHandlers[link.key]]
-  }));
+  // Procesar links de About (ocultar Desarrollate y Forma Campeones)
+  const aboutLinks = footerData.about.links
+    .filter(link => link.key !== 'develop' && link.key !== 'formChampions')
+    .map(link => ({
+      ...link,
+      onClick: handlers[navigationHandlers[link.key]]
+    }));
 
   // Procesar links de Help
   const helpLinks = footerData.help.links.map(link => ({
@@ -81,7 +83,7 @@ const Footer = ({
 
   return (
     <footer className="bg-gray-50 text-gray-800">
-      <div className="h-12 bg-gradient-to-b from-white to-gray-50" />
+      <div className="h-24 bg-gradient-to-b from-white to-gray-50" />
       {/* Main Footer */}
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">

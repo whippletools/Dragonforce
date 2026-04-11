@@ -16,7 +16,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
   const { articles, loading, error } = useNews(lang);
 
   return (
-    <section id="eventos" className="py-20 bg-gray-50 overflow-hidden">
+    <section id="noticias" className="py-20 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div 
           ref={ref} 
@@ -79,7 +79,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
                   className="group bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer flex-shrink-0 w-[320px] md:w-[380px] snap-start"
                   onClick={() => onNavigateArticle?.(article.slug)}
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
+                  <div className="aspect-[3/4] overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img 
                       src={article.image} 
                       alt={article.title} 
