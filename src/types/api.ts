@@ -64,6 +64,11 @@ export interface EventDetail {
   image: string;
   title: string;
   description: string;
+  date?: string;
+  duration?: string;
+  location?: string;
+  capacity?: string;
+  additionalInfo?: string;
   pricing: EventPricing[];
   questions: EventQuestion[];
   buttons: EventButton[];
