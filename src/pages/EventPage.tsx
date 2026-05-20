@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, HelpCircle, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Check, User, Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
-import { useCart } from '../context/CartContext';
 import type { EventDetail } from '../types/api';
 
 interface EventPageProps {
@@ -15,8 +14,60 @@ interface EventPageProps {
 const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
   const t = translations[lang];
   const { events, loading, error } = useEvents(lang);
-  const { addItem } = useCart();
-  const [openQuestion, setOpenQuestion] = useState<number | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    participantName: '',
+    email: '',
+    phone: '',
+    birthDate: '',
+    nationality: '',
+    organization: '',
+    position: '',
+    experienceLevel: '',
+    howDidYouHear: '',
+    dietaryRestrictions: '',
+    medicalConditions: '',
+    emergencyContact: '',
+    emergencyPhone: '',
+    acceptsTerms: false,
+    acceptsPrivacy: false,
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // BACKEND CONNECTION POINT - Datos del formulario de evento listos para enviar
+    const payload = {
+      eventId: event?.id,
+      eventTitle: event?.title,
+      ...formData,
+      submittedAt: new Date().toISOString(),
+      formType: 'event_registration'
+    };
+    
+    console.log('Datos del registro de evento listos para enviar al backend:', payload);
+    
+    // TODO: Aquí iría la llamada al backend:
+    // await apiClient.post('/api/event-registrations', payload);
+    
+    // Simular envío
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+  };
 
   const event = events.find((e: EventDetail) => Number(e.id) === Number(eventId));
 
@@ -88,11 +139,11 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
               {event.title}
             </h1>
 
-            {/* Price */}
+            {/* Price in Mexican Pesos */}
             {event.pricing && event.pricing.length > 0 && (
               <div className="mb-6">
                 <span className="text-3xl font-bold text-gray-900">
-                  € {event.pricing[0].price}
+                  $ {event.pricing[0].price} <span className="text-lg font-normal text-gray-600">MXN</span>
                 </span>
                 {event.pricing.length > 1 && (
                   <span className="text-gray-500 ml-2">
@@ -103,108 +154,365 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
             )}
 
             {/* Description */}
-            <div className="prose prose-lg max-w-none mb-8">
+            <div className="prose prose-lg max-w-none mb-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">
+                {lang === 'es' ? 'Descripción del Evento' : 'Descrição do Evento'}
+              </h3>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {event.description}
               </p>
             </div>
-
-            {/* Occupancy Bar */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  {lang === 'es' ? 'Lotação' : 'Lotação'}
-                </span>
-                <span className="text-sm font-medium text-gray-700">100%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-[#1a4f8a] h-2 rounded-full" style={{ width: '100%' }}></div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            {event.buttons && event.buttons.length > 0 && (
-              <div className="space-y-3 mt-auto">
-                {event.buttons.map((button) => (
-                  <button
-                    key={button.id}
-                    onClick={() => {
-                      // Add event to cart
-                      addItem({
-                        type: 'event',
-                        title: lang === 'es' 
-                          ? `Evento: ${event.title}` 
-                          : `Event: ${event.title}`,
-                        data: {
-                          eventId: event.id,
-                          eventTitle: event.title,
-                          buttonText: button.text,
-                          buttonAction: button.action,
-                          price: event.pricing?.[0]?.price || 0,
-                          submittedAt: new Date().toISOString()
-                        }
-                      });
-                      
-                      // Also open external link if present
-                      if (button.action.startsWith('http') || button.action.startsWith('/')) {
-                        window.open(button.action, '_blank');
-                      }
-                    }}
-                    className="w-full py-3 px-6 rounded-lg font-semibold bg-[#1a4f8a] text-white hover:bg-[#153d6e] transition-all"
-                  >
-                    {button.text}
-                  </button>
-                ))}
+            
+            {/* Additional Info */}
+            {event.additionalInfo && (
+              <div className="bg-gray-50 p-4 rounded-xl mb-6">
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  {lang === 'es' ? 'Información Adicional' : 'Informação Adicional'}
+                </h4>
+                <p className="text-gray-700 text-sm">{event.additionalInfo}</p>
               </div>
             )}
 
-            {/* FAQ Section - Estilo Acordeón */}
-            {event.questions && event.questions.length > 0 && (
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#1a4f8a] flex items-center justify-center">
-                    <HelpCircle className="w-5 h-5 text-white" />
+            {/* Registration Button */}
+            {!showForm && !isSubmitted && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setShowForm(true)}
+                className="w-full py-4 px-6 rounded-xl font-bold text-lg bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white hover:shadow-lg transition-all mb-6"
+              >
+                {lang === 'es' ? 'INSCRIBIRME AL EVENTO' : 'INSCREVER-ME NO EVENTO'}
+              </motion.button>
+            )}
+
+            {/* Event Registration Form */}
+            {showForm && !isSubmitted && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white border-2 border-gray-200 rounded-2xl p-6 mb-6"
+              >
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <User className="w-5 h-5 text-[#1a4f8a]" />
+                  {lang === 'es' ? 'Formulario de Inscripción' : 'Formulário de Inscrição'}
+                </h3>
+                
+                <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                      {lang === 'es' ? 'Nombre completo *' : 'Nome completo *'}
+                    </label>
+                    <input
+                      type="text"
+                      name="participantName"
+                      value={formData.participantName}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                      required
+                    />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    {lang === 'es' ? 'Preguntas Frecuentes' : 'Perguntas Frequentes'}
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {event.questions.map((q: {id: number, question: string, answer: string}) => (
-                    <div 
-                      key={q.id} 
-                      className="border border-gray-200 rounded-xl overflow-hidden bg-white hover:shadow-md transition-shadow"
-                    >
-                      <button
-                        onClick={() => setOpenQuestion(openQuestion === q.id ? null : q.id)}
-                        className="w-full flex items-center justify-between p-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
-                      >
-                        <span className="pr-4">{q.question}</span>
-                        <motion.div
-                          animate={{ rotate: openQuestion === q.id ? 180 : 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <ChevronDown className="w-5 h-5 text-[#1a4f8a] flex-shrink-0" />
-                        </motion.div>
-                      </button>
-                      <motion.div
-                        initial={false}
-                        animate={{ 
-                          height: openQuestion === q.id ? 'auto' : 0,
-                          opacity: openQuestion === q.id ? 1 : 0
-                        }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-4 pb-4 text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
-                          {q.answer}
-                        </div>
-                      </motion.div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        <Mail className="w-4 h-4 inline mr-1" />
+                        {lang === 'es' ? 'Correo electrónico *' : 'E-mail *'}
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      />
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        <Phone className="w-4 h-4 inline mr-1" />
+                        {lang === 'es' ? 'Teléfono *' : 'Telefone *'}
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                      {lang === 'es' ? 'Fecha de nacimiento *' : 'Data de nascimento *'}
+                    </label>
+                    <input
+                      type="date"
+                      name="birthDate"
+                      value={formData.birthDate}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Nacionalidad *' : 'Nacionalidade *'}
+                      </label>
+                      <select
+                        name="nationality"
+                        value={formData.nationality}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      >
+                        <option value="">{lang === 'es' ? 'Seleccione...' : 'Selecione...'}</option>
+                        <option value="mexican">{lang === 'es' ? 'Mexicano/a' : 'Mexicano/a'}</option>
+                        <option value="portuguese">{lang === 'es' ? 'Portugués' : 'Português'}</option>
+                        <option value="spanish">{lang === 'es' ? 'Español' : 'Espanhol'}</option>
+                        <option value="other">{lang === 'es' ? 'Otro' : 'Outro'}</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Nivel de experiencia *' : 'Nível de experiência *'}
+                      </label>
+                      <select
+                        name="experienceLevel"
+                        value={formData.experienceLevel}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      >
+                        <option value="">{lang === 'es' ? 'Seleccione...' : 'Selecione...'}</option>
+                        <option value="beginner">{lang === 'es' ? 'Principiante' : 'Iniciante'}</option>
+                        <option value="intermediate">{lang === 'es' ? 'Intermedio' : 'Intermediário'}</option>
+                        <option value="advanced">{lang === 'es' ? 'Avanzado' : 'Avançado'}</option>
+                        <option value="professional">{lang === 'es' ? 'Profesional' : 'Profissional'}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Organización/Escuela' : 'Organização/Escola'}
+                      </label>
+                      <input
+                        type="text"
+                        name="organization"
+                        value={formData.organization}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Cargo/Posición' : 'Cargo/Posição'}
+                      </label>
+                      <input
+                        type="text"
+                        name="position"
+                        value={formData.position}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                      {lang === 'es' ? '¿Cómo se enteró del evento? *' : 'Como ficou sabendo do evento? *'}
+                    </label>
+                    <select
+                      name="howDidYouHear"
+                      value={formData.howDidYouHear}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                      required
+                    >
+                      <option value="">{lang === 'es' ? 'Seleccione una opción...' : 'Selecione uma opção...'}</option>
+                      <option value="social_media">{lang === 'es' ? 'Redes sociales' : 'Redes sociais'}</option>
+                      <option value="email">{lang === 'es' ? 'Correo electrónico' : 'E-mail'}</option>
+                      <option value="friend">{lang === 'es' ? 'Amigo/Familiar' : 'Amigo/Familiar'}</option>
+                      <option value="school">{lang === 'es' ? 'Escuela/Club' : 'Escola/Clube'}</option>
+                      <option value="web">{lang === 'es' ? 'Página web' : 'Página web'}</option>
+                      <option value="other">{lang === 'es' ? 'Otro' : 'Outro'}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                      {lang === 'es' ? 'Restricciones alimentarias (opcional)' : 'Restrições alimentares (opcional)'}
+                    </label>
+                    <input
+                      type="text"
+                      name="dietaryRestrictions"
+                      value={formData.dietaryRestrictions}
+                      onChange={handleFormChange}
+                      placeholder={lang === 'es' ? 'Alergias, intolerancias, dieta especial...' : 'Alergias, intolerâncias, dieta especial...'}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                      {lang === 'es' ? 'Condiciones médicas relevantes (opcional)' : 'Condições médicas relevantes (opcional)'}
+                    </label>
+                    <textarea
+                      name="medicalConditions"
+                      value={formData.medicalConditions}
+                      onChange={handleFormChange}
+                      rows={2}
+                      placeholder={lang === 'es' ? 'Asma, diabetes, problemas cardíacos...' : 'Asma, diabetes, problemas cardíacos...'}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all resize-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Contacto de emergencia *' : 'Contato de emergência *'}
+                      </label>
+                      <input
+                        type="text"
+                        name="emergencyContact"
+                        value={formData.emergencyContact}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">
+                        {lang === 'es' ? 'Teléfono emergencia *' : 'Telefone emergência *'}
+                      </label>
+                      <input
+                        type="tel"
+                        name="emergencyPhone"
+                        value={formData.emergencyPhone}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1a4f8a] focus:border-[#1a4f8a] transition-all"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded-xl space-y-3">
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        name="acceptsTerms"
+                        id="acceptsTerms"
+                        checked={formData.acceptsTerms}
+                        onChange={handleFormChange}
+                        className="mt-1 w-5 h-5 text-[#1a4f8a] border-2 border-gray-300 rounded focus:ring-[#1a4f8a]"
+                        required
+                      />
+                      <label htmlFor="acceptsTerms" className="text-sm text-gray-700 leading-relaxed">
+                        {lang === 'es' 
+                          ? 'Acepto los términos y condiciones del evento, incluyendo la política de cancelación y autorizo el uso de mi imagen en material promocional.'
+                          : 'Aceito os termos e condições do evento, incluindo a política de cancelamento e autorizo o uso da minha imagem em material promocional.'}
+                      </label>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        name="acceptsPrivacy"
+                        id="acceptsPrivacy"
+                        checked={formData.acceptsPrivacy}
+                        onChange={handleFormChange}
+                        className="mt-1 w-5 h-5 text-[#1a4f8a] border-2 border-gray-300 rounded focus:ring-[#1a4f8a]"
+                        required
+                      />
+                      <label htmlFor="acceptsPrivacy" className="text-sm text-gray-700 leading-relaxed">
+                        {lang === 'es' 
+                          ? 'Acepto la política de privacidad y el tratamiento de mis datos personales para la gestión de mi inscripción al evento.'
+                          : 'Aceito a política de privacidade e o tratamento dos meus dados pessoais para a gestão da minha inscrição no evento.'}
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowForm(false)}
+                      className="flex-1 py-3 px-4 rounded-xl font-semibold border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-all"
+                    >
+                      {lang === 'es' ? 'Cancelar' : 'Cancelar'}
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-[2] py-3 px-4 rounded-xl font-bold bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white hover:shadow-lg transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                          {lang === 'es' ? 'Enviando...' : 'Enviando...'}
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-4 h-4" />
+                          {lang === 'es' ? 'CONFIRMAR INSCRIPCIÓN' : 'CONFIRMAR INSCRIÇÃO'}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
             )}
+
+            {/* Success Message */}
+            {isSubmitted && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center mb-6"
+              >
+                <div className="bg-green-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Check className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {lang === 'es' ? '¡Inscripción Exitosa!' : 'Inscrição Bem-Sucedida!'}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {lang === 'es' 
+                    ? `Te has inscrito exitosamente a ${event.title}. Recibirás un correo de confirmación con los detalles.`
+                    : `Inscreveu-se com sucesso em ${event.title}. Receberá um e-mail de confirmação com os detalhes.`}
+                </p>
+                <button
+                  onClick={() => {
+                    setIsSubmitted(false);
+                    setShowForm(false);
+                    setFormData({
+                      participantName: '',
+                      email: '',
+                      phone: '',
+                      birthDate: '',
+                      nationality: '',
+                      organization: '',
+                      position: '',
+                      experienceLevel: '',
+                      howDidYouHear: '',
+                      dietaryRestrictions: '',
+                      medicalConditions: '',
+                      emergencyContact: '',
+                      emergencyPhone: '',
+                      acceptsTerms: false,
+                      acceptsPrivacy: false,
+                    });
+                  }}
+                  className="bg-[#1a4f8a] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#153d6e] transition-all"
+                >
+                  {lang === 'es' ? 'Volver al evento' : 'Voltar ao evento'}
+                </button>
+              </motion.div>
+            )}
+
           </motion.div>
         </div>
       </div>
