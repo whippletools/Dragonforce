@@ -122,7 +122,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
               <source src={slideData.mediaUrl} type="video/mp4" />
             </video>
           )}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/70" />
         </motion.div>
       </AnimatePresence>
 
@@ -146,8 +146,10 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="">
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                {slideData.title}
+              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 text-shadow-lg tracking-tight">
+                <span className="bg-gradient-to-r from-white via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
+                  {slideData.title}
+                </span>
               </motion.h1>
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4 max-w-3xl mx-auto">
                 {slideData.body}
@@ -180,7 +182,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                     }
                   }
                 }}
-                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
+                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2 btn-pulse"
               >
                 {slideData.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>

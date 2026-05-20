@@ -4,35 +4,32 @@ export const translations = {
   es: {
     nav: { home: 'INICIO', schools: 'ESCUELAS', international: 'INTERNACIONAL', events: 'EVENTOS' },
     hero: {
-      slide1: { title: 'EVENTOS', desc: 'Entra en un universo donde la Alegría entrena contigo, la Pasión viste de azul y blanco, y la Motivación te lleva a jugar como un verdadero Dragón.', cta: 'VER CATÁLOGO 25/26' },
-      slide2: { title: 'ESCUELAS', desc: 'La pasión por el fútbol comienza aquí. Encuentra la escuela Dragon Force más cercana a ti.', cta: 'VER ESCUELAS' },
-      slide3: { title: 'INTERNACIONAL', desc: 'Una metodología abierta al mundo. Presente en Brasil, Zimbabue y Mozambique.', cta: 'SABER MÁS' },
+      slide1: { title: 'VIVE LA PASIÓN DRAGÓN', desc: 'Entra en un universo donde la Alegría entrena contigo, la Pasión viste de azul y blanco, y la Motivación te lleva a jugar como un verdadero Dragón.', cta: 'VER CATÁLOGO 25/26' },
+      slide2: { title: 'ENTRA EN EL JUEGO', desc: 'La pasión por el fútbol comienza aquí. Encuentra la escuela Dragon Force más cercana a ti y empieza a entrenar como un verdadero Dragón.', cta: 'VER ESCUELAS' },
+      slide3: { title: 'UN EQUIPO, TODO EL MUNDO', desc: 'Una metodología abierta al mundo. La pasión por el fútbol nos une a todos. Conviértete en parte de la familia Dragón.', cta: 'SABER MÁS' },
     },
     about: { 
-      label: 'ÚNETE', 
-      title: 'CADA VEZ MÁS CERCA', 
-      desc: 'El nuevo portal Dragon Force ha sido diseñado con el objetivo de ser una herramienta de fácil acceso para conocernos mejor y, rápidamente, entrar en nuestro mundo. Aquí puedes encontrar la Escuela de Fútbol Dragon Force más cercana a ti y consultar todos los detalles como su localización, horarios de entrenamiento y otros servicios. Puedes consultar nuestro catálogo anual de eventos y elegir tu preferido. Con solo un clic, formalizas la inscripción y garantizas tu plaza para una experiencia memorable.',
-      cta: 'SEGUIR LEYENDO' 
+      label: 'NUESTRA ESENCIA', 
+      title: 'FORMAMOS DRAGONES, NO SOLO JUGADORES', 
+      desc: 'En Dragon Force no enseñamos fútbol. Forjamos carácter, disciplina y pasión bajo la metodología del FC Porto. Cada entrenamiento es una oportunidad para descubrir tu mejor versión. ¿Estás listo para despertar al Dragón que llevas dentro?',
+      cta: 'DESCUBRE MÁS' 
     },
     quality: { 
-      label: 'ÚNETE', 
-      title: 'LA IMPORTANCIA DE LA CALIDAD',
-      desc: 'En Dragon Force, la calidad es el pilar fundamental de nuestra metodología. Contamos con un Sistema de Gestión de Calidad certificado conforme a la norma ISO 9001 desde 2010, siendo auditados anualmente por organismos externos.'
+      label: 'CERTIFICADOS DE EXCELENCIA', 
+      title: 'CALIDAD SIN COMPROMISOS',
+      desc: 'Certificación ISO 9001 desde 2010. Auditados anualmente por organismos internacionales. Procesos certificados que garantizan la mejor formación para tu hijo. La excelencia no es opción, es nuestro estándar.'
     },
     identity: { label: 'ADN DE DRAGÓN', title: 'NUESTRA IDENTIDAD' },
-    map: { label: 'INSCRÍBETE', title: 'EVENTOS', cta: 'VER TODAS' },
-    cta: { 
-      card1: { title: 'JUEGA COMO NOSOTROS', desc: 'Haz aquí la pre-inscripción en la Escuela de Fútbol Dragon Force más cercana a ti.', cta: 'PRE-INSCRIPCIÓN' }, 
-      card2: { title: 'FORMA CAMPEONES', desc: 'Haz aquí tu candidatura para abrir una Escuela de Fútbol Dragon Force.', cta: 'CANDIDATURA' } 
-    },
+    map: { label: 'PRÓXIMAS EXPERIENCIAS', title: 'EVENTOS', cta: 'VER TODAS' },
+    cta: {},
     international: { 
-      label: 'INTERNACIONAL', 
-      title: 'MANTENTE AL DÍA', 
+      label: 'SIN FRONTERAS', 
+      title: 'EL MUNDO JUEGA A NUESTRO RITMO', 
       cta: 'SABER MÁS', 
       stats: 'Países',
-      desc: 'Dragon Force está presente internacionalmente con escuelas de fútbol en Brasil, Zimbabue y Mozambique, todas ellas certificadas internacionalmente. La temporada pasada se realizaron 24 Foot-Camps en tres continentes, llegando a más de 2.500 jóvenes atletas.'
+      desc: 'Una metodología abierta al mundo. Presente internacionalmente con escuelas certificadas en varios países. La pasión por el fútbol nos une.'
     },
-    news: { label: 'ACTUALIDAD', title: 'NOTICIAS', cta: 'VER TODAS', read: 'Leer noticia' },
+    news: { label: 'ÚLTIMAS NOTICIAS', title: 'DRAGON FORCE EN ACCIÓN', cta: 'VER TODAS', read: 'Leer noticia' },
     accessibility: {
       previousSlide: 'Diapositiva anterior',
       nextSlide: 'Siguiente diapositiva',
@@ -226,35 +223,32 @@ export const translations = {
   en: {
     nav: { home: 'HOME', schools: 'SCHOOLS', international: 'INTERNATIONAL', events: 'EVENTS' },
     hero: {
-      slide1: { title: 'EVENTS', desc: 'Enter a universe where Joy trains with you, Passion wears blue and white, and Motivation drives you to play like a true Dragon.', cta: 'VIEW CATALOG 25/26' },
-      slide2: { title: 'SCHOOLS', desc: 'The passion for football begins here. Find the Dragon Force school nearest you.', cta: 'VIEW SCHOOLS' },
-      slide3: { title: 'INTERNATIONAL', desc: 'A methodology open to the world. Present in Brazil, Zimbabwe and Mozambique.', cta: 'LEARN MORE' },
+      slide1: { title: 'LIVE THE DRAGON PASSION', desc: 'Enter a universe where Joy trains with you, Passion wears blue and white, and Motivation drives you to play like a true Dragon.', cta: 'VIEW CATALOG 25/26' },
+      slide2: { title: 'GET IN THE GAME', desc: 'The passion for football begins here. Find the Dragon Force school nearest you and start training like a true Dragon.', cta: 'VIEW SCHOOLS' },
+      slide3: { title: 'ONE TEAM, ONE WORLD', desc: 'A methodology open to the world. The passion for football unites us all. Become part of the Dragon family.', cta: 'LEARN MORE' },
     },
     about: { 
-      label: 'JOIN US', 
-      title: 'EVER CLOSER TO YOU', 
-      desc: 'The new Dragon Force portal has been designed with the aim of being an easily accessible tool for getting to know us better and quickly entering our world. Here you can find the Dragon Force Soccer School nearest you and check all the details such as its location, training times and other services. You can consult our annual catalog of events and choose your favorite. With just one click, you can register and secure your place for a memorable experience.',
-      cta: 'READ MORE' 
+      label: 'OUR ESSENCE', 
+      title: 'WE TRAIN DRAGONS, NOT JUST PLAYERS', 
+      desc: 'At Dragon Force we do not teach football. We forge character, discipline and passion under the FC Porto methodology. Every training session is an opportunity to discover your best version. Are you ready to awaken the Dragon within?',
+      cta: 'DISCOVER MORE' 
     },
     quality: { 
-      label: 'JOIN US', 
-      title: 'THE IMPORTANCE OF QUALITY',
-      desc: 'At Dragon Force, quality is the fundamental pillar of our methodology. We have a Quality Management System certified according to ISO 9001 standards since 2010, being audited annually by external bodies.'
+      label: 'CERTIFIED EXCELLENCE', 
+      title: 'QUALITY WITHOUT COMPROMISE',
+      desc: 'ISO 9001 certified since 2010. Audited annually by international bodies. Certified processes that guarantee the best training for your child. Excellence is not an option, it is our standard.'
     },
     identity: { label: 'DRAGON DNA', title: 'OUR IDENTITY' },
-    map: { label: 'REGISTER', title: 'EVENTS', cta: 'VIEW ALL' },
-    cta: { 
-      card1: { title: 'PLAY LIKE US', desc: 'Pre-register at the nearest Dragon Force Football School.', cta: 'PRE-REGISTER' }, 
-      card2: { title: 'FORM CHAMPIONS', desc: 'Apply to open a Dragon Force Football School.', cta: 'APPLY' } 
-    },
+    map: { label: 'UPCOMING EXPERIENCES', title: 'EVENTS', cta: 'VIEW ALL' },
+    cta: {},
     international: { 
-      label: 'INTERNATIONAL', 
-      title: 'KEEP UP TO DATE', 
+      label: 'WITHOUT BORDERS', 
+      title: 'THE WORLD PLAYS AT OUR PACE', 
       cta: 'LEARN MORE', 
       stats: 'Countries',
-      desc: 'Internationally, there are talents running wild at the Dragon Force soccer schools in Brazil, Zimbabwe and Mozambique, all of which are internationally certified. Last season, 24 Foot-Camps were held on three continents, reaching more than 2,500 young athletes.'
+      desc: 'A methodology open to the world. Internationally certified schools in several countries. The passion for football unites us.'
     },
-    news: { label: 'UPDATES', title: 'NEWS', cta: 'VIEW ALL', read: 'Read the news' },
+    news: { label: 'LATEST NEWS', title: 'DRAGON FORCE IN ACTION', cta: 'VIEW ALL', read: 'Read the news' },
     accessibility: {
       previousSlide: 'Previous slide',
       nextSlide: 'Next slide',

@@ -7,7 +7,6 @@ import QualitySection from './sections/QualitySection';
 import IdentitySection from './sections/IdentitySection';
 import EventsSection from './sections/EventsSection';
 import SchoolsSection from './sections/SchoolsSection';
-import TrainChampionsSection from './sections/TrainChampionsSection';
 import InternationalSection from './sections/InternationalSection';
 import NewsSection from './sections/NewsSection';
 import ProductPage from './pages/ProductPage';
@@ -23,12 +22,11 @@ import QualityPage from './pages/QualityPage';
 import InternationalProgramPage from './pages/InternationalProgramPage';
 import EventPage from './pages/EventPage';
 import PreinscriptionPage from './pages/PreinscriptionPage';
-import ApplicationPage from './pages/ApplicationPage';
 import type { InternationalProgram } from './types/api';
 import { CartProvider } from './context/CartContext';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event' | 'preinscription' | 'application';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event' | 'preinscription';
 export type Lang = 'es' | 'en';
 
 function App() {
@@ -123,6 +121,11 @@ function App() {
     }, 100);
   };
 
+  const navigateToPreinscription = () => {
+    setCurrentPage('preinscription');
+    window.scrollTo(0, 0);
+  };
+
   const navigateToEventsSection = () => {
     setCurrentPage('home');
     setTimeout(() => {
@@ -131,16 +134,6 @@ function App() {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
-  };
-
-  const navigateToPreinscription = () => {
-    setCurrentPage('preinscription');
-    window.scrollTo(0, 0);
-  };
-
-  const navigateToApplication = () => {
-    setCurrentPage('application');
-    window.scrollTo(0, 0);
   };
 
   const navigateToNewsSection = () => {
@@ -177,6 +170,7 @@ function App() {
         onNavigateSchools={navigateToSchools}
         onNavigateInternational={navigateToInternationalSection}
         onNavigateEvents={navigateToEventsSection}
+        onNavigatePreinscription={navigateToPreinscription}
         lang={lang}
         setLang={setLang}
       />
@@ -196,11 +190,6 @@ function App() {
             <div id="escuelas">
               <SchoolsSection lang={lang} />
             </div>
-            <TrainChampionsSection 
-              lang={lang} 
-              onNavigatePreinscription={navigateToPreinscription}
-              onNavigateApplication={navigateToApplication}
-            />
             <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} />
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
@@ -248,10 +237,7 @@ function App() {
           <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToInternationalSection} />
         )}
         {currentPage === 'preinscription' && (
-          <PreinscriptionPage lang={lang} onBack={navigateToTrainChampionsSection} />
-        )}
-        {currentPage === 'application' && (
-          <ApplicationPage lang={lang} onBack={navigateToTrainChampionsSection} />
+          <PreinscriptionPage lang={lang} onBack={navigateToHome} />
         )}
       </main>
       <Footer 

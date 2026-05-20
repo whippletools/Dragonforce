@@ -11,26 +11,26 @@ const icons = [Heart, Users, Star, Trophy, BookOpen, Lightbulb, Brain, Rocket, S
 
 const cards = {
   es: [
-    { title: 'EL FÚTBOL ES PASIÓN', desc: 'Valoramos un proceso serio y organizado' },
-    { title: 'EL NIÑO EN EL CENTRO', desc: 'Desarrollamos capacidades deportivas y sociales' },
-    { title: 'CADA ALUMNO ES ÚNICO', desc: 'Merece atención especial' },
-    { title: 'PREPARAR CAMPEONES', desc: 'Para la vida, no de un día para otro' },
-    { title: 'FORMACIÓN CONTINUA', desc: 'Staff con las mejores herramientas' },
-    { title: 'ÁREAS INTEGRADAS', desc: 'Promovemos valores importantes' },
-    { title: 'PENSAMIENTO COMÚN', desc: 'Éxito desde la conexión perfecta' },
-    { title: 'INNOVACIÓN CONSTANTE', desc: 'Optimizamos para el futuro' },
-    { title: 'RESPONSABILIDAD', desc: 'Acompañamos con alegría' },
+    { title: 'EL FÚTBOL ES NUESTRA RAZÓN DE SER', desc: 'Vivimos y respiramos fútbol. Cada entrenamiento es una oportunidad para superarnos.' },
+    { title: 'EL NIÑO EN EL CENTRO', desc: 'Desarrollamos capacidades deportivas y sociales con una metodología única.' },
+    { title: 'CADA ALUMNO ES ÚNICO', desc: 'Atención personalizada para descubrir y potenciar el talento de cada jugador.' },
+    { title: 'CAMPEONES PARA LA VIDA', desc: 'Formamos carácter, disciplina y valores que trascienden el campo de juego.' },
+    { title: 'FORMACIÓN CONTINUA', desc: 'Nuestro staff cuenta con las mejores herramientas y certificaciones internacionales.' },
+    { title: 'ÁREAS INTEGRADAS', desc: 'Fútbol, fisioterapia, psicología y nutrición. Formación 360° para el atleta.' },
+    { title: 'PENSAMIENTO COMÚN', desc: 'Éxito desde la conexión perfecta entre entrenador, alumno y familia.' },
+    { title: 'SIEMPRE UN PASO ADELANTE', desc: 'Innovación constante para optimizar nuestros procesos y resultados.' },
+    { title: 'RESPONSABILIDAD TOTAL', desc: 'Acompañamos con alegría y compromiso cada etapa del desarrollo.' },
   ],
   en: [
-    { title: 'FOOTBALL IS PASSION', desc: 'We value a serious process' },
-    { title: 'CHILD AT CENTER', desc: 'Develop sporting and social skills' },
-    { title: 'EACH STUDENT UNIQUE', desc: 'Deserves special attention' },
-    { title: 'PREPARE CHAMPIONS', desc: 'For life, not overnight' },
-    { title: 'CONTINUOUS TRAINING', desc: 'Staff with best tools' },
-    { title: 'INTEGRATED AREAS', desc: 'Promote important values' },
-    { title: 'COMMON THINKING', desc: 'Success from perfect connection' },
-    { title: 'CONSTANT INNOVATION', desc: 'Optimize for the future' },
-    { title: 'RESPONSIBILITY', desc: 'Accompany with joy' },
+    { title: 'FOOTBALL IS OUR REASON FOR BEING', desc: 'We live and breathe football. Every training is an opportunity to improve.' },
+    { title: 'CHILD AT THE CENTER', desc: 'We develop sporting and social skills with a unique methodology.' },
+    { title: 'EACH STUDENT IS UNIQUE', desc: 'Personalized attention to discover and enhance every player\'s talent.' },
+    { title: 'CHAMPIONS FOR LIFE', desc: 'We forge character, discipline and values that transcend the pitch.' },
+    { title: 'CONTINUOUS TRAINING', desc: 'Our staff has the best tools and international certifications.' },
+    { title: 'INTEGRATED AREAS', desc: 'Football, physiotherapy, psychology and nutrition. 360° athlete development.' },
+    { title: 'COMMON THINKING', desc: 'Success from the perfect connection between coach, student and family.' },
+    { title: 'ALWAYS ONE STEP AHEAD', desc: 'Constant innovation to optimize our processes and results.' },
+    { title: 'TOTAL RESPONSIBILITY', desc: 'We accompany with joy and commitment every stage of development.' },
   ],
 };
 
@@ -60,7 +60,7 @@ const IdentitySection = ({ lang }: IdentitySectionProps) => {
           <h2 className="text-3xl md:text-4xl font-bold text-white">{t.identity.title}</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {cardData.map((card, i) => {
             const Icon = icons[i];
             return (
@@ -69,12 +69,12 @@ const IdentitySection = ({ lang }: IdentitySectionProps) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: i * 0.1 }}
-                className="text-center"
+                className="text-center p-6 rounded-2xl glass hover:glow-blue transition-all duration-500 cursor-default group"
               >
-                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
-                  <Icon className="w-8 h-8 text-[#0d47a1]" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Icon className="w-8 h-8 text-yellow-300" />
                 </div>
-                <h3 className="text-base font-bold text-white mb-2 uppercase">{card.title}</h3>
+                <h3 className="text-sm font-bold text-white mb-2 uppercase tracking-wide">{card.title}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{card.desc}</p>
               </motion.div>
             );

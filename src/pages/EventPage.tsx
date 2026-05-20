@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
 import type { EventDetail } from '../types/api';
+import { API_BASE_URL } from '../config';
 
 interface EventPageProps {
   eventId: number;
@@ -48,25 +49,46 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // BACKEND CONNECTION POINT - Datos del formulario de evento listos para enviar
-    const payload = {
-      eventId: event?.id,
-      eventTitle: event?.title,
-      ...formData,
-      submittedAt: new Date().toISOString(),
-      formType: 'event_registration'
-    };
-    
-    console.log('Datos del registro de evento listos para enviar al backend:', payload);
-    
-    // TODO: Aquí iría la llamada al backend:
-    // await apiClient.post('/api/event-registrations', payload);
-    
-    // Simular envío
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      // Payload exacto que espera el backend
+      const payload = {
+        eventId: event?.id,
+        participantName: formData.participantName,
+        email: formData.email,
+        phone: formData.phone,
+        birthDate: formData.birthDate,
+        nationality: formData.nationality,
+        organization: formData.organization || null,
+        position: formData.position || null,
+        experienceLevel: formData.experienceLevel || null,
+        howDidYouHear: formData.howDidYouHear || null,
+        dietaryRestrictions: formData.dietaryRestrictions || null,
+        medicalConditions: formData.medicalConditions || null,
+        emergencyContact: formData.emergencyContact,
+        emergencyPhone: formData.emergencyPhone,
+        acceptsTerms: formData.acceptsTerms,
+        acceptsPrivacy: formData.acceptsPrivacy,
+      };
+      
+      const response = await fetch(`${API_BASE_URL}event-registrations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || 'Error al registrar en el evento');
+      }
+      
+      setIsSubmitted(true);
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
+      alert(lang === 'es' ? `Error: ${errorMsg}` : `Error: ${errorMsg}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const event = events.find((e: EventDetail) => Number(e.id) === Number(eventId));

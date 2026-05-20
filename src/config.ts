@@ -1,5 +1,7 @@
-const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://dragonforce-api.lab.whipple.mx/api/';
-const VITE_UPLOADS_BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://dragonforce-api.lab.whipple.mx/';
+// TEMP: Usando backend local para desarrollo
+// Cambiar a producción cuando se despliegue: 'https://dragonforce-api.lab.whipple.mx/api/'
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3009/api/';
+const VITE_UPLOADS_BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'http://localhost:3009/';
 
 // Normalize URLs to always end with a single slash
 export const API_BASE_URL = VITE_API_BASE_URL.endsWith('/') ? VITE_API_BASE_URL : `${VITE_API_BASE_URL}/`;
