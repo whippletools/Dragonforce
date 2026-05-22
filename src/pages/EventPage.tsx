@@ -14,10 +14,11 @@ interface EventPageProps {
 
 const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
   const t = translations[lang];
-  const { events, loading, error } = useEvents(lang);
+  const { events, loading, error, usingFallback } = useEvents(lang);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     participantName: '',
@@ -49,6 +50,7 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
+    setSubmitError(null);
     try {
       // Payload exacto que espera el backend
       const payload = {
@@ -85,7 +87,7 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
       setIsSubmitted(true);
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : 'Error desconocido';
-      alert(lang === 'es' ? `Error: ${errorMsg}` : `Error: ${errorMsg}`);
+      setSubmitError(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -220,6 +222,11 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
                 </h3>
                 
                 <form onSubmit={handleFormSubmit} className="space-y-4">
+                  {submitError && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                      {lang === 'es' ? 'Error: ' : 'Erro: '}{submitError}
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       {lang === 'es' ? 'Nombre completo *' : 'Nome completo *'}

@@ -19,12 +19,14 @@ export function useNews(lang: Lang) {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadArticles = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get<NewsResponse>(endpoints.news, {
             params: { lang, limit: 100 },
@@ -37,6 +39,7 @@ export function useNews(lang: Lang) {
           setArticles(sortedArticles);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           // Fallback: convertir JSON local a estructura del backend
           const fallbackArticles: NewsArticle[] = newsData.articles.map((article: any) => ({
             ...article,
@@ -64,5 +67,6 @@ export function useNews(lang: Lang) {
     articles,
     loading,
     error,
+    usingFallback,
   };
 }

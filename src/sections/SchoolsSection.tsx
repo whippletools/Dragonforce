@@ -12,7 +12,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
   const ref = useRef(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { schools, loading, error } = useSchools(lang);
+  const { schools, loading, error, usingFallback } = useSchools(lang);
   const t = translations[lang];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);

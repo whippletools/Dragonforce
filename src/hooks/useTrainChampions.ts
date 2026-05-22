@@ -43,12 +43,14 @@ export function useTrainChampions(lang: Lang) {
   const [options, setOptions] = useState<TrainChampionOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadOptions = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get(endpoints.trainChampions, {
             params: { lang, limit: 100 },
@@ -60,6 +62,7 @@ export function useTrainChampions(lang: Lang) {
           setOptions(sortedOptions);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           const data = trainChampionsData as TrainChampionsResponse;
           const sortedOptions = [...data.options]
             .sort((a, b) => a.order - b.order)
@@ -82,5 +85,6 @@ export function useTrainChampions(lang: Lang) {
     options,
     loading,
     error,
+    usingFallback,
   };
 }

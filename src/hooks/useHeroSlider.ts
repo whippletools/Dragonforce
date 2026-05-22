@@ -19,11 +19,13 @@ export function useHeroSlider(lang: Lang) {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadSlides = async () => {
       try {
         setLoading(true);
+        setUsingFallback(false);
 
         try {
           const response = await apiClient.get(endpoints.heroSlider, {
@@ -45,6 +47,7 @@ export function useHeroSlider(lang: Lang) {
           setSlides(apiSlides);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           const data = heroSliderData as HeroSliderResponse;
           const processedSlides = data.data.map(processSlideImages);
           setSlides(processedSlides);
@@ -65,5 +68,6 @@ export function useHeroSlider(lang: Lang) {
     slides,
     loading,
     error,
+    usingFallback,
   };
 }

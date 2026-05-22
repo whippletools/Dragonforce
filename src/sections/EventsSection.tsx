@@ -14,7 +14,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
-  const { events, loading, error } = useEvents(lang);
+  const { events, loading, error, usingFallback } = useEvents(lang);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [visibleCount, setVisibleCount] = useState(4);

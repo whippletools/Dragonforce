@@ -20,12 +20,14 @@ export function useInternationalPrograms(lang: Lang) {
   const [programs, setPrograms] = useState<InternationalProgram[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadPrograms = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get(endpoints.internationalPrograms, {
             params: { lang, limit: 100 },
@@ -36,6 +38,7 @@ export function useInternationalPrograms(lang: Lang) {
           setPrograms(sortedPrograms);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           const data = programsData as InternationalProgramsResponse;
           const sortedPrograms = [...data.programs]
             .sort((a, b) => a.order - b.order)
@@ -58,5 +61,6 @@ export function useInternationalPrograms(lang: Lang) {
     programs,
     loading,
     error,
+    usingFallback,
   };
 }

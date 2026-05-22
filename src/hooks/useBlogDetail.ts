@@ -23,6 +23,7 @@ export function useBlogDetail(slug: string, lang: Lang) {
   const [article, setArticle] = useState<BlogArticle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -30,7 +31,8 @@ export function useBlogDetail(slug: string, lang: Lang) {
       
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get<BlogResponse>(`${endpoints.blog}/${slug}`, {
             params: { lang }
@@ -38,10 +40,11 @@ export function useBlogDetail(slug: string, lang: Lang) {
           setArticle(processBlogImages(response.data.article));
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
-          
+          setUsingFallback(true);
+
           const data = blogData as { articles: BlogArticle[] };
           const foundArticle = data.articles.find(a => a.slug === slug);
-          
+
           if (foundArticle) {
             setArticle(processBlogImages(foundArticle));
           } else {
@@ -64,5 +67,6 @@ export function useBlogDetail(slug: string, lang: Lang) {
     article,
     loading,
     error,
+    usingFallback,
   };
 }

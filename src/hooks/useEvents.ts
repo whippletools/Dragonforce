@@ -19,12 +19,14 @@ export function useEvents(lang: Lang) {
   const [events, setEvents] = useState<EventDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadEvents = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get<EventsResponse>(endpoints.events, {
             params: { lang, limit: 100 },
@@ -66,8 +68,9 @@ export function useEvents(lang: Lang) {
             .sort((a, b) => a.order - b.order)
             .map(processEventImages);
           setEvents(sortedEvents);
+          setUsingFallback(true);
         }
-        
+
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error loading events');
@@ -83,5 +86,6 @@ export function useEvents(lang: Lang) {
     events,
     loading,
     error,
+    usingFallback,
   };
 }

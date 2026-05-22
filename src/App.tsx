@@ -190,7 +190,7 @@ function App() {
             <div id="escuelas">
               <SchoolsSection lang={lang} />
             </div>
-            <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} />
+            {/* <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} /> */}
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
         )}

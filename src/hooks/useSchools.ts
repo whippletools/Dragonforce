@@ -20,12 +20,14 @@ export function useSchools(lang: Lang) {
   const [schools, setSchools] = useState<School[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadSchools = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get(endpoints.schools, {
             params: { lang, limit: 100 },
@@ -38,6 +40,7 @@ export function useSchools(lang: Lang) {
           setSchools(sortedSchools);
         } catch (apiError) {
           console.error('API error:', apiError);
+          setUsingFallback(true);
           // Fallback a JSON local
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = schoolsData as unknown as { schools: any[] };
@@ -69,5 +72,6 @@ export function useSchools(lang: Lang) {
     schools,
     loading,
     error,
+    usingFallback,
   };
 }

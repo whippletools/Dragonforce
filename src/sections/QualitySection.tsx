@@ -12,7 +12,7 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
-  const { images, loading, error } = useQualityCarousel(lang);
+  const { images, loading, error, usingFallback } = useQualityCarousel(lang);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (

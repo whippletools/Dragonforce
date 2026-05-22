@@ -26,7 +26,7 @@ const isYouTubeUrl = (url: string): boolean => {
 
 const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
-  const { slides, loading, error } = useHeroSlider(lang);
+  const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const t = translations[lang];
 
   const nextSlide = useCallback(() => {

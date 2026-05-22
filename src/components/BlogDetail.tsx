@@ -22,7 +22,7 @@ const formatDate = (dateString: string, lang: Lang): string => {
 };
 
 const BlogDetail = ({ slug, lang, onBack }: BlogDetailProps) => {
-  const { article, loading, error } = useBlogDetail(slug, lang);
+  const { article, loading, error, usingFallback } = useBlogDetail(slug, lang);
 
   if (loading) {
     return (

@@ -14,7 +14,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
-  const { articles, loading, error } = useNews(lang);
+  const { articles, loading, error, usingFallback } = useNews(lang);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [visibleCount, setVisibleCount] = useState(2);

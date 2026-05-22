@@ -12,7 +12,7 @@ interface TrainChampionsSectionProps {
 
 const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateApplication }: TrainChampionsSectionProps) => {
   const ref = useRef(null);
-  const { options, loading, error } = useTrainChampions(lang);
+  const { options, loading, error, usingFallback } = useTrainChampions(lang);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleButtonClick = (formType: 'preregistration' | 'application') => {
