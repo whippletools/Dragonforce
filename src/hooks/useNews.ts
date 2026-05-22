@@ -5,15 +5,7 @@ import newsData from '../data/news.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-
-// Helper to complete relative image URLs
-const completeImageUrl = (url: string): string => {
-  if (!url) return url;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  return `${BASE_URL}${cleanUrl}`;
-};
+import { completeImageUrl } from '../config';
 
 // Process article to complete image URL
 const processNewsImages = (article: NewsArticle): NewsArticle => {
@@ -27,12 +19,14 @@ export function useNews(lang: Lang) {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadArticles = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get<NewsResponse>(endpoints.news, {
             params: { lang, limit: 100 },
@@ -45,6 +39,7 @@ export function useNews(lang: Lang) {
           setArticles(sortedArticles);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           // Fallback: convertir JSON local a estructura del backend
           const fallbackArticles: NewsArticle[] = newsData.articles.map((article: any) => ({
             ...article,
@@ -72,5 +67,6 @@ export function useNews(lang: Lang) {
     articles,
     loading,
     error,
+    usingFallback,
   };
 }

@@ -6,6 +6,9 @@ import { useHeroSlider } from '../hooks/useHeroSlider';
 
 interface HeroSliderProps {
   lang: Lang;
+  onNavigateEvents: () => void;
+  onNavigateSchools: () => void;
+  onNavigateInternational: () => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
@@ -21,9 +24,9 @@ const isYouTubeUrl = (url: string): boolean => {
   return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
-const HeroSlider = ({ lang }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
-  const { slides, loading, error } = useHeroSlider(lang);
+  const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const t = translations[lang];
 
   const nextSlide = useCallback(() => {
@@ -119,7 +122,7 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
               <source src={slideData.mediaUrl} type="video/mp4" />
             </video>
           )}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/70" />
         </motion.div>
       </AnimatePresence>
 
@@ -143,8 +146,10 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="">
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                {slideData.title}
+              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 text-shadow-lg tracking-tight">
+                <span className="bg-gradient-to-r from-white via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
+                  {slideData.title}
+                </span>
               </motion.h1>
               <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4 max-w-3xl mx-auto">
                 {slideData.body}
@@ -154,8 +159,30 @@ const HeroSlider = ({ lang }: HeroSliderProps) => {
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.6 }} 
                 whileHover={{ scale: 1.05 }} 
-                onClick={() => window.location.href = slideData.buttonAction || '#'}
-                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2"
+                onClick={() => {
+                  const buttonText = slideData.buttonText?.toLowerCase() || '';
+                  const buttonAction = slideData.buttonAction || '';
+                  
+                  // Ver catálogo / Ver eventos → Eventos
+                  if (buttonText.includes('catálogo') || buttonText.includes('catalog') || buttonAction.includes('event')) {
+                    onNavigateEvents();
+                  }
+                  // Ver escuelas → Escuelas
+                  else if (buttonText.includes('escuel') || buttonText.includes('school') || buttonAction.includes('school')) {
+                    onNavigateSchools();
+                  }
+                  // Saber más / Más información → Internacional
+                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
+                    onNavigateInternational();
+                  }
+                  else {
+                    // Fallback: intentar abrir URL si no coincide con ninguna
+                    if (buttonAction && buttonAction !== '#') {
+                      window.open(buttonAction, '_blank');
+                    }
+                  }
+                }}
+                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2 btn-pulse"
               >
                 {slideData.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>

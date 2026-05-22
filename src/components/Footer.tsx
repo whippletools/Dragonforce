@@ -25,6 +25,7 @@ const navigationHandlers: Record<string, string> = {
   develop: 'onNavigateInternship',
   formChampions: 'onNavigateOpenSchool',
   terms: 'onNavigateTerms',
+  privacy: 'onNavigatePrivacy',
   cookies: 'onNavigateCookies',
   quality: 'onNavigateQuality',
 };
@@ -36,6 +37,7 @@ interface FooterProps {
   onNavigateInternship?: () => void;
   onNavigateOpenSchool?: () => void;
   onNavigateTerms?: () => void;
+  onNavigatePrivacy?: () => void;
   onNavigateCookies?: () => void;
   onNavigateQuality?: () => void;
 }
@@ -47,6 +49,7 @@ const Footer = ({
   onNavigateInternship, 
   onNavigateOpenSchool,
   onNavigateTerms,
+  onNavigatePrivacy,
   onNavigateCookies,
   onNavigateQuality
 }: FooterProps) => {
@@ -59,15 +62,18 @@ const Footer = ({
     onNavigateInternship,
     onNavigateOpenSchool,
     onNavigateTerms,
+    onNavigatePrivacy,
     onNavigateCookies,
     onNavigateQuality,
   };
 
-  // Procesar links de About
-  const aboutLinks = footerData.about.links.map(link => ({
-    ...link,
-    onClick: handlers[navigationHandlers[link.key]]
-  }));
+  // Procesar links de About (ocultar Desarrollate y Forma Campeones)
+  const aboutLinks = footerData.about.links
+    .filter(link => link.key !== 'develop' && link.key !== 'formChampions')
+    .map(link => ({
+      ...link,
+      onClick: handlers[navigationHandlers[link.key]]
+    }));
 
   // Procesar links de Help
   const helpLinks = footerData.help.links.map(link => ({
@@ -77,7 +83,7 @@ const Footer = ({
 
   return (
     <footer className="bg-gray-50 text-gray-800">
-      <div className="h-6 bg-gradient-to-b from-white to-gray-50" />
+      <div className="h-24 bg-gradient-to-b from-white to-gray-50" />
       {/* Main Footer */}
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -130,7 +136,7 @@ const Footer = ({
             <ul className="space-y-3">
               {helpLinks.map((link, index) => (
                 <li key={index}>
-                  {link.external ? (
+                  {link.key === 'regulations' ? (
                     <a 
                       href={link.url}
                       target="_blank"
@@ -183,7 +189,7 @@ const Footer = ({
             )}
             
             {/* Social Media */}
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex gap-4">
               {footerData.socialMedia.map((social, index) => {
                 const IconComponent = socialIcons[social.icon] || TikTokIcon;
                 return (
@@ -192,10 +198,10 @@ const Footer = ({
                     href={social.url} 
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1 }} 
-                    className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-colors"
+                    whileHover={{ scale: 1.15, y: -2 }} 
+                    className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#1a4f8a] hover:text-white transition-all shadow-md hover:shadow-lg"
                   >
-                    <IconComponent size={20} />
+                    <IconComponent size={24} />
                   </motion.a>
                 );
               })}
@@ -204,10 +210,9 @@ const Footer = ({
         </div>
       </div>
 
-      {/* Copyright */}
-      <div className="border-t border-gray-200">
+      <div className="border-t border-gray-200 bg-gray-50">
         <div className="container mx-auto py-6">
-          <p className="text-gray-600 text-sm text-center">
+          <p className="text-gray-500 text-sm text-center">
             {footerData.copyright}
           </p>
         </div>

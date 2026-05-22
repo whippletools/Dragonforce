@@ -40,8 +40,8 @@
       {
         "key": "regulations",
         "label": { "es": "Reglamento", "en": "Regulations" },
-        "url": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/09/DFN.-123.11-REGULAMENTO-GERAL-DRAGON-FORCE_25_26.pdf",
-        "external": true
+        "url": "/pdfs/DFN-123.11-Reglamento-General-Dragon-Force-25-26-ES-contacto-actualizado.pdf",
+        "external": false
       },
       {
         "key": "terms",
@@ -52,8 +52,8 @@
       {
         "key": "privacy",
         "label": { "es": "Política de Privacidad", "en": "Privacy Policy" },
-        "url": "https://www.fcporto.pt/pt/privacidade",
-        "external": true
+        "url": "/privacidad",
+        "external": false
       },
       {
         "key": "cookies",
@@ -100,7 +100,7 @@
     }
   ],
   "brand": {
-    "logo": "/images/imgi_1_Ativo-1@10x-1024x585.png",
+    "logo": "/images/favicon.png",
     "slogan": {
       "es": "Preparar Campeones para la Vida.",
       "en": "Preparing Champions for Life."

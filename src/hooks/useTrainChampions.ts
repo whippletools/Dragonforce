@@ -5,15 +5,7 @@ import trainChampionsData from '../data/trainChampions.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-
-// Helper to complete relative image URLs
-const completeImageUrl = (url: string): string => {
-  if (!url) return url;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  return `${BASE_URL}${cleanUrl}`;
-};
+import { completeImageUrl } from '../config';
 
 // Transformar datos del backend al formato del frontend
 const transformBackendToFrontend = (data: any): TrainChampionOption => {
@@ -51,12 +43,14 @@ export function useTrainChampions(lang: Lang) {
   const [options, setOptions] = useState<TrainChampionOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadOptions = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         try {
           const response = await apiClient.get(endpoints.trainChampions, {
             params: { lang, limit: 100 },
@@ -68,6 +62,7 @@ export function useTrainChampions(lang: Lang) {
           setOptions(sortedOptions);
         } catch (apiError) {
           await new Promise(resolve => setTimeout(resolve, 300));
+          setUsingFallback(true);
           const data = trainChampionsData as TrainChampionsResponse;
           const sortedOptions = [...data.options]
             .sort((a, b) => a.order - b.order)
@@ -90,5 +85,6 @@ export function useTrainChampions(lang: Lang) {
     options,
     loading,
     error,
+    usingFallback,
   };
 }

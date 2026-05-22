@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 
 interface AboutSectionProps {
@@ -11,49 +11,60 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const t = translations[lang];
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <section className="py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
-        <div ref={ref} className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}}>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">{t.about.title}</h2>
-            <div className="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
-              <p>
-                {lang === 'es'
-                  ? 'El nuevo portal Dragon Force fue diseñado para ser una herramienta de fácil acceso para conocernos mejor y, rápidamente, entrar en nuestro mundo.'
-                  : 'The new Dragon Force portal was designed to be an easy-to-access tool to get to know us better and quickly enter our world.'}
-              </p>
-              
-              {isExpanded && (
-                <>
-                  <p>
-                    {lang === 'es'
-                      ? 'Aquí podrás encontrar la Escuela de Fútbol Dragon Force más cercana a ti y ver todos los detalles como su ubicación, horarios de entrenamiento y demás servicios.'
-                      : 'Here you can find the Dragon Force Football School closest to you and see all the details such as its location, training schedules and other services.'}
-                  </p>
-                  <p>
-                    {lang === 'es'
-                      ? 'Puedes explorar nuestro catálogo anual de eventos y elegir tu favorito. Con un solo clic, puedes registrarte y reservar tu lugar para una experiencia inolvidable.'
-                      : 'You can explore our annual catalog of events and choose your favorite. With just one click, you can register and reserve your place for an unforgettable experience.'}
-                  </p>
-                </>
-              )}
+        <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          {/* Left column - Image & Badge */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/67031804.jpg"
+                alt="Dragon Force Training"
+                className="w-full h-[400px] md:h-[500px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             </div>
-            <motion.button
-              onClick={() => setIsExpanded(!isExpanded)}
-              whileHover={{ y: 5 }}
-              className="inline-flex items-center gap-2 mt-10 text-[#1a4f8a] font-semibold text-sm uppercase tracking-wider"
+            {/* ISO Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="absolute -bottom-6 -right-4 md:right-8 bg-white rounded-xl shadow-xl p-4 flex items-center gap-3 glow-gold"
             >
-              <motion.div
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ArrowDown size={18} />
-              </motion.div>
-              {isExpanded ? (lang === 'es' ? 'VER MENOS' : 'SEE LESS') : t.about.cta}
-            </motion.button>
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-500 uppercase">ISO 9001</p>
+                <p className="text-sm font-bold text-gray-900">
+                  {lang === 'es' ? 'Certificados' : 'Certified'}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right column - Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block border-2 border-[#1a4f8a] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#1a4f8a] mb-6">
+              {t.about.label}
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-6">
+              <span className="gradient-text">{t.about.title}</span>
+            </h2>
+            <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+              {t.about.desc}
+            </p>
           </motion.div>
         </div>
       </div>

@@ -17,9 +17,11 @@ COPY . .
 # Declare build-args so Docker consumes them (eliminates the warning)
 ARG CAPROVER_GIT_COMMIT_SHA
 ARG VITE_API_BASE_URL
+ARG VITE_UPLOADS_BASE_URL
 
-# Make VITE_API_BASE_URL available to Vite at build time
+# Make environment variables available to Vite at build time
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+ENV VITE_UPLOADS_BASE_URL=$VITE_UPLOADS_BASE_URL
 
 # Build the application
 RUN pnpm build

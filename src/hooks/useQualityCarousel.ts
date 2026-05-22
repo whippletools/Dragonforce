@@ -5,15 +5,7 @@ import qualityCarouselData from '../data/qualityCarousel.json';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
 
-const BASE_URL = import.meta.env.VITE_UPLOADS_BASE_URL || 'https://api-df.lab.tupla.dev/';
-
-// Helper to complete relative image URLs
-const completeImageUrl = (url: string): string => {
-  if (!url) return url;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  return `${BASE_URL}${cleanUrl}`;
-};
+import { completeImageUrl } from '../config';
 
 // Process image to complete URL
 const processQualityImages = (image: QualityImage): QualityImage => {
@@ -27,12 +19,14 @@ export function useQualityCarousel(lang: Lang) {
   const [images, setImages] = useState<QualityImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     const loadImages = async () => {
       try {
         setLoading(true);
-        
+        setUsingFallback(false);
+
         // Intentar cargar desde API, si falla usar JSON local
         try {
           const response = await apiClient.get(endpoints.qualityCarousel, {
@@ -43,6 +37,7 @@ export function useQualityCarousel(lang: Lang) {
             .map(processQualityImages);
           setImages(sortedImages);
         } catch (apiError) {
+          setUsingFallback(true);
           // Fallback a JSON local
           await new Promise(resolve => setTimeout(resolve, 300));
           const data = qualityCarouselData as QualityCarouselResponse;
@@ -67,5 +62,6 @@ export function useQualityCarousel(lang: Lang) {
     images,
     loading,
     error,
+    usingFallback,
   };
 }
