@@ -197,7 +197,8 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
               </div>
             )}
 
-            {/* Registration Button */}
+            {/* Registration Button — hidden for now */}
+            {/*
             {!showForm && !isSubmitted && (
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -208,6 +209,7 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
                 {lang === 'es' ? 'INSCRIBIRME AL EVENTO' : 'INSCREVER-ME NO EVENTO'}
               </motion.button>
             )}
+            */}
 
             {/* Event Registration Form */}
             {showForm && !isSubmitted && (
