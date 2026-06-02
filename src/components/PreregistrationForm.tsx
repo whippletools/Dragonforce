@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { Lang } from '../data/translations';
 import { useCart } from '../context/CartContext';
+import { useSchools } from '../hooks/useSchools';
+import { formatCurrency } from '../utils/currency';
 
 interface PreregistrationFormProps {
   isOpen: boolean;
@@ -11,35 +13,33 @@ interface PreregistrationFormProps {
 }
 
 const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps) => {
-  const [selectedSchool, setSelectedSchool] = useState('');
+  const [selectedSchoolId, setSelectedSchoolId] = useState('');
   const { addItem } = useCart();
+  const { schools, loading, error } = useSchools(lang);
+
+  const selectedSchool = useMemo(
+    () => schools.find((s) => String(s.id) === selectedSchoolId) ?? null,
+    [schools, selectedSchoolId],
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Get school name from value
-    const schoolNames: Record<string, string> = {
-      'dragoes-sandinenses': 'Dragões Sandinenses',
-      'gondomar': 'Gondomar',
-      'maia': 'Maia',
-      'trofa': 'Trofa',
-      'porto': 'Colegio Internacional de Porto'
-    };
+    if (!selectedSchool) return;
 
-    // Add to cart
     addItem({
       type: 'preregistration',
-      title: lang === 'es' 
-        ? `Preinscripción - ${schoolNames[selectedSchool]}` 
-        : `Pre-registration - ${schoolNames[selectedSchool]}`,
+      title: lang === 'es'
+        ? `Preinscripción - ${selectedSchool.name}`
+        : `Pre-registration - ${selectedSchool.name}`,
       data: {
-        school: selectedSchool,
-        schoolName: schoolNames[selectedSchool],
-        submittedAt: new Date().toISOString()
-      }
+        schoolId: selectedSchool.id,
+        schoolName: selectedSchool.name,
+        enrollmentFee: selectedSchool.enrollmentFee ?? null,
+        monthlyFee: selectedSchool.monthlyFee ?? null,
+        submittedAt: new Date().toISOString(),
+      },
     });
 
-    // Close form
     onClose();
   };
 
@@ -95,31 +95,66 @@ const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        ESCUELA DE FÚTBOL
+                        {lang === 'es' ? 'ESCUELA DE FÚTBOL' : 'FOOTBALL SCHOOL'}
                       </label>
                       <select
-                        value={selectedSchool}
-                        onChange={(e) => setSelectedSchool(e.target.value)}
+                        value={selectedSchoolId}
+                        onChange={(e) => setSelectedSchoolId(e.target.value)}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         required
+                        disabled={loading}
                       >
                         <option value="">
-                          Elige una opción
+                          {loading
+                            ? (lang === 'es' ? 'Cargando escuelas...' : 'Loading schools...')
+                            : (lang === 'es' ? 'Elige una opción' : 'Choose an option')}
                         </option>
-                        <option value="dragoes-sandinenses">Dragões Sandinenses</option>
-                        <option value="gondomar">Gondomar</option>
-                        <option value="maia">Maia</option>
-                        <option value="trofa">Trofa</option>
-                        <option value="porto">Colegio Internacional de Porto</option>
+                        {schools.map((s) => (
+                          <option key={s.id} value={String(s.id)}>
+                            {s.name}
+                          </option>
+                        ))}
                       </select>
+                      {error && (
+                        <p className="mt-2 text-xs text-red-600">
+                          {lang === 'es' ? 'Error cargando escuelas' : 'Error loading schools'}
+                        </p>
+                      )}
                     </div>
+
+                    {selectedSchool && (
+                      <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+                        <p className="text-xs uppercase tracking-wider text-blue-700 mb-2 font-semibold">
+                          {lang === 'es' ? 'Costos de la escuela' : 'School costs'}
+                        </p>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="text-[11px] text-gray-600">
+                              {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                            </p>
+                            <p className="text-lg font-bold text-gray-900">
+                              {formatCurrency(selectedSchool.enrollmentFee)}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-[11px] text-gray-600">
+                              {lang === 'es' ? 'Mensualidad' : 'Monthly'}
+                            </p>
+                            <p className="text-lg font-bold text-gray-900">
+                              {formatCurrency(selectedSchool.monthlyFee)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="pt-4">
                       <button
                         type="submit"
-                        className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-bold text-sm uppercase tracking-wider hover:bg-gray-800 transition-all duration-300"
+                        disabled={!selectedSchool}
+                        className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-bold text-sm uppercase tracking-wider hover:bg-gray-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        PARA AGREGAR
+                        {lang === 'es' ? 'AGREGAR AL CARRITO' : 'ADD TO CART'}
                       </button>
                     </div>
 

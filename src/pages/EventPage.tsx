@@ -5,6 +5,7 @@ import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
 import type { EventDetail } from '../types/api';
 import { API_BASE_URL } from '../config';
+import { formatCurrency } from '../utils/currency';
 
 interface EventPageProps {
   eventId: number;
@@ -163,19 +164,33 @@ const EventPage = ({ eventId, lang, onBack }: EventPageProps) => {
               {event.title}
             </h1>
 
-            {/* Price in Mexican Pesos */}
-            {event.pricing && event.pricing.length > 0 && (
-              <div className="mb-6">
-                <span className="text-3xl font-bold text-gray-900">
-                  $ {event.pricing[0].price} <span className="text-lg font-normal text-gray-600">MXN</span>
-                </span>
-                {event.pricing.length > 1 && (
-                  <span className="text-gray-500 ml-2">
-                    {lang === 'es' ? 'desde' : 'desde'}
+            {/* Precio MXN: prioriza pricing[0].price > standardPrice (enriquecido desde FeeConfig en backend) */}
+            {(() => {
+              const price = event.pricing?.[0]?.price ?? event.standardPrice ?? null
+              const hasMultiple = (event.pricing?.length ?? 0) > 1
+              const capacityNum = event.capacity != null && event.capacity !== '' ? Number(event.capacity) : null
+              const hasCapacity = capacityNum != null && Number.isFinite(capacityNum) && capacityNum > 0
+              return (
+                <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                  <span className="text-3xl font-bold text-gray-900">
+                    {formatCurrency(price)}
                   </span>
-                )}
-              </div>
-            )}
+                  {hasMultiple && (
+                    <span className="text-gray-500">
+                      {lang === 'es' ? 'desde' : 'from'}
+                    </span>
+                  )}
+                  {hasCapacity && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-sm font-medium text-emerald-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      {lang === 'es'
+                        ? `Cupos disponibles: ${capacityNum}`
+                        : `Available spots: ${capacityNum}`}
+                    </span>
+                  )}
+                </div>
+              )
+            })()}
 
             {/* Description */}
             <div className="prose prose-lg max-w-none mb-6">

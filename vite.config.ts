@@ -19,5 +19,15 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    watch: {
+      ignored: [
+        '**/node_modules/**',
+        '**/.git/**',
+        '**/dist/**',
+        '**/.vite/**',
+        '**/coverage/**',
+        '**/.DS_Store',
+      ],
+    },
   },
 });
