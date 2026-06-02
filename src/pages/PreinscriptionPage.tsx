@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Send, User, Mail, Phone, MapPin } from 'lucide-react';
 import { type Lang } from '../data/translations';
+import { apiClient } from '../services/api';
+import { endpoints } from '../services/endpoints';
 
 interface PreinscriptionPageProps {
   lang: Lang;
@@ -16,14 +18,33 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    try {
+      await apiClient.post(endpoints.parentRegistrations, {
+        fullName: formData.parentName,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        sourceLang: lang,
+      });
+      setSubmitted(true);
+    } catch (err: any) {
+      const msg = err?.response?.data?.message || 'Error al enviar la inscripción. Inténtalo de nuevo.';
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -149,12 +170,25 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
               </div>
             </div>
 
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full py-4 bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white font-bold rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              disabled={loading}
+              className="w-full py-4 bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white font-bold rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <Send size={20} />
-              {lang === 'es' ? 'Enviar inscripción' : 'Send registration'}
+              {loading ? (
+                <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Send size={20} />
+              )}
+              {loading
+                ? (lang === 'es' ? 'Enviando...' : 'Sending...')
+                : (lang === 'es' ? 'Enviar inscripción' : 'Send registration')}
             </button>
           </form>
         </motion.div>
