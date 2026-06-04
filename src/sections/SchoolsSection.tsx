@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
+import { formatCurrency } from '../utils/currency';
 
 interface SchoolsSectionProps {
   lang: Lang;
@@ -159,6 +160,20 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
                     <h3 className="text-white font-bold text-xl mb-1 text-shadow">{school.name}</h3>
                     <p className="text-white/90 text-sm">{school.location}</p>
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-white/95">
+                      <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1.5">
+                        <p className="text-[10px] uppercase tracking-wider text-white/70">
+                          {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                        </p>
+                        <p className="text-sm font-bold">{formatCurrency(school.enrollmentFee)}</p>
+                      </div>
+                      <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1.5">
+                        <p className="text-[10px] uppercase tracking-wider text-white/70">
+                          {lang === 'es' ? 'Mensualidad' : 'Monthly'}
+                        </p>
+                        <p className="text-sm font-bold">{formatCurrency(school.monthlyFee)}</p>
+                      </div>
+                    </div>
                     <a 
                       href={getFullPdfUrl(school.pdfUrl)}
                       target="_blank"

@@ -67,8 +67,9 @@ export interface EventDetail {
   date?: string;
   duration?: string;
   location?: string;
-  capacity?: string;
+  capacity?: number | string | null;
   additionalInfo?: string;
+  standardPrice?: number | string | null;
   pricing: EventPricing[];
   questions: EventQuestion[];
   buttons: EventButton[];
@@ -92,6 +93,8 @@ export interface School {
   location: string;
   pdfUrl: string;
   order: number;
+  enrollmentFee?: number | string | null;
+  monthlyFee?: number | string | null;
 }
 
 export interface SchoolsResponse {

@@ -36,6 +36,10 @@ export function useEvents(lang: Lang) {
             .map(processEventImages);
           setEvents(sortedEvents);
         } catch (apiError) {
+          console.warn(
+            '[useEvents] No se pudo cargar /events desde el API. Usando datos locales de respaldo. Los precios reales de FeeConfig no estarán disponibles hasta que el backend responda.',
+            apiError,
+          );
           await new Promise(resolve => setTimeout(resolve, 300));
           // Fallback: convertir JSON local a estructura del backend
           const fallbackEvents: EventDetail[] = (eventsData as any).events.map((event: any, _index: number) => ({

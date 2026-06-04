@@ -13,6 +13,8 @@ const processSchoolData = (school: School): School => {
     ...school,
     image: completeImageUrl(school.image),
     pdfUrl: completeImageUrl(school.pdfUrl),
+    enrollmentFee: school.enrollmentFee ?? null,
+    monthlyFee: school.monthlyFee ?? null,
   };
 };
 
@@ -39,7 +41,10 @@ export function useSchools(lang: Lang) {
           console.log('Processed schools:', sortedSchools);
           setSchools(sortedSchools);
         } catch (apiError) {
-          console.error('API error:', apiError);
+          console.warn(
+            '[useSchools] No se pudo cargar /schools desde el API. Usando datos locales de respaldo. Los precios de FeeConfig (Recargos) no se mostrarán hasta que el backend responda.',
+            apiError,
+          );
           setUsingFallback(true);
           // Fallback a JSON local
           await new Promise(resolve => setTimeout(resolve, 300));
@@ -50,7 +55,9 @@ export function useSchools(lang: Lang) {
             name: school.name[lang] || school.name.es,
             location: school.location,
             pdfUrl: school.pdfUrl,
-            order: school.order
+            order: school.order,
+            enrollmentFee: school.enrollmentFee ?? null,
+            monthlyFee: school.monthlyFee ?? null,
           })).map(processSchoolData);
           const sortedSchools = [...fallbackSchools]
             .sort((a, b) => a.order - b.order);

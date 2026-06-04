@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, MapPin, Mail, Phone, Search } from 'lucide-react';
+import { ArrowLeft, MapPin, Search } from 'lucide-react';
 import { useState } from 'react';
-import { translations, schoolsList, type Lang } from '../data/translations';
+import { translations, type Lang } from '../data/translations';
+import { useSchools } from '../hooks/useSchools';
+import { formatCurrency } from '../utils/currency';
 
 interface SchoolsPageProps {
   lang: Lang;
@@ -10,12 +12,13 @@ interface SchoolsPageProps {
 
 const SchoolsPage = ({ lang, onBack }: SchoolsPageProps) => {
   const t = translations[lang];
-  const schools = schoolsList[lang];
+  const { schools, loading, error } = useSchools(lang);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredSchools = schools.filter(school => 
-    school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    school.city.toLowerCase().includes(searchTerm.toLowerCase())
+  const term = searchTerm.toLowerCase();
+  const filteredSchools = schools.filter((school) =>
+    school.name.toLowerCase().includes(term) ||
+    (school.location ?? '').toLowerCase().includes(term),
   );
 
   return (
@@ -62,50 +65,67 @@ const SchoolsPage = ({ lang, onBack }: SchoolsPageProps) => {
           </div>
 
           {/* Schools Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredSchools.map((school, index) => (
-              <motion.div
-                key={school.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
-              >
-                <div className="flex items-start gap-3 mb-4">
-                  <div className="w-10 h-10 bg-[#1a4f8a] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} className="text-white" />
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12 text-gray-500">
+              {lang === 'es' ? 'Error cargando escuelas.' : 'Error loading schools.'}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredSchools.map((school, index) => (
+                <motion.div
+                  key={school.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col"
+                >
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-10 h-10 bg-[#1a4f8a] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin size={20} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-800">{school.name}</h3>
+                      {school.location && (
+                        <p className="text-sm text-gray-500">{school.location}</p>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-800">{school.name}</h3>
-                    <p className="text-sm text-gray-500">{school.city}</p>
+
+                  <div className="grid grid-cols-2 gap-3 mt-2">
+                    <div className="rounded-lg border border-gray-200 p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-gray-500">
+                        {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                      </p>
+                      <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.enrollmentFee)}</p>
+                    </div>
+                    <div className="rounded-lg border border-gray-200 p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-gray-500">
+                        {lang === 'es' ? 'Mensualidad' : 'Monthly'}
+                      </p>
+                      <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.monthlyFee)}</p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <a 
-                    href={`mailto:${school.email}`}
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#1a4f8a] transition-colors"
-                  >
-                    <Mail size={16} />
-                    <span className="truncate">{school.email}</span>
-                  </a>
-                  <a 
-                    href={`tel:${school.phone}`}
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#1a4f8a] transition-colors"
-                  >
-                    <Phone size={16} />
-                    <span>{school.phone}</span>
-                  </a>
-                </div>
+                  {school.pdfUrl && (
+                    <a
+                      href={school.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 w-full inline-flex items-center justify-center py-2 border border-[#1a4f8a] text-[#1a4f8a] rounded-lg text-sm font-medium hover:bg-[#1a4f8a] hover:text-white transition-colors"
+                    >
+                      {t.schools.moreInfo}
+                    </a>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          )}
 
-                <button className="mt-4 w-full py-2 border border-[#1a4f8a] text-[#1a4f8a] rounded-lg text-sm font-medium hover:bg-[#1a4f8a] hover:text-white transition-colors">
-                  {t.schools.moreInfo}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-
-          {filteredSchools.length === 0 && (
+          {!loading && !error && filteredSchools.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500">
                 {lang === 'es' ? 'No se encontraron escuelas.' : 'No schools found.'}
