@@ -79,46 +79,65 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
               </div>
             ) : (
               <>
-                <div 
-                  className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+                <div
+                  className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide px-2"
                   style={{ scrollBehavior: 'smooth' }}
                   id="quality-carousel"
                 >
                   {images.map((img, i) => (
                     <motion.div
                       key={img.id}
-                      initial={{ opacity: 0, x: 100 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.3 + i * 0.1 }}
-                      className="flex-shrink-0 w-full md:w-[350px] snap-start"
+                      initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                      animate={isInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+                      transition={{ delay: 0.3 + i * 0.15, type: 'spring', stiffness: 100 }}
+                      className="flex-shrink-0 w-full md:w-[380px] snap-start group"
                     >
-                      <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-lg cursor-pointer" onClick={() => setSelectedImage(img.url)}>
-                        <img src={img.url} alt={img.alt} className="w-full h-full object-contain bg-gray-100 hover:scale-105 transition-transform duration-300" />
+                      <div
+                        className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl cursor-pointer ring-4 ring-transparent hover:ring-[#1a4f8a]/30 transition-all duration-500"
+                        onClick={() => setSelectedImage(img.url)}
+                      >
+                        <img
+                          src={img.url}
+                          alt={img.alt}
+                          className="w-full h-full object-cover bg-gray-100 group-hover:scale-110 transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a4f8a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                          <p className="text-white font-bold text-sm drop-shadow-lg">{img.alt}</p>
+                        </div>
+                        <div className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-50 group-hover:scale-100 shadow-lg">
+                          <span className="text-[#1a4f8a] text-lg">+</span>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
-                
-                <div className="flex gap-3 mt-6">
+
+                <div className="flex items-center justify-center gap-4 mt-8">
                   <button
                     onClick={() => {
                       const carousel = document.getElementById('quality-carousel');
-                      if (carousel) carousel.scrollLeft -= 370;
+                      if (carousel) carousel.scrollLeft -= 400;
                     }}
-                    className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
+                    className="w-12 h-12 rounded-full bg-[#1a4f8a] text-white shadow-lg hover:bg-[#2d6bc3] hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft size={20} />
+                    <ChevronLeft size={24} />
                   </button>
+                  <div className="flex gap-2">
+                    {images.map((_, i) => (
+                      <div key={i} className="w-2 h-2 rounded-full bg-gray-300" />
+                    ))}
+                  </div>
                   <button
                     onClick={() => {
                       const carousel = document.getElementById('quality-carousel');
-                      if (carousel) carousel.scrollLeft += 370;
+                      if (carousel) carousel.scrollLeft += 400;
                     }}
-                    className="p-2 rounded-full border-2 border-gray-800 hover:bg-gray-800 hover:text-white transition-all"
+                    className="w-12 h-12 rounded-full bg-[#1a4f8a] text-white shadow-lg hover:bg-[#2d6bc3] hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
                     aria-label="Next image"
                   >
-                    <ChevronRight size={20} />
+                    <ChevronRight size={24} />
                   </button>
                 </div>
               </>
