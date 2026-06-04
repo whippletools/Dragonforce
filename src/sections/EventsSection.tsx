@@ -163,14 +163,6 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    {(() => {
-                      const price = event.pricing?.[0]?.price ?? event.standardPrice ?? null
-                      return (
-                        <div className="absolute top-3 right-3 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-bold text-[#1a4f8a] shadow">
-                          {formatCurrency(price)}
-                        </div>
-                      )
-                    })()}
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <h3 className="text-white font-bold text-lg text-shadow">{event.title}</h3>
                     </div>

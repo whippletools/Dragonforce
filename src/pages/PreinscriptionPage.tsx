@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Send, User, Mail, Phone, MapPin } from 'lucide-react';
+import { ArrowLeft, Send, User, Mail, Phone } from 'lucide-react';
 import { type Lang } from '../data/translations';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
@@ -14,8 +14,7 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
   const [formData, setFormData] = useState({
     parentName: '',
     email: '',
-    phone: '',
-    message: ''
+    phone: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +34,6 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
         fullName: formData.parentName,
         email: formData.email,
         phone: formData.phone,
-        message: formData.message,
         sourceLang: lang,
       });
       setSubmitted(true);
@@ -63,8 +61,8 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
           </h2>
           <p className="text-gray-600 mb-8">
             {lang === 'es'
-              ? 'Hemos recibido tus datos. El equipo de administración te creará un usuario y contraseña para acceder al portal de padres, donde podrás inscribir a tus hijos.'
-              : 'We have received your information. The administration team will create a username and password for you to access the parent portal, where you can register your children.'}
+              ? 'Hemos recibido tus datos. En unos minutos recibirás un correo con tu usuario, contraseña y el enlace para acceder al portal de padres, donde podrás inscribir a tus hijos.'
+              : 'We have received your information. In a few minutes you will receive an email with your username, password and link to access the parent portal, where you can register your children.'}
           </p>
           <button
             onClick={onBack}
@@ -99,8 +97,8 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
             </h1>
             <p className="text-white/80 mt-2">
               {lang === 'es'
-                ? 'Completa tus datos para que administración te cree tu acceso al portal de padres.'
-                : 'Complete your information so administration can create your access to the parent portal.'}
+                ? 'Completa tus datos para crear tu acceso automático al portal de padres.'
+                : 'Complete your information to automatically create your access to the parent portal.'}
             </p>
           </div>
 
@@ -154,20 +152,6 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <MapPin size={16} className="inline mr-2" />
-                  {lang === 'es' ? 'Mensaje adicional (opcional)' : 'Additional message (optional)'}
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={1}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1a4f8a] focus:border-transparent outline-none transition-all resize-none"
-                  placeholder={lang === 'es' ? '¿Tienes alguna pregunta o comentario?' : 'Any questions or comments?'}
-                />
-              </div>
             </div>
 
             {error && (
