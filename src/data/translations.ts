@@ -2,7 +2,7 @@ export type Lang = 'es' | 'en';
 
 export const translations = {
   es: {
-    nav: { home: 'INICIO', schools: 'ESCUELAS', international: 'INTERNACIONAL', events: 'EVENTOS' },
+    nav: { home: 'INICIO', schools: 'ESCUELAS', events: 'EVENTOS' },
     hero: {
       slide1: { title: 'VIVE LA PASIÓN DRAGÓN', desc: 'Entra en un universo donde la Alegría entrena contigo, la Pasión viste de azul y blanco, y la Motivación te lleva a jugar como un verdadero Dragón.', cta: 'VER CATÁLOGO 25/26' },
       slide2: { title: 'ENTRA EN EL JUEGO', desc: 'La pasión por el fútbol comienza aquí. Encuentra la escuela Dragon Force más cercana a ti y empieza a entrenar como un verdadero Dragón.', cta: 'VER ESCUELAS' },
@@ -221,7 +221,7 @@ export const translations = {
     }
   },
   en: {
-    nav: { home: 'HOME', schools: 'SCHOOLS', international: 'INTERNATIONAL', events: 'EVENTS' },
+    nav: { home: 'HOME', schools: 'SCHOOLS', events: 'EVENTS' },
     hero: {
       slide1: { title: 'LIVE THE DRAGON PASSION', desc: 'Enter a universe where Joy trains with you, Passion wears blue and white, and Motivation drives you to play like a true Dragon.', cta: 'VIEW CATALOG 25/26' },
       slide2: { title: 'GET IN THE GAME', desc: 'The passion for football begins here. Find the Dragon Force school nearest you and start training like a true Dragon.', cta: 'VIEW SCHOOLS' },

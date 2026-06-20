@@ -77,85 +77,97 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-[#f8fafc] py-12 px-4">
+      <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-xl overflow-hidden"
+          className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden border border-gray-100"
         >
-          <div className="bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] p-6 text-white">
+          <div className="bg-[#1a4f8a] px-8 py-8 text-white">
             <button
               onClick={onBack}
-              className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4 transition-colors"
+              className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-5 transition-colors text-sm font-medium"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={18} />
               {lang === 'es' ? 'Volver' : 'Back'}
             </button>
-            <h1 className="text-2xl md:text-3xl font-bold">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
               {lang === 'es' ? 'Inscripción' : 'Registration'}
             </h1>
-            <p className="text-white/80 mt-2">
+            <p className="text-white/90 mt-3 text-base leading-relaxed max-w-xl">
               {lang === 'es'
-                ? 'Completa tus datos para crear tu acceso automático al portal de padres.'
+                ? 'Registra tus datos como tutor para generar automáticamente tu usuario y contraseña. Te enviaremos tus credenciales de acceso por correo electrónico para que ingreses al portal e inscribas a los alumnos.'
                 : 'Complete your information to automatically create your access to the parent portal.'}
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="p-8 md:p-10 space-y-7">
+            <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <User size={16} className="inline mr-2" />
+                <label className="block text-sm font-semibold text-[#1a4f8a] mb-2 uppercase tracking-wide">
                   {lang === 'es' ? 'Nombre completo' : 'Full name'}
                 </label>
-                <input
-                  type="text"
-                  name="parentName"
-                  value={formData.parentName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1a4f8a] focus:border-transparent outline-none transition-all"
-                  placeholder={lang === 'es' ? 'Tu nombre completo' : 'Your full name'}
-                />
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1a4f8a]/60">
+                    <User size={18} />
+                  </div>
+                  <input
+                    type="text"
+                    name="parentName"
+                    value={formData.parentName}
+                    onChange={handleChange}
+                    required
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-gray-800 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1a4f8a]/20 focus:border-[#1a4f8a] focus:bg-white outline-none transition-all"
+                    placeholder={lang === 'es' ? 'Tu nombre completo' : 'Your full name'}
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Mail size={16} className="inline mr-2" />
+                <label className="block text-sm font-semibold text-[#1a4f8a] mb-2 uppercase tracking-wide">
                   {lang === 'es' ? 'Correo electrónico' : 'Email'}
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1a4f8a] focus:border-transparent outline-none transition-all"
-                  placeholder="email@ejemplo.com"
-                />
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1a4f8a]/60">
+                    <Mail size={18} />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-gray-800 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1a4f8a]/20 focus:border-[#1a4f8a] focus:bg-white outline-none transition-all"
+                    placeholder="email@ejemplo.com"
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Phone size={16} className="inline mr-2" />
+                <label className="block text-sm font-semibold text-[#1a4f8a] mb-2 uppercase tracking-wide">
                   {lang === 'es' ? 'Teléfono' : 'Phone'}
                 </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1a4f8a] focus:border-transparent outline-none transition-all"
-                  placeholder="+52 81 2345 6789"
-                />
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1a4f8a]/60">
+                    <Phone size={18} />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-gray-800 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1a4f8a]/20 focus:border-[#1a4f8a] focus:bg-white outline-none transition-all"
+                    placeholder="+52 81 2345 6789"
+                  />
+                </div>
               </div>
-
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3.5 rounded-xl text-sm flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                 {error}
               </div>
             )}
@@ -163,17 +175,23 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-[#1a4f8a] to-[#2d6bc3] text-white font-bold rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#1a4f8a] hover:bg-[#153d6e] text-white font-bold text-base rounded-xl shadow-lg shadow-[#1a4f8a]/20 hover:shadow-xl hover:shadow-[#1a4f8a]/30 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  {lang === 'es' ? 'Enviando...' : 'Sending...'}
+                </span>
               ) : (
-                <Send size={20} />
+                lang === 'es' ? 'Registrarme' : 'Register'
               )}
-              {loading
-                ? (lang === 'es' ? 'Enviando...' : 'Sending...')
-                : (lang === 'es' ? 'Enviar inscripción' : 'Send registration')}
             </button>
+
+            <p className="text-xs text-gray-500 text-center">
+              {lang === 'es'
+                ? 'Al registrarte, aceptas recibir tus credenciales de acceso por correo electrónico.'
+                : 'By registering, you agree to receive your access credentials by email.'}
+            </p>
           </form>
         </motion.div>
       </div>

@@ -76,7 +76,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
             {t.news.label}
           </span>
           <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">
-            <span className="gradient-text">{t.news.title}</span>
+            <span className="text-[#1a4f8a]">{t.news.title}</span>
           </h2>
         </motion.div>
 
@@ -119,7 +119,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
 
             <div
               ref={carouselRef}
-              className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : 'overflow-hidden'}`}
+              className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${articles.length === 1 ? 'justify-center' : 'justify-start'}`}`}
               style={{ scrollBehavior: 'smooth' }}
               id="news-carousel"
             >

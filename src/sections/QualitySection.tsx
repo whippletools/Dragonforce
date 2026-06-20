@@ -29,7 +29,7 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
               </span>
               
               <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-8">
-                <span className="gradient-text">{t.quality.title}</span>
+                <span className="text-[#1a4f8a]">{t.quality.title}</span>
               </h2>
               
               <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -101,7 +101,7 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
                           alt={img.alt}
                           className="w-full h-full object-cover bg-gray-100 group-hover:scale-110 transition-transform duration-700 ease-out"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a4f8a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
                           <p className="text-white font-bold text-sm drop-shadow-lg">{img.alt}</p>
                         </div>

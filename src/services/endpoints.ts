@@ -10,4 +10,5 @@ export const endpoints = {
   blog: '/blog',
   blogList: '/blog-list',
   parentRegistrations: '/parent-registrations',
+  schedules: '/schedules',
 } as const;
