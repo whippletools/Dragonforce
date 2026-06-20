@@ -8,7 +8,7 @@ interface HeroSliderProps {
   lang: Lang;
   onNavigateEvents: () => void;
   onNavigateSchools: () => void;
-  onNavigateInternational: () => void;
+  onNavigateInternational?: () => void;
   onNavigatePreinscription: () => void;
 }
 
