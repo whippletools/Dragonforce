@@ -3,7 +3,6 @@ export const endpoints = {
   qualityCarousel: '/quality-carousel',
   events: '/events',
   schools: '/schools',
-  internationalPrograms: '/international-programs',
   trainChampions: '/train-champions',
   news: '/news',
   products: '/products',

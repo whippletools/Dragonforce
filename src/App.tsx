@@ -162,7 +162,6 @@ function App() {
               lang={lang} 
               onNavigateEvents={navigateToEventsSection}
               onNavigateSchools={navigateToSchools}
-              onNavigateInternational={() => {}}
               onNavigatePreinscription={navigateToPreinscription}
             />
             <AboutSection lang={lang} />
@@ -175,7 +174,6 @@ function App() {
             <div id="horarios">
               <SchedulesSection lang={lang} />
             </div>
-            {/* <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} /> */}
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
         )}
