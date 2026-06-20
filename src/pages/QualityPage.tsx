@@ -23,8 +23,8 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
     },
     {
       text: isSpanish
-        ? 'Ampliar el concepto a nivel nacional e internacional'
-        : 'Expand the concept nationally and internationally'
+        ? 'Ampliar el concepto a nivel nacional'
+        : 'Expand the concept nationally'
     },
     {
       text: isSpanish

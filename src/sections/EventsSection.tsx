@@ -77,7 +77,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
             {t.map.label}
           </span>
           <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">
-            <span className="gradient-text">{t.map.title}</span>
+            <span className="text-[#1a4f8a]">{t.map.title}</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl font-medium">
             {lang === 'es' ? 'No dejes pasar tu momento. Vive la experiencia Dragon Force.' : "Don't miss your moment. Live the Dragon Force experience."}
@@ -123,7 +123,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
 
           <div 
             ref={carouselRef}
-            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : 'overflow-hidden'}`}
+            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${events.length === 1 ? 'justify-center' : 'justify-start'}`}`}
             style={{ scrollBehavior: 'smooth' }}
             id="events-carousel"
           >
@@ -162,9 +162,9 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
                         target.parentElement?.appendChild(fallback);
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="text-white font-bold text-lg text-shadow">{event.title}</h3>
+                      <h3 className="text-white font-bold text-lg text-shadow-lg">{event.title}</h3>
                     </div>
                   </div>
                 </div>

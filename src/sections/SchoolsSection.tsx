@@ -80,7 +80,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
             {t.schools.moreInfo}
           </span>
           <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">
-            <span className="gradient-text">{t.schools.title}</span>
+            <span className="text-[#1a4f8a]">{t.schools.title}</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl">
             {lang === 'es' 
@@ -128,7 +128,7 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
 
           <div 
             ref={carouselRef}
-            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : 'overflow-hidden justify-start'}`}
+            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${schools.length === 1 ? 'justify-center' : 'justify-start'}`}`}
             style={{ scrollBehavior: 'smooth' }}
             id="schools-carousel"
           >
@@ -140,48 +140,54 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className={`snap-start flex-shrink-0 ${
                   schools.length === 1
-                    ? 'w-full'
+                    ? 'w-full max-w-2xl'
                     : schools.length === 2
                     ? 'w-full md:w-[calc(50%-12px)]'
-                    : 'w-full md:w-[calc(33.333%-16px)]'
+                    : 'w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]'
                 }`}
               >
                 <div 
                   className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all card-premium group cursor-pointer"
                   onClick={() => window.open(getFullPdfUrl(school.pdfUrl), '_blank', 'noopener,noreferrer')}
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
+                  <div className={`overflow-hidden bg-white/95 flex items-center justify-center ${schools.length === 1 ? 'aspect-[4/3]' : 'aspect-[16/9]'}`}>
                     <img 
                       src={school.image} 
                       alt={school.name} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                      className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${schools.length === 1 ? 'object-contain' : 'object-cover'}`} 
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
-                    <h3 className="text-white font-bold text-xl mb-1 text-shadow">{school.name}</h3>
-                    <p className="text-white/90 text-sm">{school.location}</p>
-                    <div className="mt-3 grid grid-cols-2 gap-2 text-white/95">
-                      <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1.5">
-                        <p className="text-[10px] uppercase tracking-wider text-white/70">
-                          {lang === 'es' ? 'Inscripción' : 'Enrollment'}
-                        </p>
-                        <p className="text-sm font-bold">{formatCurrency(school.enrollmentFee)}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
+                    <h3 className="text-white font-bold text-lg mb-1 text-shadow">{school.name}</h3>
+                    <p className="text-white/90 text-xs">{school.location}</p>
+                    {(school.enrollmentFee || school.monthlyFee) && (
+                      <div className="mt-2 grid grid-cols-2 gap-2 text-white/95">
+                        {school.enrollmentFee && (
+                          <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1">
+                            <p className="text-[9px] uppercase tracking-wider text-white/70">
+                              {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                            </p>
+                            <p className="text-xs font-bold">{formatCurrency(school.enrollmentFee)}</p>
+                          </div>
+                        )}
+                        {school.monthlyFee && (
+                          <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1">
+                            <p className="text-[9px] uppercase tracking-wider text-white/70">
+                              {lang === 'es' ? 'Mensualidad' : 'Monthly'}
+                            </p>
+                            <p className="text-xs font-bold">{formatCurrency(school.monthlyFee)}</p>
+                          </div>
+                        )}
                       </div>
-                      <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1.5">
-                        <p className="text-[10px] uppercase tracking-wider text-white/70">
-                          {lang === 'es' ? 'Mensualidad' : 'Monthly'}
-                        </p>
-                        <p className="text-sm font-bold">{formatCurrency(school.monthlyFee)}</p>
-                      </div>
-                    </div>
+                    )}
                     <a 
                       href={getFullPdfUrl(school.pdfUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="mt-4 inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-md text-sm font-medium transition-all w-fit"
+                      className="mt-3 inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-3 py-1.5 rounded-md text-xs font-medium transition-all w-fit"
                     >
-                      {t.schools.moreInfo} <ChevronRight size={16} />
+                      {t.schools.moreInfo} <ChevronRight size={14} />
                     </a>
                   </div>
                 </div>
