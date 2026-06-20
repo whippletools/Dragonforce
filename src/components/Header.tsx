@@ -7,14 +7,13 @@ import { useCart } from '../context/CartContext';
 interface HeaderProps {
   onNavigateHome: () => void;
   onNavigateSchools: () => void;
-  onNavigateInternational: () => void;
   onNavigateEvents: () => void;
   onNavigatePreinscription: () => void;
   lang: Lang;
   setLang: (lang: Lang) => void;
 }
 
-const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, onNavigateEvents, onNavigatePreinscription, lang, setLang }: HeaderProps) => {
+const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigatePreinscription, lang, setLang }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -33,9 +32,9 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
         <div className="flex items-center justify-between h-20">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
             <img
-              src={"/images/favicon.png"}
+              src={"/images/Lockup Highlands.png"}
               alt="Dragon Force FC Porto"
-              className="w-24 h-24 object-contain transition-all duration-300"
+              className="w-32 h-32 object-contain transition-all duration-300"
               style={{
                 filter: isScrolled ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' : 'none'
               }}
@@ -51,10 +50,6 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
               {t.nav.schools}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
             </button>
-            <button onClick={onNavigateInternational} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
-              {t.nav.international}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
-            </button>
             <button onClick={onNavigateEvents} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
               {t.nav.events}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
@@ -63,6 +58,10 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
               {lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
             </button>
+            <a href="https://dragonforce-padres.lab.whipple.mx/" target="_blank" rel="noopener noreferrer" className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+              {lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+            </a>
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
@@ -107,9 +106,9 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateInternational, on
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
               <button onClick={() => { onNavigateHome(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.home}</button>
               <button onClick={() => { onNavigateSchools(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.schools}</button>
-              <button onClick={() => { onNavigateInternational(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.international}</button>
               <button onClick={() => { onNavigateEvents(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.events}</button>
               <button onClick={() => { onNavigatePreinscription(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}</button>
+              <a href="https://dragonforce-padres.lab.whipple.mx/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}</a>
               <button onClick={() => { setLang(lang === 'es' ? 'en' : 'es'); }} className="text-left font-medium text-[#1a4f8a] py-2">{lang === 'es' ? 'English' : 'Español'}</button>
             </nav>
           </motion.div>

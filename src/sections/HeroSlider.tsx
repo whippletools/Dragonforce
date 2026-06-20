@@ -8,7 +8,8 @@ interface HeroSliderProps {
   lang: Lang;
   onNavigateEvents: () => void;
   onNavigateSchools: () => void;
-  onNavigateInternational: () => void;
+  onNavigateInternational?: () => void;
+  onNavigatePreinscription: () => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
@@ -24,7 +25,7 @@ const isYouTubeUrl = (url: string): boolean => {
   return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
-const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const t = translations[lang];
@@ -43,7 +44,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
 
   useEffect(() => {
     if (slides.length > 0) {
-      const interval = setInterval(nextSlide, 8000);
+      const interval = setInterval(nextSlide, 15000);
       return () => clearInterval(interval);
     }
   }, [nextSlide, slides.length]);
@@ -122,17 +123,18 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
               <source src={slideData.mediaUrl} type="video/mp4" />
             </video>
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/40" />
+          <div className="absolute inset-0 bg-black/20" />
         </motion.div>
       </AnimatePresence>
 
-        <div className={`relative z-10 h-full flex flex-col px-4 ${getPositionClasses()}`}>
+        <div className={`relative z-10 h-full flex flex-col px-4 pt-24 pb-16 ${getPositionClasses()}`}>
         <button
           onClick={prevSlide}
           className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
           aria-label={t.accessibility.previousSlide}
         >
-          <ChevronLeft size={40} className="text-white" strokeWidth={2} />
+          <ChevronLeft size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
         </button>
 
         <button
@@ -140,18 +142,16 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
           className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
           aria-label={t.accessibility.nextSlide}
         >
-          <ChevronRight size={40} className="text-white" strokeWidth={2} />
+          <ChevronRight size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
         </button>
 
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div key={current} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="">
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 text-shadow-lg tracking-tight">
-                <span className="bg-gradient-to-r from-white via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
-                  {slideData.title}
-                </span>
+              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 text-shadow-lg tracking-tight leading-tight">
+                {slideData.title}
               </motion.h1>
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/90 mb-10 px-4 max-w-3xl mx-auto">
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base md:text-lg lg:text-xl text-white/95 mb-10 px-4 max-w-3xl mx-auto leading-relaxed text-shadow">
                 {slideData.body}
               </motion.p>
               <motion.button 
@@ -175,6 +175,10 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
                     onNavigateInternational();
                   }
+                  // Inscripción / Registro → Formulario de inscripción
+                  else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonAction.includes('preinscription') || buttonAction.includes('inscripcion')) {
+                    onNavigatePreinscription();
+                  }
                   else {
                     // Fallback: intentar abrir URL si no coincide con ninguna
                     if (buttonAction && buttonAction !== '#') {
@@ -182,7 +186,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                     }
                   }
                 }}
-                className="bg-blue-600 text-white px-8 py-4 rounded-md font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-all duration-300 inline-flex items-center gap-2 btn-pulse"
+                className="bg-[#1a4f8a] text-white px-8 py-4 rounded-xl font-bold text-sm md:text-base uppercase tracking-wider shadow-lg hover:bg-[#153d6e] transition-all duration-300 inline-flex items-center gap-2 btn-pulse"
               >
                 {slideData.buttonText} <ChevronRight size={20} strokeWidth={2.5} />
               </motion.button>

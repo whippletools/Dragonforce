@@ -1,4 +1,4 @@
-# Schema Backend - Inscripcion de Padres
+# Schema Backend - Inscripcion de Padres (FLUJO AUTOMATICO)
 
 ## Tabla: `parent_registrations`
 
@@ -6,19 +6,13 @@
 CREATE TABLE parent_registrations (
   id              SERIAL PRIMARY KEY,
   full_name       VARCHAR(150) NOT NULL,
-  email           VARCHAR(150) NOT NULL,
+  email           VARCHAR(150) NOT NULL UNIQUE,
   phone           VARCHAR(30)  NOT NULL,
-  message         TEXT,
 
-  -- Estado del registro
-  status          VARCHAR(20)  NOT NULL DEFAULT 'pending'
-                    CHECK (status IN ('pending','processing','completed','rejected')),
-
-  -- Cuando administracion crea el usuario en el portal
-  portal_username VARCHAR(50),
-  portal_password_hash VARCHAR(255), -- bcrypt (NUNCA guardar la contraseña en texto plano)
-  portal_url VARCHAR(255),           -- Ej: https://padres.dragonforce.com
-  portal_created_at TIMESTAMP,
+  -- Credenciales del portal (generadas automaticamente al registrar)
+  portal_username VARCHAR(50)  NOT NULL,
+  portal_password_hash VARCHAR(255) NOT NULL, -- bcrypt (NUNCA guardar la contraseña en texto plano)
+  portal_url VARCHAR(255) NOT NULL DEFAULT 'https://padres.dragonforce.com',
 
   -- Metadatos
   created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -28,7 +22,6 @@ CREATE TABLE parent_registrations (
 
 -- Indices utiles
 CREATE INDEX idx_parent_registrations_email ON parent_registrations(email);
-CREATE INDEX idx_parent_registrations_status ON parent_registrations(status);
 CREATE INDEX idx_parent_registrations_created_at ON parent_registrations(created_at);
 ```
 
@@ -39,31 +32,26 @@ CREATE INDEX idx_parent_registrations_created_at ON parent_registrations(created
 | Nombre completo    | parentName        | VARCHAR(150) | NOT NULL | Nombre del padre/madre                   |
 | Correo electronico | email             | VARCHAR(150) | NOT NULL | Usado para enviar credenciales del portal|
 | Telefono           | phone             | VARCHAR(30)  | NOT NULL | Contacto directo                         |
-| Mensaje adicional  | message           | TEXT         | NULL     | Opcional                                 |
 
-## Estado (`status`)
+## Flujo de trabajo (AUTOMATICO - sin aprobacion manual)
 
-| Valor       | Significado                                              |
-|-------------|----------------------------------------------------------|
-| `pending`   | Recibido, aun no revisado por administracion             |
-| `processing`| En revision, administracion esta creando el portal       |
-| `completed` | Usuario y password del portal creados y enviados         |
-| `rejected`  | Rechazado (email invalido, duplicado, etc.)              |
-
-## Flujo de trabajo
-
-1. **Padre llena formulario** -> INSERT con status='pending'
-2. **Admin revisa panel** -> UPDATE status='processing'
-3. **Admin crea usuario portal** -> UPDATE portal_username, portal_password_hash, portal_created_at, status='completed'
-4. **Sistema envia email** al padre con sus credenciales
+1. **Padre llena formulario** -> POST al backend
+2. **Backend valida email unico** -> Si existe, retorna error
+3. **Backend genera automaticamente:**
+   - `portal_username`: basado en nombre + numero aleatorio (ej: juanperez123)
+   - `portal_password_plain`: contraseña segura aleatoria (ej: Df2026$Xy)
+   - `portal_password_hash`: bcrypt de la contraseña
+4. **Backend INSERTA registro** con todos los datos
+5. **Backend envia email de bienvenida** inmediatamente al correo proporcionado con usuario, contraseña en texto y link al portal
+6. **Frontend muestra pantalla de exito** indicando que revisen su correo
 
 ## API Endpoints sugeridos
 
 ```
-POST   /api/v1/parent-registrations        -- Crear nuevo registro (desde frontend)
+POST   /api/v1/parent-registrations        -- Crear nuevo registro + generar credenciales + enviar email
 GET    /api/v1/parent-registrations        -- Listar todos (panel admin)
 GET    /api/v1/parent-registrations/:id     -- Ver detalle
-PATCH  /api/v1/parent-registrations/:id    -- Actualizar status / datos
+PATCH  /api/v1/parent-registrations/:id    -- Actualizar datos
 DELETE /api/v1/parent-registrations/:id    -- Eliminar
 ```
 
@@ -71,11 +59,10 @@ DELETE /api/v1/parent-registrations/:id    -- Eliminar
 
 ```json
 {
-  "full_name": "Juan Perez",
+  "fullName": "Juan Perez",
   "email": "juan@ejemplo.com",
   "phone": "+52 81 2345 6789",
-  "message": "Me interesa inscribir a mi hijo",
-  "source_lang": "es"
+  "sourceLang": "es"
 }
 ```
 
@@ -84,22 +71,25 @@ DELETE /api/v1/parent-registrations/:id    -- Eliminar
 ```json
 {
   "success": true,
+  "message": "Registro exitoso. Revisa tu correo para tus credenciales.",
   "data": {
     "id": 42,
     "full_name": "Juan Perez",
     "email": "juan@ejemplo.com",
     "phone": "+52 81 2345 6789",
-    "status": "pending",
+    "portal_username": "juanperez123",
     "created_at": "2026-05-18T19:45:00Z"
   }
 }
 ```
 
+**IMPORTANTE:** La contraseña en texto plano (`portal_password_plain`) debe enviarse solo en el email, NUNCA en la respuesta JSON de la API.
+
 ---
 
 ## Plantilla de email de bienvenida (HTML)
 
-El backend debe enviar este email cuando `status` cambie a `completed`. La contraseña se genera en ese momento, se envía en el email y solo se guarda el `bcrypt` en la base de datos.
+El backend debe enviar este email **automaticamente e inmediatamente** despues de crear el registro. La contraseña se genera en ese momento, se envia en el email y solo se guarda el `bcrypt` en la base de datos.
 
 ```html
 <!DOCTYPE html>
@@ -152,19 +142,21 @@ El backend debe enviar este email cuando `status` cambie a `completed`. La contr
 
 ### Variables a reemplazar (desde backend)
 
-| Variable | Fuente DB | Ejemplo |
-|----------|-----------|---------|
+| Variable | Fuente DB / Generacion | Ejemplo |
+|----------|------------------------|---------|
 | `{{full_name}}` | `full_name` | `Juan Perez` |
-| `{{portal_username}}` | `portal_username` | `juanperez123` |
-| `{{portal_password_plain}}` | **Generada en backend** (no se guarda en DB) | `Df2026$Xy` |
-| `{{portal_url}}` | `portal_url` o constante | `https://padres.dragonforce.com` |
+| `{{portal_username}}` | Generado automaticamente | `juanperez123` |
+| `{{portal_password_plain}}` | **Generada automaticamente** (NO guardar en DB, solo enviar por email) | `Df2026$Xy` |
+| `{{portal_url}}` | Constante de config | `https://padres.dragonforce.com` |
 
-### Flujo de envío de credenciales
+### Flujo de envío de credenciales (AUTOMATICO)
 
-1. Admin aprueba registro en panel
-2. Backend genera contraseña aleatoria segura
-3. Backend hashea con bcrypt → guarda `portal_password_hash`
-4. Backend envía email con contraseña **en texto** (solo esta vez)
-5. Padre recibe email con usuario, contraseña y link directo
-6. Padre inicia sesión y cambia contraseña
-7. Después del primer login, el portal fuerza cambio de contraseña
+1. Frontend envia POST con datos del padre
+2. Backend valida que el email no exista ya
+3. Backend genera username unico y contraseña segura aleatoria
+4. Backend hashea contraseña con bcrypt → guarda `portal_password_hash`
+5. Backend INSERTA registro completo en DB
+6. Backend envia email de bienvenida con contraseña en texto (solo esta vez)
+7. Frontend muestra mensaje de exito pidiendo revisar el correo
+8. Padre recibe email con usuario, contraseña y link directo
+9. Padre ingresa al portal de padres e inicia sesion

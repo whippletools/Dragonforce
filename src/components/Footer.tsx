@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Facebook, Instagram, Mail, Phone, ExternalLink } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import { type Lang } from '../data/translations';
 import { useFooter } from '../hooks/useFooter';
 
@@ -96,7 +96,7 @@ const Footer = ({
                 className="w-24 h-24 object-contain"
               />
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-500 text-sm">
               {footerData.brand.slogan}
             </p>
           </div>
@@ -112,7 +112,7 @@ const Footer = ({
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                      className="text-gray-600 hover:text-[#1a4f8a] text-sm flex items-center gap-1 transition-colors"
                     >
                       {link.label}
                       <ExternalLink size={12} />
@@ -120,7 +120,7 @@ const Footer = ({
                   ) : (
                     <button
                       onClick={link.onClick}
-                      className="text-gray-600 hover:text-blue-600 text-sm transition-colors text-left"
+                      className="text-gray-600 hover:text-[#1a4f8a] text-sm transition-colors text-left"
                     >
                       {link.label}
                     </button>
@@ -141,7 +141,7 @@ const Footer = ({
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-blue-600 text-sm flex items-center gap-1 transition-colors"
+                      className="text-gray-600 hover:text-[#1a4f8a] text-sm flex items-center gap-1 transition-colors"
                     >
                       {link.label}
                       <ExternalLink size={12} />
@@ -149,7 +149,7 @@ const Footer = ({
                   ) : (
                     <button
                       onClick={link.onClick}
-                      className="text-gray-600 hover:text-blue-600 text-sm transition-colors text-left"
+                      className="text-gray-600 hover:text-[#1a4f8a] text-sm transition-colors text-left"
                     >
                       {link.label}
                     </button>
@@ -165,19 +165,19 @@ const Footer = ({
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-gray-600">
                 <Mail size={18} className="text-[#1a4f8a]" />
-                <a href={`mailto:${footerData.contact.email}`} className="text-sm hover:text-blue-600 transition-colors">
+                <a href={`mailto:${footerData.contact.email}`} className="text-sm hover:text-[#1a4f8a] transition-colors">
                   {footerData.contact.email}
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-600">
                 <Phone size={18} className="text-[#1a4f8a]" />
-                <a href={`tel:${footerData.contact.phone.replace(/\s/g, '')}`} className="text-sm hover:text-blue-600 transition-colors">
+                <a href={`tel:${footerData.contact.phone.replace(/\s/g, '')}`} className="text-sm hover:text-[#1a4f8a] transition-colors">
                   {footerData.contact.phone}
                 </a>
               </li>
               {footerData.contact.address && (
                 <li className="flex items-center gap-3 text-gray-600">
-                  <Phone size={18} className="text-[#1a4f8a]" />
+                  <MapPin size={18} className="text-[#1a4f8a]" />
                   <span className="text-sm">{footerData.contact.address}</span>
                 </li>
               )}

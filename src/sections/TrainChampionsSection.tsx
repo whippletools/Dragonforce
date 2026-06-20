@@ -33,7 +33,7 @@ const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateAppli
 
   if (loading) {
     return (
-      <section className="py-20 bg-[#0d47a1]">
+      <section className="py-20 bg-[#1a4f8a]">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
@@ -49,7 +49,7 @@ const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateAppli
 
   return (
     <>
-      <section className="py-20 bg-[#0d47a1] relative overflow-hidden">
+      <section className="py-20 bg-[#1a4f8a] relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center" 
           style={{ 
@@ -57,7 +57,7 @@ const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateAppli
             opacity: 0.3
           }} 
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0d47a1]/80 to-[#1565c0]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a4f8a]/80 to-[#153d6e]/80" />
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
@@ -79,7 +79,7 @@ const TrainChampionsSection = ({ lang, onNavigatePreinscription, onNavigateAppli
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => handleButtonClick(currentOption.formType)}
-              className="bg-white text-[#0d47a1] px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg hover:bg-gray-100 transition-all"
+              className="bg-white text-[#1a4f8a] px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg hover:bg-gray-100 transition-all"
             >
               {currentOption.buttonText[lang]}
             </motion.button>

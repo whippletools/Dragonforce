@@ -43,17 +43,6 @@
       "location": "(TROFA)",
       "pdfUrl": "/pdfs/schools/colegio-trofa.pdf",
       "order": 4
-    },
-    {
-      "id": 5,
-      "image": "https://dragonforce.fcporto.pt/wp-content/uploads/2025/05/colegiobananca.jpg",
-      "name": {
-        "es": "COLEGIO INTERNACIONAL DE PORTO",
-        "en": "INTERNATIONAL SCHOOL OF PORTO"
-      },
-      "location": "(PORTO)",
-      "pdfUrl": "/pdfs/schools/colegio-internacional-porto.pdf",
-      "order": 5
     }
   ]
 }

@@ -27,20 +27,6 @@
       "buttonText": "VER ESCUELAS",
       "buttonAction": "/schools",
       "order": 2
-    },
-    {
-      "id": 3,
-      "mediaType": "video",
-      "mediaUrl": "https://youtu.be/V7ZQ3tsGiNI?si=vLs-yatH5ps71cFq",
-      "position": {
-        "horizontal": "center",
-        "vertical": "center"
-      },
-      "title": "INTERNACIONAL",
-      "body": "Una metodología abierta al mundo. Presente en Brasil, Zimbabue y Mozambique.",
-      "buttonText": "SABER MÁS",
-      "buttonAction": "/international",
-      "order": 3
     }
   ]
 }

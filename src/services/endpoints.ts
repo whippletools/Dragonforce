@@ -3,10 +3,11 @@ export const endpoints = {
   qualityCarousel: '/quality-carousel',
   events: '/events',
   schools: '/schools',
-  internationalPrograms: '/international-programs',
   trainChampions: '/train-champions',
   news: '/news',
   products: '/products',
   blog: '/blog',
   blogList: '/blog-list',
+  parentRegistrations: '/parent-registrations',
+  schedules: '/schedules',
 } as const;

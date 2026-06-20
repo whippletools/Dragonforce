@@ -7,8 +7,8 @@ import QualitySection from './sections/QualitySection';
 import IdentitySection from './sections/IdentitySection';
 import EventsSection from './sections/EventsSection';
 import SchoolsSection from './sections/SchoolsSection';
-import InternationalSection from './sections/InternationalSection';
 import NewsSection from './sections/NewsSection';
+import SchedulesSection from './sections/SchedulesSection';
 import ProductPage from './pages/ProductPage';
 import SchoolsPage from './pages/SchoolsPage';
 import BlogPost from './pages/BlogPost';
@@ -19,14 +19,12 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
 import QualityPage from './pages/QualityPage';
-import InternationalProgramPage from './pages/InternationalProgramPage';
 import EventPage from './pages/EventPage';
 import PreinscriptionPage from './pages/PreinscriptionPage';
-import type { InternationalProgram } from './types/api';
 import { CartProvider } from './context/CartContext';
 import './App.css';
 
-export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'internationalProgram' | 'event' | 'preinscription';
+export type Page = 'home' | 'product' | 'schools' | 'blog' | 'recruitment' | 'internship' | 'openSchool' | 'terms' | 'privacy' | 'cookies' | 'quality' | 'event' | 'preinscription';
 export type Lang = 'es' | 'en';
 
 function App() {
@@ -35,7 +33,6 @@ function App() {
   const [blogSlug, setBlogSlug] = useState<string>('');
   const [eventId, setEventId] = useState<number>(0);
   const [lang, setLang] = useState<Lang>('es');
-  const [selectedProgram, setSelectedProgram] = useState<InternationalProgram | null>(null);
 
   // const navigateToProduct = (_slug: string) => {
   //   setProductSlug(_slug);
@@ -99,27 +96,12 @@ function App() {
     window.scrollTo(0, 0);
   };
 
-  const navigateToInternationalProgram = (program: InternationalProgram) => {
-    setSelectedProgram(program);
-    setCurrentPage('internationalProgram');
-    window.scrollTo(0, 0);
-  };
-
   const navigateToEvent = (id: number) => {
     setEventId(id);
     setCurrentPage('event');
     window.scrollTo(0, 0);
   };
 
-  const navigateToInternationalSection = () => {
-    setCurrentPage('home');
-    setTimeout(() => {
-      const element = document.getElementById('internacional');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
 
   const navigateToPreinscription = () => {
     setCurrentPage('preinscription');
@@ -168,7 +150,6 @@ function App() {
       <Header 
         onNavigateHome={navigateToHome}
         onNavigateSchools={navigateToSchools}
-        onNavigateInternational={navigateToInternationalSection}
         onNavigateEvents={navigateToEventsSection}
         onNavigatePreinscription={navigateToPreinscription}
         lang={lang}
@@ -181,7 +162,7 @@ function App() {
               lang={lang} 
               onNavigateEvents={navigateToEventsSection}
               onNavigateSchools={navigateToSchools}
-              onNavigateInternational={navigateToInternationalSection}
+              onNavigatePreinscription={navigateToPreinscription}
             />
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
@@ -190,7 +171,9 @@ function App() {
             <div id="escuelas">
               <SchoolsSection lang={lang} />
             </div>
-            {/* <InternationalSection lang={lang} onNavigateProgram={navigateToInternationalProgram} /> */}
+            <div id="horarios">
+              <SchedulesSection lang={lang} />
+            </div>
             <NewsSection lang={lang} onNavigateArticle={navigateToBlog} />
           </>
         )}
@@ -232,9 +215,6 @@ function App() {
               if (element) element.scrollIntoView({ behavior: 'smooth' });
             }, 100);
           }} />
-        )}
-        {currentPage === 'internationalProgram' && selectedProgram && (
-          <InternationalProgramPage program={selectedProgram} lang={lang} onBack={navigateToInternationalSection} />
         )}
         {currentPage === 'preinscription' && (
           <PreinscriptionPage lang={lang} onBack={navigateToHome} />

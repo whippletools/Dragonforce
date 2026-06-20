@@ -101,32 +101,6 @@ export interface SchoolsResponse {
   schools: School[];
 }
 
-export interface ProgramButton {
-  text: string;
-  action: string;
-  variant: 'primary' | 'secondary';
-}
-
-export interface InternationalProgram {
-  id: number;
-  coverImage: string;
-  title: string | {
-    es: string;
-    en: string;
-  };
-  description: string | {
-    es: string;
-    en: string;
-  };
-  gallery: string[];
-  buttons: ProgramButton[];
-  order: number;
-}
-
-export interface InternationalProgramsResponse {
-  programs: InternationalProgram[];
-}
-
 // Train Champions Types
 export interface TrainChampionOption {
   id: number;

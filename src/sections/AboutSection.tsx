@@ -29,7 +29,7 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
                 alt="Dragon Force Training"
                 className="w-full h-[400px] md:h-[500px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
             {/* ISO Badge */}
             <motion.div
@@ -59,8 +59,8 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
             <span className="inline-block border-2 border-[#1a4f8a] rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider text-[#1a4f8a] mb-6">
               {t.about.label}
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-6">
-              <span className="gradient-text">{t.about.title}</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1a4f8a] mb-6">
+              {t.about.title}
             </h2>
             <p className="text-gray-700 text-base md:text-lg leading-relaxed">
               {t.about.desc}
