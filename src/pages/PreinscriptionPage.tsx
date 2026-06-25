@@ -14,7 +14,8 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
   const [formData, setFormData] = useState({
     parentName: '',
     email: '',
-    phone: ''
+    phone: '',
+    relationship: 'padre'
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
         fullName: formData.parentName,
         email: formData.email,
         phone: formData.phone,
+        relationship: formData.relationship,
         sourceLang: lang,
       });
       setSubmitted(true);
@@ -162,6 +164,23 @@ const PreinscriptionPage = ({ lang, onBack }: PreinscriptionPageProps) => {
                     placeholder="+52 81 2345 6789"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-[#1a4f8a] mb-2 uppercase tracking-wide">
+                  {lang === 'es' ? '¿Quién inscribe?' : 'Who is registering?'}
+                </label>
+                <select
+                  name="relationship"
+                  value={formData.relationship}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-gray-800 focus:ring-2 focus:ring-[#1a4f8a]/20 focus:border-[#1a4f8a] focus:bg-white outline-none transition-all"
+                >
+                  <option value="padre">{lang === 'es' ? 'Papá' : 'Father'}</option>
+                  <option value="madre">{lang === 'es' ? 'Mamá' : 'Mother'}</option>
+                  <option value="tutor">{lang === 'es' ? 'Tutor' : 'Tutor'}</option>
+                </select>
               </div>
             </div>
 

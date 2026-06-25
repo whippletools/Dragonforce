@@ -173,7 +173,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   }
                   // Saber más / Más información → Internacional
                   else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
-                    onNavigateInternational();
+                    onNavigateInternational?.();
                   }
                   // Inscripción / Registro → Formulario de inscripción
                   else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonAction.includes('preinscription') || buttonAction.includes('inscripcion')) {

@@ -15,6 +15,7 @@ const processSchoolData = (school: School): School => {
     pdfUrl: completeImageUrl(school.pdfUrl),
     enrollmentFee: school.enrollmentFee ?? null,
     monthlyFee: school.monthlyFee ?? null,
+    fees: school.fees ?? undefined,
   };
 };
 
@@ -32,12 +33,19 @@ export function useSchools(lang: Lang) {
 
         try {
           const response = await apiClient.get(endpoints.schools, {
-            params: { lang, limit: 100 },
+            params: { lang, limit: 100, _t: Date.now() },
           });
           console.log('API response:', response.data);
           const sortedSchools = [...response.data.data]
             .sort((a: any, b: any) => a.order - b.order)
-            .map(processSchoolData);
+            .map((s: any) => {
+              const processed = processSchoolData(s as School);
+              // Forzar copia de fees si existe en la respuesta cruda
+              if (s.fees) {
+                (processed as any).fees = s.fees;
+              }
+              return processed;
+            });
           console.log('Processed schools:', sortedSchools);
           setSchools(sortedSchools);
         } catch (apiError) {
