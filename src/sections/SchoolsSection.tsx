@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, School } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useSchools } from '../hooks/useSchools';
 import { formatCurrency } from '../utils/currency';
@@ -97,6 +97,12 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
           <div className="flex items-center justify-center py-20">
             <p className="text-gray-600">Error loading schools</p>
           </div>
+        ) : schools.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-2xl">
+            <School className="w-16 h-16 text-[#1a4f8a]/30 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">{t.empty.schoolsTitle}</h3>
+            <p className="text-gray-500">{t.empty.schoolsDesc}</p>
+          </div>
         ) : (
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
@@ -160,7 +166,27 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
                     <h3 className="text-white font-bold text-lg mb-1 text-shadow">{school.name}</h3>
                     <p className="text-white/90 text-xs">{school.location}</p>
-                    {(school.enrollmentFee || school.monthlyFee) && (
+                    {school.fees && Object.keys(school.fees).length > 0 ? (
+                      <div className="mt-2 text-white/95">
+                        <p className="text-[9px] uppercase tracking-wider text-white/70 mb-1">
+                          {lang === 'es' ? 'Tarifas por grado' : 'Fees by grade'}
+                        </p>
+                        <div className="space-y-0">
+                          {Object.entries(school.fees).slice(0, 4).map(([grade, fee]) => (
+                            <div key={grade} className="flex justify-between text-[10px] leading-tight">
+                              <span className="capitalize">{grade === 'all' ? (lang === 'es' ? 'Todos' : 'All') : grade}</span>
+                              <span>
+                                {fee.enrollment != null && <>I:{formatCurrency(fee.enrollment)} </>}
+                                {fee.monthly != null && <>M:{formatCurrency(fee.monthly)}</>}
+                              </span>
+                            </div>
+                          ))}
+                          {Object.keys(school.fees).length > 4 && (
+                            <p className="text-[9px] text-white/60">+{Object.keys(school.fees).length - 4} {lang === 'es' ? 'más' : 'more'}</p>
+                          )}
+                        </div>
+                      </div>
+                    ) : (school.enrollmentFee || school.monthlyFee) && (
                       <div className="mt-2 grid grid-cols-2 gap-2 text-white/95">
                         {school.enrollmentFee && (
                           <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1">

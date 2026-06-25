@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useEvents } from '../hooks/useEvents';
 import { formatCurrency } from '../utils/currency';
@@ -80,7 +80,9 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
             <span className="text-[#1a4f8a]">{t.map.title}</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl font-medium">
-            {lang === 'es' ? 'No dejes pasar tu momento. Vive la experiencia Dragon Force.' : "Don't miss your moment. Live the Dragon Force experience."}
+            {lang === 'es'
+              ? 'No dejes pasar tu momento. Vive la experiencia Highlands International School.'
+              : "Don't miss your moment. Live the Highlands International School experience."}
           </p>
         </motion.div>
 
@@ -91,6 +93,12 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
         ) : error ? (
           <div className="flex items-center justify-center py-20">
             <p className="text-gray-600">Error loading events</p>
+          </div>
+        ) : events.length === 0 ? (
+          <div className="text-center py-16 bg-gray-50 rounded-2xl">
+            <CalendarDays className="w-16 h-16 text-[#1a4f8a]/30 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">{t.empty.eventsTitle}</h3>
+            <p className="text-gray-500">{t.empty.eventsDesc}</p>
           </div>
         ) : (
           <motion.div 
