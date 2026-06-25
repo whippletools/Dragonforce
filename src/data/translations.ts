@@ -21,6 +21,14 @@ export const translations = {
     },
     identity: { label: 'ADN DE DRAGÓN', title: 'NUESTRA IDENTIDAD' },
     map: { label: 'PRÓXIMAS EXPERIENCIAS', title: 'EVENTOS', cta: 'VER TODAS' },
+    empty: {
+      eventsTitle: 'No hay eventos disponibles',
+      eventsDesc: 'Próximamente publicaremos nuevas experiencias en Highlands International School.',
+      newsTitle: 'No hay noticias disponibles',
+      newsDesc: 'Próximamente compartiremos las últimas novedades de Highlands International School.',
+      schoolsTitle: 'No hay escuelas disponibles',
+      schoolsDesc: 'Próximamente publicaremos las escuelas Highlands International School activas.',
+    },
     cta: {},
     international: { 
       label: 'SIN FRONTERAS', 
@@ -240,6 +248,14 @@ export const translations = {
     },
     identity: { label: 'DRAGON DNA', title: 'OUR IDENTITY' },
     map: { label: 'UPCOMING EXPERIENCES', title: 'EVENTS', cta: 'VIEW ALL' },
+    empty: {
+      eventsTitle: 'No events available',
+      eventsDesc: 'New experiences at Highlands International School will be published soon.',
+      newsTitle: 'No news available',
+      newsDesc: 'Latest Highlands International School updates will be shared soon.',
+      schoolsTitle: 'No schools available',
+      schoolsDesc: 'Active Highlands International School schools will be published soon.',
+    },
     cta: {},
     international: { 
       label: 'WITHOUT BORDERS', 

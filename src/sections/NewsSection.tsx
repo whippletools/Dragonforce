@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, ArrowRight, ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useNews } from '../hooks/useNews';
 
@@ -87,6 +87,12 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
         ) : error ? (
           <div className="flex items-center justify-center py-20">
             <p className="text-gray-600">Error loading news</p>
+          </div>
+        ) : articles.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-2xl">
+            <Newspaper className="w-16 h-16 text-[#1a4f8a]/30 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">{t.empty.newsTitle}</h3>
+            <p className="text-gray-500">{t.empty.newsDesc}</p>
           </div>
         ) : (
           <motion.div

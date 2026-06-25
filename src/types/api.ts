@@ -95,6 +95,7 @@ export interface School {
   order: number;
   enrollmentFee?: number | string | null;
   monthlyFee?: number | string | null;
+  fees?: Record<string, { enrollment?: number; monthly?: number }>;
 }
 
 export interface SchoolsResponse {

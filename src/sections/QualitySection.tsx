@@ -101,10 +101,6 @@ const QualitySection = ({ lang }: QualitySectionProps) => {
                           alt={img.alt}
                           className="w-full h-full object-cover bg-gray-100 group-hover:scale-110 transition-transform duration-700 ease-out"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                          <p className="text-white font-bold text-sm drop-shadow-lg">{img.alt}</p>
-                        </div>
                         <div className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-50 group-hover:scale-100 shadow-lg">
                           <span className="text-[#1a4f8a] text-lg">+</span>
                         </div>

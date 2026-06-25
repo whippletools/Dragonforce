@@ -95,20 +95,51 @@ const SchoolsPage = ({ lang, onBack }: SchoolsPageProps) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 mt-2">
-                    <div className="rounded-lg border border-gray-200 p-3">
-                      <p className="text-[10px] uppercase tracking-wider text-gray-500">
-                        {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                  {school.fees && Object.keys(school.fees).length > 0 ? (
+                    <div className="mt-2">
+                      <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-2">
+                        {lang === 'es' ? 'Tarifas por grado' : 'Fees by grade'}
                       </p>
-                      <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.enrollmentFee)}</p>
+                      <div className="space-y-1">
+                        {Object.entries(school.fees).map(([grade, fee]) => (
+                          <div key={grade} className="text-sm border-b border-gray-100 pb-1 last:border-0">
+                            <div className="capitalize text-gray-700 font-medium text-xs mb-0.5">
+                              {grade === 'all' ? (lang === 'es' ? 'Todos los grados' : 'All grades') : grade}
+                            </div>
+                            <div className="flex gap-2 text-xs">
+                              {fee.enrollment != null && (
+                                <span className="text-[#1a4f8a]">
+                                  <span className="text-gray-400">{lang === 'es' ? 'Insc.' : 'Enr.'} </span>
+                                  <span className="font-bold">{formatCurrency(fee.enrollment)}</span>
+                                </span>
+                              )}
+                              {fee.monthly != null && (
+                                <span className="text-[#1a4f8a]">
+                                  <span className="text-gray-400">{lang === 'es' ? 'Mens.' : 'Mo.'} </span>
+                                  <span className="font-bold">{formatCurrency(fee.monthly)}</span>
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="rounded-lg border border-gray-200 p-3">
-                      <p className="text-[10px] uppercase tracking-wider text-gray-500">
-                        {lang === 'es' ? 'Mensualidad' : 'Monthly'}
-                      </p>
-                      <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.monthlyFee)}</p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3 mt-2">
+                      <div className="rounded-lg border border-gray-200 p-3">
+                        <p className="text-[10px] uppercase tracking-wider text-gray-500">
+                          {lang === 'es' ? 'Inscripción' : 'Enrollment'}
+                        </p>
+                        <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.enrollmentFee)}</p>
+                      </div>
+                      <div className="rounded-lg border border-gray-200 p-3">
+                        <p className="text-[10px] uppercase tracking-wider text-gray-500">
+                          {lang === 'es' ? 'Mensualidad' : 'Monthly'}
+                        </p>
+                        <p className="text-base font-bold text-[#1a4f8a]">{formatCurrency(school.monthlyFee)}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {school.pdfUrl && (
                     <a
