@@ -11,9 +11,10 @@ interface HeaderProps {
   onNavigatePreinscription: () => void;
   lang: Lang;
   setLang: (lang: Lang) => void;
+  portalUrl: string;
 }
 
-const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigatePreinscription, lang, setLang }: HeaderProps) => {
+const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigatePreinscription, lang, setLang, portalUrl }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -58,7 +59,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
               {lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
             </button>
-            <a href="https://padres.app.dragonforcemx.com/" target="_blank" rel="noopener noreferrer" className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <a href={portalUrl} target="_blank" rel="noopener noreferrer" className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
               {lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
             </a>
@@ -108,7 +109,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
               <button onClick={() => { onNavigateSchools(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.schools}</button>
               <button onClick={() => { onNavigateEvents(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.events}</button>
               <button onClick={() => { onNavigatePreinscription(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}</button>
-              <a href="https://padres.app.dragonforcemx.com/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}</a>
+              <a href={portalUrl} target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}</a>
               <button onClick={() => { setLang(lang === 'es' ? 'en' : 'es'); }} className="text-left font-medium text-[#1a4f8a] py-2">{lang === 'es' ? 'English' : 'Español'}</button>
             </nav>
           </motion.div>
