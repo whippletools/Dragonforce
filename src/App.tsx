@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { API_BASE_URL } from './config';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HeroSlider from './sections/HeroSlider';
@@ -33,6 +34,20 @@ function App() {
   const [blogSlug, setBlogSlug] = useState<string>('');
   const [eventId, setEventId] = useState<number>(0);
   const [lang, setLang] = useState<Lang>('es');
+  const [portalUrl, setPortalUrl] = useState<string>('https://padres.app.dragonforcemx.com');
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}settings`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.PORTAL_URL) {
+          setPortalUrl(data.PORTAL_URL);
+        }
+      })
+      .catch(() => {
+        // fallback ya está en el estado inicial
+      });
+  }, []);
 
   // const navigateToProduct = (_slug: string) => {
   //   setProductSlug(_slug);
@@ -147,13 +162,14 @@ function App() {
   return (
     <CartProvider>
     <div className="min-h-screen bg-white">
-      <Header 
+      <Header
         onNavigateHome={navigateToHome}
         onNavigateSchools={navigateToSchools}
         onNavigateEvents={navigateToEventsSection}
         onNavigatePreinscription={navigateToPreinscription}
         lang={lang}
         setLang={setLang}
+        portalUrl={portalUrl}
       />
       <main>
         {currentPage === 'home' && (
