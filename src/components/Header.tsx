@@ -30,12 +30,12 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-[120px]">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
             <img
-              src={"/images/Lockup Highlands.png"}
+              src={"/images/favicon.png"}
               alt="Dragon Force FC Porto"
-              className="w-32 h-32 object-contain transition-all duration-300"
+              className="h-[90px] w-auto object-contain transition-all duration-300"
               style={{
                 filter: isScrolled ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' : 'none'
               }}
