@@ -190,7 +190,7 @@ const Footer = ({
             
             {/* Social Media */}
             <div className="mt-6 flex flex-wrap gap-4">
-              {footerData.socialMedia.map((social, index) => {
+              {footerData.socialMedia.filter(s => s.visible !== false).map((social, index) => {
                 const IconComponent = socialIcons[social.icon] || TikTokIcon;
                 const brandColor = social.icon === 'facebook'
                   ? 'text-[#1877F2] hover:text-[#166fe5]'

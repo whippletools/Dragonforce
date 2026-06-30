@@ -86,17 +86,20 @@
     {
       "name": "Facebook",
       "icon": "facebook",
-      "url": "https://facebook.com"
+      "url": "https://facebook.com",
+      "visible": false
     },
     {
       "name": "Instagram",
       "icon": "instagram",
-      "url": "https://instagram.com"
+      "url": "https://instagram.com",
+      "visible": false
     },
     {
       "name": "TikTok",
       "icon": "tiktok",
-      "url": "https://tiktok.com"
+      "url": "https://tiktok.com",
+      "visible": false
     }
   ],
   "brand": {
