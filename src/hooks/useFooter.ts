@@ -31,6 +31,7 @@ export interface FooterData {
     name: string;
     icon: string;
     url: string;
+    visible?: boolean;
   }>;
   brand: {
     logo: string;
