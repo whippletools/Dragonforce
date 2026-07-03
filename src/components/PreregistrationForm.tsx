@@ -14,6 +14,7 @@ interface PreregistrationFormProps {
 
 const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps) => {
   const [selectedSchoolId, setSelectedSchoolId] = useState('');
+  const [selectedDays, setSelectedDays] = useState('1');
   const { addItem } = useCart();
   const { schools, loading, error } = useSchools(lang);
 
@@ -21,6 +22,11 @@ const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps
     () => schools.find((s) => String(s.id) === selectedSchoolId) ?? null,
     [schools, selectedSchoolId],
   );
+
+  const selectedFees = useMemo(() => {
+    if (!selectedSchool) return null;
+    return selectedSchool.fees?.[selectedDays] || selectedSchool.fees?.['all'] || null;
+  }, [selectedSchool, selectedDays]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,8 +40,9 @@ const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps
       data: {
         schoolId: selectedSchool.id,
         schoolName: selectedSchool.name,
-        enrollmentFee: selectedSchool.enrollmentFee ?? null,
-        monthlyFee: selectedSchool.monthlyFee ?? null,
+        trainingDays: Number(selectedDays),
+        enrollmentFee: selectedFees?.enrollment ?? selectedSchool.enrollmentFee ?? null,
+        monthlyFee: selectedFees?.monthly ?? selectedSchool.monthlyFee ?? null,
         submittedAt: new Date().toISOString(),
       },
     });
@@ -127,13 +134,27 @@ const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps
                         <p className="text-xs uppercase tracking-wider text-blue-700 mb-2 font-semibold">
                           {lang === 'es' ? 'Costos de la escuela' : 'School costs'}
                         </p>
+                        <div className="mb-3">
+                          <label className="block text-[11px] text-gray-600 mb-1">
+                            {lang === 'es' ? 'Días de entrenamiento' : 'Training days'}
+                          </label>
+                          <select
+                            value={selectedDays}
+                            onChange={(e) => setSelectedDays(e.target.value)}
+                            className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm bg-white"
+                          >
+                            <option value="1">{lang === 'es' ? '1 día a la semana' : '1 day per week'}</option>
+                            <option value="2">{lang === 'es' ? '2 días a la semana' : '2 days per week'}</option>
+                            <option value="3">{lang === 'es' ? '3 días a la semana' : '3 days per week'}</option>
+                          </select>
+                        </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <p className="text-[11px] text-gray-600">
                               {lang === 'es' ? 'Inscripción' : 'Enrollment'}
                             </p>
                             <p className="text-lg font-bold text-gray-900">
-                              {formatCurrency(selectedSchool.enrollmentFee)}
+                              {formatCurrency(selectedFees?.enrollment ?? selectedSchool.enrollmentFee)}
                             </p>
                           </div>
                           <div>
@@ -141,10 +162,13 @@ const PreregistrationForm = ({ isOpen, onClose, lang }: PreregistrationFormProps
                               {lang === 'es' ? 'Mensualidad' : 'Monthly'}
                             </p>
                             <p className="text-lg font-bold text-gray-900">
-                              {formatCurrency(selectedSchool.monthlyFee)}
+                              {formatCurrency(selectedFees?.monthly ?? selectedSchool.monthlyFee)}
                             </p>
                           </div>
                         </div>
+                        <p className="text-[10px] text-blue-600 mt-2 italic">
+                          {lang === 'es' ? 'Costo estimado. El cargo final se confirma con la sede.' : 'Estimated cost. Final charge is confirmed by the school.'}
+                        </p>
                       </div>
                     )}
 
