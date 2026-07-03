@@ -169,12 +169,12 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                     {school.fees && Object.keys(school.fees).length > 0 ? (
                       <div className="mt-2 text-white/95">
                         <p className="text-[9px] uppercase tracking-wider text-white/70 mb-1">
-                          {lang === 'es' ? 'Tarifas por grado' : 'Fees by grade'}
+                          {lang === 'es' ? 'Tarifas por días' : 'Fees by days'}
                         </p>
                         <div className="space-y-0">
-                          {Object.entries(school.fees).slice(0, 4).map(([grade, fee]) => (
-                            <div key={grade} className="flex justify-between text-[10px] leading-tight">
-                              <span className="capitalize">{grade === 'all' ? (lang === 'es' ? 'Todos' : 'All') : grade}</span>
+                          {Object.entries(school.fees).slice(0, 4).map(([days, fee]) => (
+                            <div key={days} className="flex justify-between text-[10px] leading-tight">
+                              <span className="capitalize">{days === 'all' ? (lang === 'es' ? 'Todos' : 'All') : `${days}d`}</span>
                               <span>
                                 {fee.enrollment != null && <>I:{formatCurrency(fee.enrollment)} </>}
                                 {fee.monthly != null && <>M:{formatCurrency(fee.monthly)}</>}
