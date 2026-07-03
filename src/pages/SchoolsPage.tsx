@@ -98,13 +98,13 @@ const SchoolsPage = ({ lang, onBack }: SchoolsPageProps) => {
                   {school.fees && Object.keys(school.fees).length > 0 ? (
                     <div className="mt-2">
                       <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-2">
-                        {lang === 'es' ? 'Tarifas por grado' : 'Fees by grade'}
+                        {lang === 'es' ? 'Tarifas por días de entrenamiento' : 'Fees by training days'}
                       </p>
                       <div className="space-y-1">
-                        {Object.entries(school.fees).map(([grade, fee]) => (
-                          <div key={grade} className="text-sm border-b border-gray-100 pb-1 last:border-0">
+                        {Object.entries(school.fees).map(([days, fee]) => (
+                          <div key={days} className="text-sm border-b border-gray-100 pb-1 last:border-0">
                             <div className="capitalize text-gray-700 font-medium text-xs mb-0.5">
-                              {grade === 'all' ? (lang === 'es' ? 'Todos los grados' : 'All grades') : grade}
+                              {days === 'all' ? (lang === 'es' ? 'Todas las opciones' : 'All options') : `${days} ${lang === 'es' ? 'días' : 'days'}`}
                             </div>
                             <div className="flex gap-2 text-xs">
                               {fee.enrollment != null && (

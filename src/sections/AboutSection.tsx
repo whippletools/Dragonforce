@@ -25,7 +25,7 @@ const AboutSection = ({ lang }: AboutSectionProps) => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/images/67031804.jpg"
+                src="/images/DSC04975.jpg"
                 alt="Dragon Force Training"
                 className="w-full h-[400px] md:h-[500px] object-cover"
               />

@@ -222,6 +222,7 @@ export interface NewsArticle {
   order: number;
   title: string;
   excerpt: string;
+  content?: string;
 }
 
 export interface NewsResponse {
