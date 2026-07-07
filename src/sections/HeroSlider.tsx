@@ -129,21 +129,25 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
       </AnimatePresence>
 
         <div className={`relative z-10 h-full flex flex-col px-4 pt-24 pb-16 ${getPositionClasses()}`}>
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label={t.accessibility.previousSlide}
-        >
-          <ChevronLeft size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
-        </button>
+        {slides.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+              aria-label={t.accessibility.previousSlide}
+            >
+              <ChevronLeft size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
+            </button>
 
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
-          aria-label={t.accessibility.nextSlide}
-        >
-          <ChevronRight size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
-        </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 hover:bg-white/10 rounded-full transition-all"
+              aria-label={t.accessibility.nextSlide}
+            >
+              <ChevronRight size={28} className="text-white/80 hover:text-white" strokeWidth={2} />
+            </button>
+          </>
+        )}
 
         <div className="container mx-auto max-w-4xl">
           <AnimatePresence mode="wait">
@@ -195,11 +199,13 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-        {slides.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`w-3 h-3 rounded-full transition-all ${i === current ? 'bg-white w-8' : 'bg-white/50'}`} />
-        ))}
-      </div>
+      {slides.length > 1 && (
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+          {slides.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)} className={`w-3 h-3 rounded-full transition-all ${i === current ? 'bg-white w-8' : 'bg-white/50'}`} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
