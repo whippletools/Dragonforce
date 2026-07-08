@@ -170,6 +170,7 @@ function App() {
         lang={lang}
         setLang={setLang}
         portalUrl={portalUrl}
+        forceDarkHeader={currentPage === 'blog'}
       />
       <main>
         {currentPage === 'home' && (

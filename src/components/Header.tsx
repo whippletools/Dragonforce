@@ -12,9 +12,10 @@ interface HeaderProps {
   lang: Lang;
   setLang: (lang: Lang) => void;
   portalUrl: string;
+  forceDarkHeader?: boolean;
 }
 
-const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigatePreinscription, lang, setLang, portalUrl }: HeaderProps) => {
+const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigatePreinscription, lang, setLang, portalUrl, forceDarkHeader = false }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -28,12 +29,12 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${forceDarkHeader ? 'bg-[#1a4f8a]/95 shadow-lg' : (isScrolled ? 'bg-white shadow-lg' : 'bg-transparent')}`}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-[120px]">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
             <img
-              src={"/images/favicon.png"}
+              src="/images/lockup2_combinado_transparente_2.png"
               alt="Dragon Force FC Porto"
               className="h-[90px] w-auto object-contain transition-all duration-300"
               style={{
@@ -43,25 +44,25 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
           </button>
 
           <nav className="hidden lg:flex items-center gap-8">
-            <button onClick={onNavigateHome} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <button onClick={onNavigateHome} className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {t.nav.home}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </button>
-            <button onClick={onNavigateSchools} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <button onClick={onNavigateSchools} className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {t.nav.schools}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </button>
-            <button onClick={onNavigateEvents} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <button onClick={onNavigateEvents} className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {t.nav.events}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </button>
-            <button onClick={onNavigatePreinscription} className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <button onClick={onNavigatePreinscription} className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </button>
-            <a href={portalUrl} target="_blank" rel="noopener noreferrer" className={`font-medium text-sm tracking-wide ${isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white'} relative group`}>
+            <a href={portalUrl} target="_blank" rel="noopener noreferrer" className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}
-              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${isScrolled ? 'bg-[#1a4f8a]' : 'bg-white'}`} />
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </a>
           </nav>
 
@@ -81,7 +82,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
             </button>
             */}
             <div className="relative">
-              <button onClick={() => setIsLangOpen(!isLangOpen)} className={`flex items-center gap-1 font-medium text-sm ${isScrolled ? 'text-gray-700' : 'text-white'}`}>
+              <button onClick={() => setIsLangOpen(!isLangOpen)} className={`flex items-center gap-1 font-medium text-sm ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700' : 'text-white')}`}>
                 {lang.toUpperCase()} <ChevronDown size={16} className={isLangOpen ? 'rotate-180' : ''} />
               </button>
               <AnimatePresence>
@@ -95,7 +96,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
             </div>
           </div>
 
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`lg:hidden p-2 ${isScrolled ? 'text-gray-700' : 'text-white'}`}>
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={`lg:hidden p-2 ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700' : 'text-white')}`}>
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
