@@ -93,7 +93,7 @@ const Footer = ({
               <img
                 src={footerData.brand.logo}
                 alt="Dragon Force FC Porto"
-                className="w-24 h-24 object-contain"
+                className="w-40 h-40 object-contain"
               />
             </div>
             <p className="text-gray-500 text-sm">
