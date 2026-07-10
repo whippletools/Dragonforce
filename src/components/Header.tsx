@@ -34,7 +34,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
         <div className="flex items-center justify-between h-[120px]">
           <button onClick={onNavigateHome} className="flex items-center gap-3">
             <img
-              src="/images/lockup2_combinado_transparente_2.png"
+              src="/images/favicon.png"
               alt="Dragon Force FC Porto"
               className="h-[90px] w-auto object-contain transition-all duration-300"
               style={{
