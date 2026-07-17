@@ -41,19 +41,19 @@
         "key": "regulations",
         "label": { "es": "Reglamento", "en": "Regulations" },
         "url": "/pdfs/reglamento-general.pdf",
-        "external": false
+        "external": true
       },
       {
-        "key": "terms",
-        "label": { "es": "Términos y Condiciones", "en": "Terms & Conditions" },
-        "url": "/terminos",
-        "external": false
+        "key": "codeOfConduct",
+        "label": { "es": "Código de Conducta", "en": "Code of Conduct" },
+        "url": "/pdfs/codigo-conducta.pdf",
+        "external": true
       },
       {
         "key": "privacy",
-        "label": { "es": "Política de Privacidad", "en": "Privacy Policy" },
-        "url": "/privacidad",
-        "external": false
+        "label": { "es": "Aviso de Privacidad", "en": "Privacy Notice" },
+        "url": "/pdfs/aviso-privacidad.pdf",
+        "external": true
       },
       {
         "key": "cookies",
