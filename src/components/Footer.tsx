@@ -136,8 +136,8 @@ const Footer = ({
             <ul className="space-y-3">
               {helpLinks.map((link, index) => (
                 <li key={index}>
-                  {link.key === 'regulations' ? (
-                    <a 
+                  {link.external ? (
+                    <a
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
