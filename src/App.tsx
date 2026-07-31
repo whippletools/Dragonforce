@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { API_BASE_URL } from './config';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import HighlandsModal from './components/HighlandsModal';
 import HeroSlider from './sections/HeroSlider';
 import AboutSection from './sections/AboutSection';
 import QualitySection from './sections/QualitySection';
@@ -35,6 +36,7 @@ function App() {
   const [eventId, setEventId] = useState<number>(0);
   const [lang, setLang] = useState<Lang>('es');
   const [portalUrl, setPortalUrl] = useState<string>('https://padres.app.dragonforcemx.com');
+  const [isHighlandsModalOpen, setIsHighlandsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}settings`)
@@ -175,11 +177,12 @@ function App() {
       <main>
         {currentPage === 'home' && (
           <>
-            <HeroSlider 
-              lang={lang} 
+            <HeroSlider
+              lang={lang}
               onNavigateEvents={navigateToEventsSection}
               onNavigateSchools={navigateToSchools}
               onNavigatePreinscription={navigateToPreinscription}
+              onOpenHighlandsModal={() => setIsHighlandsModalOpen(true)}
             />
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
@@ -237,7 +240,7 @@ function App() {
           <PreinscriptionPage lang={lang} onBack={navigateToHome} />
         )}
       </main>
-      <Footer 
+      <Footer
         lang={lang}
         onNavigateHome={navigateToHome}
         onNavigateRecruitment={navigateToRecruitment}
@@ -247,6 +250,11 @@ function App() {
         onNavigatePrivacy={navigateToPrivacy}
         onNavigateCookies={navigateToCookies}
         onNavigateQuality={navigateToQuality}
+      />
+      <HighlandsModal
+        isOpen={isHighlandsModalOpen}
+        onClose={() => setIsHighlandsModalOpen(false)}
+        lang={lang}
       />
     </div>
     </CartProvider>

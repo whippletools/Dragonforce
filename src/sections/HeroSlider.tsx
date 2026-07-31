@@ -10,6 +10,7 @@ interface HeroSliderProps {
   onNavigateSchools: () => void;
   onNavigateInternational?: () => void;
   onNavigatePreinscription: () => void;
+  onOpenHighlandsModal?: () => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
@@ -25,7 +26,7 @@ const isYouTubeUrl = (url: string): boolean => {
   return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
-const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const t = translations[lang];
@@ -179,9 +180,13 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
                     onNavigateInternational?.();
                   }
-                  // Inscripción / Registro → Formulario de inscripción
-                  else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonAction.includes('preinscription') || buttonAction.includes('inscripcion')) {
-                    onNavigatePreinscription();
+                  // Inscripción / Registro → Modal Highlands
+                  else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonText.includes('inscríbete') || buttonText.includes('inscribete') || buttonAction.includes('preinscription') || buttonAction.includes('inscripcion')) {
+                    if (onOpenHighlandsModal) {
+                      onOpenHighlandsModal();
+                    } else {
+                      onNavigatePreinscription();
+                    }
                   }
                   else {
                     // Fallback: intentar abrir URL si no coincide con ninguna
