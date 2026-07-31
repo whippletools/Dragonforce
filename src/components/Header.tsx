@@ -56,6 +56,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
               {t.nav.events}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </button>
+            {/*
             <button onClick={onNavigatePreinscription} className={`font-medium text-sm tracking-wide ${forceDarkHeader ? 'text-white' : (isScrolled ? 'text-gray-700 hover:text-[#1a4f8a]' : 'text-white')} relative group`}>
               {lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
@@ -64,6 +65,7 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
               {lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}
               <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${forceDarkHeader || !isScrolled ? 'bg-white' : 'bg-[#1a4f8a]'}`} />
             </a>
+            */}
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
@@ -109,8 +111,10 @@ const Header = ({ onNavigateHome, onNavigateSchools, onNavigateEvents, onNavigat
               <button onClick={() => { onNavigateHome(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.home}</button>
               <button onClick={() => { onNavigateSchools(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.schools}</button>
               <button onClick={() => { onNavigateEvents(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{t.nav.events}</button>
+              {/*
               <button onClick={() => { onNavigatePreinscription(); setIsMobileMenuOpen(false); }} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'INSCRIPCIÓN' : 'REGISTRATION'}</button>
               <a href={portalUrl} target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-left font-medium text-gray-700 hover:text-[#1a4f8a] py-2">{lang === 'es' ? 'PORTAL PADRES' : 'PARENT PORTAL'}</a>
+              */}
               <button onClick={() => { setLang(lang === 'es' ? 'en' : 'es'); }} className="text-left font-medium text-[#1a4f8a] py-2">{lang === 'es' ? 'English' : 'Español'}</button>
             </nav>
           </motion.div>
