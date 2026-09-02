@@ -7,9 +7,9 @@
     "links": [
       {
         "key": "history",
-        "label": { "es": "Historia", "en": "History" },
-        "url": "/historia",
-        "external": false
+        "label": { "es": "Sitio Oficial", "en": "Official Site" },
+        "url": "https://dragonforce.fcporto.pt/",
+        "external": true
       },
       {
         "key": "helpShine",

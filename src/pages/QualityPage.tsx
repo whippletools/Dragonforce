@@ -57,7 +57,7 @@ const QualityPage = ({ lang, onBack }: QualityPageProps) => {
               {isSpanish ? 'Política de Calidad' : 'Quality Policy'}
             </h1>
             <p className="text-gray-600">
-              FC Porto Dragon Force México - Monterrey, Nuevo León
+              FC Porto Dragon Force México
             </p>
           </div>
 

@@ -125,7 +125,7 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
 
             <div
               ref={carouselRef}
-              className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${articles.length === 1 ? 'justify-center' : 'justify-start'}`}`}
+              className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${articles.length <= 2 ? 'justify-center' : 'justify-start'}`}`}
               style={{ scrollBehavior: 'smooth' }}
               id="news-carousel"
             >
@@ -138,9 +138,9 @@ const NewsSection = ({ lang, onNavigateArticle }: NewsSectionProps) => {
                   whileHover={{ y: -4 }} 
                   className={`group bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer flex-shrink-0 snap-start ${
                     articles.length === 1
-                      ? 'w-full'
+                      ? 'w-full max-w-[360px] md:max-w-[400px]'
                       : articles.length === 2
-                      ? 'w-full sm:w-[calc(50%-12px)]'
+                      ? 'w-full max-w-[320px] sm:max-w-[380px]'
                       : 'w-[320px] md:w-[380px]'
                   }`}
                   onClick={() => onNavigateArticle?.(article.slug)}
