@@ -81,8 +81,8 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl font-medium">
             {lang === 'es'
-              ? 'No dejes pasar tu momento. Vive la experiencia Highlands International School.'
-              : "Don't miss your moment. Live the Highlands International School experience."}
+              ? 'No dejes pasar tu momento. Vive la experiencia Dragon Force en Highlands International School.'
+              : "Don't miss your moment. Live the Dragon Force experience at Highlands International School."}
           </p>
         </motion.div>
 
@@ -170,9 +170,9 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
                         target.parentElement?.appendChild(fallback);
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="text-white font-bold text-lg text-shadow-lg">{event.title}</h3>
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-500" />
+                    <div className="absolute inset-0 flex items-center justify-center p-6">
+                      <h3 className="text-white font-black text-2xl md:text-3xl text-center drop-shadow-lg">{event.title}</h3>
                     </div>
                   </div>
                 </div>
