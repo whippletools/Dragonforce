@@ -84,8 +84,8 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl">
             {lang === 'es' 
-              ? 'Encuentra tu escuela y empieza a entrenar como un verdadero Dragón.' 
-              : 'Find your school and start training like a true Dragon.'}
+              ? 'Empieza a entrenar como un verdadero Dragón.' 
+              : 'Start training like a true Dragon.'}
           </p>
         </motion.div>
 
@@ -156,56 +156,16 @@ const SchoolsSection = ({ lang }: SchoolsSectionProps) => {
                   className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all card-premium group cursor-pointer"
                   onClick={() => window.open(getFullPdfUrl(school.pdfUrl), '_blank', 'noopener,noreferrer')}
                 >
-                  <div className={`overflow-hidden bg-white/95 flex items-center justify-center ${schools.length === 1 ? 'aspect-[4/3]' : 'aspect-[16/9]'}`}>
+                  <div className="overflow-hidden bg-white/95 flex items-center justify-center aspect-[16/9]">
                     <img 
                       src={school.image} 
                       alt={school.name} 
-                      className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${schools.length === 1 ? 'object-contain' : 'object-cover'}`} 
+                      className="w-full h-full group-hover:scale-105 transition-transform duration-500 object-cover" 
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
                     <h3 className="text-white font-bold text-lg mb-1 text-shadow">{school.name}</h3>
                     <p className="text-white/90 text-xs">{school.location}</p>
-                    {school.fees && Object.keys(school.fees).length > 0 ? (
-                      <div className="mt-2 text-white/95">
-                        <p className="text-[9px] uppercase tracking-wider text-white/70 mb-1">
-                          {lang === 'es' ? 'Tarifas por días' : 'Fees by days'}
-                        </p>
-                        <div className="space-y-0">
-                          {Object.entries(school.fees).slice(0, 4).map(([days, fee]) => (
-                            <div key={days} className="flex justify-between text-[10px] leading-tight">
-                              <span className="capitalize">{days === 'all' ? (lang === 'es' ? 'Todos' : 'All') : `${days}d`}</span>
-                              <span>
-                                {fee.enrollment != null && <>I:{formatCurrency(fee.enrollment)} </>}
-                                {fee.monthly != null && <>M:{formatCurrency(fee.monthly)}</>}
-                              </span>
-                            </div>
-                          ))}
-                          {Object.keys(school.fees).length > 4 && (
-                            <p className="text-[9px] text-white/60">+{Object.keys(school.fees).length - 4} {lang === 'es' ? 'más' : 'more'}</p>
-                          )}
-                        </div>
-                      </div>
-                    ) : (school.enrollmentFee || school.monthlyFee) && (
-                      <div className="mt-2 grid grid-cols-2 gap-2 text-white/95">
-                        {school.enrollmentFee && (
-                          <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1">
-                            <p className="text-[9px] uppercase tracking-wider text-white/70">
-                              {lang === 'es' ? 'Inscripción' : 'Enrollment'}
-                            </p>
-                            <p className="text-xs font-bold">{formatCurrency(school.enrollmentFee)}</p>
-                          </div>
-                        )}
-                        {school.monthlyFee && (
-                          <div className="rounded-md bg-white/10 backdrop-blur-sm px-2 py-1">
-                            <p className="text-[9px] uppercase tracking-wider text-white/70">
-                              {lang === 'es' ? 'Mensualidad' : 'Monthly'}
-                            </p>
-                            <p className="text-xs font-bold">{formatCurrency(school.monthlyFee)}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
                     <a 
                       href={getFullPdfUrl(school.pdfUrl)}
                       target="_blank"

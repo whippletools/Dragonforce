@@ -131,7 +131,7 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
 
           <div 
             ref={carouselRef}
-            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${events.length === 1 ? 'justify-center' : 'justify-start'}`}`}
+            className={`flex gap-6 pb-4 snap-x snap-mandatory scrollbar-hide px-2 ${needsScroll ? 'overflow-x-auto' : `overflow-hidden ${events.length <= 2 ? 'justify-center' : 'justify-start'}`}`}
             style={{ scrollBehavior: 'smooth' }}
             id="events-carousel"
           >
@@ -143,9 +143,9 @@ const EventsSection = ({ lang, onNavigateEvent }: EventsSectionProps) => {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className={`snap-start flex-shrink-0 ${
                   events.length === 1
-                    ? 'w-full'
+                    ? 'w-full max-w-[340px] md:max-w-[360px]'
                     : events.length === 2
-                    ? 'w-full sm:w-[calc(50%-12px)]'
+                    ? 'w-full max-w-[300px] sm:max-w-[340px]'
                     : events.length === 3
                     ? 'w-[280px] sm:w-[calc(33%-12px)]'
                     : 'w-[280px] md:w-[320px]'

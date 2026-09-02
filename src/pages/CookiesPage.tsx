@@ -65,7 +65,7 @@ const CookiesPage = ({ lang, onBack }: CookiesPageProps) => {
               {isSpanish ? 'Política de Cookies' : 'Cookies Policy'}
             </h1>
             <p className="text-gray-600">
-              FC Porto Dragon Force México - Monterrey, Nuevo León
+              FC Porto Dragon Force México
             </p>
           </div>
 
