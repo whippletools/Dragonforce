@@ -12,6 +12,7 @@ const processSlideImages = (slide: Slide): Slide => {
   return {
     ...slide,
     mediaUrl: completeImageUrl(slide.mediaUrl),
+    mediaUrlMobile: slide.mediaUrlMobile ? completeImageUrl(slide.mediaUrlMobile) : undefined,
   };
 };
 
@@ -36,6 +37,7 @@ export function useHeroSlider(lang: Lang) {
               id: s.id,
               mediaType: s.mediaType,
               mediaUrl: s.mediaUrl,
+              mediaUrlMobile: s.mediaUrlMobile || undefined,
               position: s.position,
               title: s.title,
               body: s.body,

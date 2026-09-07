@@ -14,6 +14,8 @@ export interface Slide {
   id: number;
   mediaType: 'image' | 'video';
   mediaUrl: string;
+  /** Media vertical (9:16) opcional para smartphones. Si falta se usa mediaUrl. */
+  mediaUrlMobile?: string;
   position: Position;
   title: string;
   body: string;

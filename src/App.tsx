@@ -3,6 +3,7 @@ import { API_BASE_URL } from './config';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HighlandsModal from './components/HighlandsModal';
+import IntroVideoModal from './components/IntroVideoModal';
 import HeroSlider from './sections/HeroSlider';
 import AboutSection from './sections/AboutSection';
 import QualitySection from './sections/QualitySection';
@@ -256,6 +257,7 @@ function App() {
         onClose={() => setIsHighlandsModalOpen(false)}
         lang={lang}
       />
+      <IntroVideoModal lang={lang} />
     </div>
     </CartProvider>
   );
