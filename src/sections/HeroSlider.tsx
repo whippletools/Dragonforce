@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useHeroSlider } from '../hooks/useHeroSlider';
+import { HERO_MEDIA_OVERRIDE } from '../data/heroMedia';
 
 interface HeroSliderProps {
   lang: Lang;
@@ -26,9 +27,29 @@ const isYouTubeUrl = (url: string): boolean => {
   return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
+// Breakpoint 'md' de Tailwind: por debajo consideramos smartphone y usamos el media vertical
+const MOBILE_QUERY = '(max-width: 767px)';
+
+const useIsMobile = (): boolean => {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_QUERY);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  return isMobile;
+};
+
 const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error, usingFallback } = useHeroSlider(lang);
+  const isMobile = useIsMobile();
   const t = translations[lang];
 
   const nextSlide = useCallback(() => {
@@ -72,6 +93,21 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
 
   const slideData = slides[current];
 
+  // Orden de prioridad para elegir el archivo que se reproduce:
+  //   1. Override local (src/data/heroMedia.ts) mientras no esté cargado en el CMS
+  //   2. Versión vertical del CMS, si estamos en smartphone
+  //   3. Media normal del CMS
+  const overrideApplies =
+    HERO_MEDIA_OVERRIDE.enabled &&
+    (HERO_MEDIA_OVERRIDE.slideIndex === null || HERO_MEDIA_OVERRIDE.slideIndex === current);
+
+  const mediaUrl = overrideApplies
+    ? (isMobile ? HERO_MEDIA_OVERRIDE.mobile : HERO_MEDIA_OVERRIDE.desktop)
+    : (isMobile && slideData.mediaUrlMobile) || slideData.mediaUrl;
+
+  // El override siempre es un archivo de video local, nunca imagen ni YouTube
+  const mediaType = overrideApplies ? 'video' : slideData.mediaType;
+
   // Get position classes based on slide position settings
   const getPositionClasses = () => {
     const horizontal = slideData.position?.horizontal || 'center';
@@ -103,25 +139,26 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
           transition={{ duration: 0.8 }}
           className="absolute inset-0"
         >
-          {slideData.mediaType === 'image' ? (
-            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${slideData.mediaUrl})` }} />
-          ) : isYouTubeUrl(slideData.mediaUrl) ? (
+          {mediaType === 'image' ? (
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${mediaUrl})` }} />
+          ) : isYouTubeUrl(mediaUrl) ? (
             <iframe
               className="absolute inset-0 w-full h-full"
-              src={getYouTubeEmbedUrl(slideData.mediaUrl) || ''}
+              src={getYouTubeEmbedUrl(mediaUrl) || ''}
               allow="autoplay; encrypted-media"
               allowFullScreen
               style={{ border: 'none', pointerEvents: 'none' }}
             />
           ) : (
             <video
+              key={mediaUrl}
               className="absolute inset-0 w-full h-full object-cover"
               autoPlay
               muted
               loop
               playsInline
             >
-              <source src={slideData.mediaUrl} type="video/mp4" />
+              <source src={mediaUrl} type="video/mp4" />
             </video>
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/40" />

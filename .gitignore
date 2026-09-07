@@ -55,3 +55,6 @@ desktop.ini
 .parcel-cache/
 .eslintcache
 .stylelintcache
+
+# Videos master (no se despliegan, solo fuente para recomprimir)
+media-src/
