@@ -11,6 +11,7 @@ interface HeroSliderProps {
   onNavigateInternational?: () => void;
   onNavigatePreinscription: () => void;
   onOpenHighlandsModal?: () => void;
+  onOpenIntroModal?: () => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
@@ -45,7 +46,7 @@ const useIsMobile = (): boolean => {
   return isMobile;
 };
 
-const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal, onOpenIntroModal }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const isMobile = useIsMobile();
@@ -193,21 +194,34 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                 onClick={() => {
                   const buttonText = slideData.buttonText?.toLowerCase() || '';
                   const buttonAction = slideData.buttonAction || '';
+                  const action = buttonAction.toLowerCase().trim();
                   
+                  // Saludo / Bienvenida → Modal de Saludo en video
+                  if (
+                    action.includes('saludo') ||
+                    action.includes('intro') ||
+                    action.includes('bienvenida') ||
+                    buttonText.includes('saludo') ||
+                    buttonText.includes('bienvenida') ||
+                    action === '#saludo' ||
+                    action === '#intro'
+                  ) {
+                    onOpenIntroModal?.();
+                  }
                   // Ver catálogo / Ver eventos → Eventos
-                  if (buttonText.includes('catálogo') || buttonText.includes('catalog') || buttonAction.includes('event')) {
+                  else if (buttonText.includes('catálogo') || buttonText.includes('catalog') || action.includes('event')) {
                     onNavigateEvents();
                   }
                   // Ver escuelas → Escuelas
-                  else if (buttonText.includes('escuel') || buttonText.includes('school') || buttonAction.includes('school')) {
+                  else if (buttonText.includes('escuel') || buttonText.includes('school') || action.includes('school')) {
                     onNavigateSchools();
                   }
                   // Saber más / Más información → Internacional
-                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || buttonAction.includes('international')) {
+                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || action.includes('international')) {
                     onNavigateInternational?.();
                   }
                   // Inscripción / Registro → Modal Highlands
-                  else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonText.includes('inscríbete') || buttonText.includes('inscribete') || buttonAction.includes('preinscription') || buttonAction.includes('inscripcion')) {
+                  else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonText.includes('inscríbete') || buttonText.includes('inscribete') || action.includes('preinscription') || action.includes('inscripcion')) {
                     if (onOpenHighlandsModal) {
                       onOpenHighlandsModal();
                     } else {

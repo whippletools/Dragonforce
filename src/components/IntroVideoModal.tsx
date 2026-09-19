@@ -5,14 +5,16 @@ import { INTRO_VIDEO_POPUP } from '../data/heroMedia';
 
 interface IntroVideoModalProps {
   lang: 'es' | 'en';
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 const MOBILE_QUERY = '(max-width: 767px)';
 
 /**
  * Popup de bienvenida con el mensaje en video. Se configura en
- * src/data/heroMedia.ts (INTRO_VIDEO_POPUP). Si `enabled` es false no
- * renderiza nada.
+ * src/data/heroMedia.ts (INTRO_VIDEO_POPUP). Puede abrirse automáticamente
+ * al entrar o manualmente mediante isOpen.
  *
  * IMPORTANTE — por qué no arranca con sonido solo:
  * Ningún navegador permite reproducir audio automáticamente en la primera
@@ -22,15 +24,28 @@ const MOBILE_QUERY = '(max-width: 767px)';
  * sonido y el video VUELVE A EMPEZAR, para que no se pierda el inicio del
  * mensaje.
  */
-const IntroVideoModal = ({ lang }: IntroVideoModalProps) => {
+const IntroVideoModal = ({ lang, isOpen: externalIsOpen, onClose }: IntroVideoModalProps) => {
   const isSpanish = lang === 'es';
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [hasSound, setHasSound] = useState(false);
   const [needsManualPlay, setNeedsManualPlay] = useState(false);
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches
   );
+
+  const isOpen = externalIsOpen !== undefined ? (externalIsOpen || internalIsOpen) : internalIsOpen;
+
+  useEffect(() => {
+    if (externalIsOpen) {
+      setHasSound(false);
+      setNeedsManualPlay(false);
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(() => setNeedsManualPlay(true));
+      }
+    }
+  }, [externalIsOpen]);
 
   useEffect(() => {
     if (!INTRO_VIDEO_POPUP.enabled) return;
@@ -44,12 +59,13 @@ const IntroVideoModal = ({ lang }: IntroVideoModalProps) => {
     }
 
     setIsMobile(window.matchMedia(MOBILE_QUERY).matches);
-    const timer = setTimeout(() => setIsOpen(true), INTRO_VIDEO_POPUP.delayMs);
+    const timer = setTimeout(() => setInternalIsOpen(true), INTRO_VIDEO_POPUP.delayMs);
     return () => clearTimeout(timer);
   }, []);
 
   const close = () => {
-    setIsOpen(false);
+    setInternalIsOpen(false);
+    onClose?.();
     videoRef.current?.pause();
     if (INTRO_VIDEO_POPUP.showOncePerVisitor) {
       try {
@@ -99,7 +115,7 @@ const IntroVideoModal = ({ lang }: IntroVideoModalProps) => {
     }
   };
 
-  if (!INTRO_VIDEO_POPUP.enabled) return null;
+  if (!INTRO_VIDEO_POPUP.enabled && !externalIsOpen) return null;
 
   const src = isMobile ? INTRO_VIDEO_POPUP.mobile : INTRO_VIDEO_POPUP.desktop;
   const showSoundPrompt = !hasSound;

@@ -38,6 +38,7 @@ function App() {
   const [lang, setLang] = useState<Lang>('es');
   const [portalUrl, setPortalUrl] = useState<string>('https://padres.app.dragonforcemx.com');
   const [isHighlandsModalOpen, setIsHighlandsModalOpen] = useState(false);
+  const [isIntroModalOpen, setIsIntroModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}settings`)
@@ -184,6 +185,7 @@ function App() {
               onNavigateSchools={navigateToSchools}
               onNavigatePreinscription={navigateToPreinscription}
               onOpenHighlandsModal={() => setIsHighlandsModalOpen(true)}
+              onOpenIntroModal={() => setIsIntroModalOpen(true)}
             />
             <AboutSection lang={lang} />
             <QualitySection lang={lang} />
@@ -257,7 +259,11 @@ function App() {
         onClose={() => setIsHighlandsModalOpen(false)}
         lang={lang}
       />
-      <IntroVideoModal lang={lang} />
+      <IntroVideoModal
+        lang={lang}
+        isOpen={isIntroModalOpen}
+        onClose={() => setIsIntroModalOpen(false)}
+      />
     </div>
     </CartProvider>
   );
