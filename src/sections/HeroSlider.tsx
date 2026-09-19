@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { translations, type Lang } from '../data/translations';
 import { useHeroSlider } from '../hooks/useHeroSlider';
-import { HERO_MEDIA_OVERRIDE } from '../data/heroMedia';
 
 interface HeroSliderProps {
   lang: Lang;
@@ -93,20 +92,9 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
 
   const slideData = slides[current];
 
-  // Orden de prioridad para elegir el archivo que se reproduce:
-  //   1. Override local (src/data/heroMedia.ts) mientras no esté cargado en el CMS
-  //   2. Versión vertical del CMS, si estamos en smartphone
-  //   3. Media normal del CMS
-  const overrideApplies =
-    HERO_MEDIA_OVERRIDE.enabled &&
-    (HERO_MEDIA_OVERRIDE.slideIndex === null || HERO_MEDIA_OVERRIDE.slideIndex === current);
-
-  const mediaUrl = overrideApplies
-    ? (isMobile ? HERO_MEDIA_OVERRIDE.mobile : HERO_MEDIA_OVERRIDE.desktop)
-    : (isMobile && slideData.mediaUrlMobile) || slideData.mediaUrl;
-
-  // El override siempre es un archivo de video local, nunca imagen ni YouTube
-  const mediaType = overrideApplies ? 'video' : slideData.mediaType;
+  // Media proveniente directamente de la base de datos / CMS
+  const mediaUrl = (isMobile && slideData.mediaUrlMobile) || slideData.mediaUrl;
+  const mediaType = slideData.mediaType;
 
   // Get position classes based on slide position settings
   const getPositionClasses = () => {
@@ -152,6 +140,7 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
           ) : (
             <video
               key={mediaUrl}
+              src={mediaUrl}
               className="absolute inset-0 w-full h-full object-cover"
               autoPlay
               muted

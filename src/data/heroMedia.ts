@@ -32,32 +32,6 @@ const readNumber = (value: string | undefined, fallback: number): number => {
   return value !== undefined && value.trim() !== '' && Number.isFinite(n) ? n : fallback;
 };
 
-/** El índice del slide acepta un número o la palabra "all" (todos los slides). */
-const readSlideIndex = (value: string | undefined, fallback: number | null): number | null => {
-  if (value === undefined || value.trim() === '') return fallback;
-  const v = value.trim().toLowerCase();
-  if (v === 'all' || v === 'todos') return null;
-  const n = Number(v);
-  return Number.isInteger(n) && n >= 0 ? n : fallback;
-};
-
-export interface HeroMediaOverride {
-  /** false = el hero vuelve a tomar el video del CMS */
-  enabled: boolean;
-  /** Video horizontal 16:9 — escritorio y tablet */
-  desktop: string;
-  /** Video vertical 9:16 — smartphones (< 768px) */
-  mobile: string;
-  /** A qué slide se le aplica (0 = el primero). `null` = a todos. */
-  slideIndex: number | null;
-}
-
-export const HERO_MEDIA_OVERRIDE: HeroMediaOverride = {
-  enabled: readBool(env.VITE_HERO_VIDEO_ENABLED, true),
-  desktop: readString(env.VITE_HERO_VIDEO_DESKTOP, '/videos/hero-horizontal.mp4'),
-  mobile: readString(env.VITE_HERO_VIDEO_MOBILE, '/videos/hero-vertical.mp4'),
-  slideIndex: readSlideIndex(env.VITE_HERO_VIDEO_SLIDE_INDEX, 0),
-};
 
 export interface IntroVideoPopupConfig {
   /** false = no se muestra el popup de bienvenida */
