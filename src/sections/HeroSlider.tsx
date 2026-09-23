@@ -12,6 +12,7 @@ interface HeroSliderProps {
   onNavigatePreinscription: () => void;
   onOpenHighlandsModal?: () => void;
   onOpenIntroModal?: () => void;
+  onNavigateArticle?: (slug: string) => void;
 }
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
