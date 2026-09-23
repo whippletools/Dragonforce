@@ -14,11 +14,11 @@ interface BlogPostProps {
 function renderArticleContent(rawText: string) {
   if (!rawText) return null;
 
-  const lines = rawText.split('\n');
+  const lines = rawText.split(/\r?\n/);
   const elements: React.ReactNode[] = [];
   let paragraphBuffer: string[] = [];
 
-  const flushParagraph = (keyPrefix: number) => {
+  const flushParagraph = (keyPrefix: number | string) => {
     if (paragraphBuffer.length > 0) {
       const text = paragraphBuffer.join('\n').trim();
       if (text) {
@@ -93,7 +93,7 @@ function renderArticleContent(rawText: string) {
     paragraphBuffer.push(line);
   });
 
-  flushParagraph(lines.length);
+  flushParagraph('end');
   return elements;
 }
 
@@ -123,7 +123,7 @@ const BlogPost = ({ slug, lang, onBack }: BlogPostProps) => {
   }
 
   // Usar content como cuerpo principal; si no existe, fallback a excerpt.
-  const content = article.content || article.excerpt || '';
+  const content = article.content || '';
 
   return (
     <div className=pt-20 min-h-screen bg-gray-50>
