@@ -198,14 +198,21 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   const action = buttonAction.toLowerCase().trim();
                   const rawAction = buttonAction.trim();
 
-                  // 1. Noticia (ej. /news/slug, /noticias/slug, o slug directo como /Aviso-25-Septiembre)
+                  // 1. Noticia (soporta /news/slug, /noticias/slug, URL completa con dominio, o slug directo)
+                  const newsMatch = rawAction.match(/(?:news|noticias)\/([^/?#\s]+)/i);
+                  if (newsMatch && onNavigateArticle) {
+                    onNavigateArticle(decodeURIComponent(newsMatch[1]));
+                    return;
+                  }
+
                   const cleanSlug = rawAction.replace(/^\/?(news\/|noticias\/)?/, '').replace(/^\/+/, '').trim();
                   if (
-                    rawAction.startsWith('/news/') ||
-                    rawAction.startsWith('/noticias/') ||
-                    (cleanSlug && !['events', 'schools', 'inscripcion', 'saludo', 'intro', 'catalog', 'preinscription', 'international'].includes(cleanSlug.toLowerCase()) && !rawAction.startsWith('http') && !rawAction.startsWith('#'))
+                    cleanSlug &&
+                    !['events', 'schools', 'inscripcion', 'saludo', 'intro', 'catalog', 'preinscription', 'international'].includes(cleanSlug.toLowerCase()) &&
+                    !rawAction.startsWith('http') &&
+                    !rawAction.startsWith('#')
                   ) {
-                    if (cleanSlug && onNavigateArticle) {
+                    if (onNavigateArticle) {
                       onNavigateArticle(cleanSlug);
                       return;
                     }
