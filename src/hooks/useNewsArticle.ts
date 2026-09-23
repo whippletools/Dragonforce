@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import type { NewsArticle } from '../types/api';
 import type { Lang } from '../data/translations';
 import { apiClient } from '../services/api';
 import { endpoints } from '../services/endpoints';
-
 import { completeImageUrl } from '../config';
 
 export function useNewsArticle(slug: string, lang: Lang) {
@@ -15,17 +14,25 @@ export function useNewsArticle(slug: string, lang: Lang) {
     const loadArticle = async () => {
       try {
         setLoading(true);
+        setError(null);
         
         try {
-          // Intentar obtener artículo del backend
           const response = await apiClient.get<{ data: NewsArticle[] }>(endpoints.news, {
             params: { lang, limit: 100 },
           });
-          const foundArticle = response.data.data.find(a => a.slug === slug);
+
+          const cleanSlug = slug.replace(/^\/?(news\/|noticias\/)?/, '').replace(/^\/+/, '').trim();
+          const foundArticle = response.data.data.find(
+            (a) =>
+              a.slug === slug ||
+              a.slug === cleanSlug ||
+              a.slug.toLowerCase() === cleanSlug.toLowerCase()
+          );
+
           if (foundArticle) {
             setArticle({
               ...foundArticle,
-              image: completeImageUrl(foundArticle.image)
+              image: completeImageUrl(foundArticle.image),
             });
           } else {
             setError('Article not found');
@@ -34,8 +41,6 @@ export function useNewsArticle(slug: string, lang: Lang) {
           console.error('Error fetching article:', apiError);
           setError('Failed to load article');
         }
-        
-        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error loading article');
       } finally {

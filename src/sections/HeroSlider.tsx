@@ -46,7 +46,7 @@ const useIsMobile = (): boolean => {
   return isMobile;
 };
 
-const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal, onOpenIntroModal }: HeroSliderProps) => {
+const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInternational, onNavigatePreinscription, onOpenHighlandsModal, onOpenIntroModal, onNavigateArticle }: HeroSliderProps) => {
   const [current, setCurrent] = useState(0);
   const { slides, loading, error, usingFallback } = useHeroSlider(lang);
   const isMobile = useIsMobile();
@@ -195,8 +195,22 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   const buttonText = slideData.buttonText?.toLowerCase() || '';
                   const buttonAction = slideData.buttonAction || '';
                   const action = buttonAction.toLowerCase().trim();
-                  
-                  // Saludo / Bienvenida → Modal de Saludo en video
+                  const rawAction = buttonAction.trim();
+
+                  // 1. Noticia (ej. /news/slug, /noticias/slug, o slug directo como /Aviso-25-Septiembre)
+                  const cleanSlug = rawAction.replace(/^\/?(news\/|noticias\/)?/, '').replace(/^\/+/, '').trim();
+                  if (
+                    rawAction.startsWith('/news/') ||
+                    rawAction.startsWith('/noticias/') ||
+                    (cleanSlug && !['events', 'schools', 'inscripcion', 'saludo', 'intro', 'catalog', 'preinscription', 'international'].includes(cleanSlug.toLowerCase()) && !rawAction.startsWith('http') && !rawAction.startsWith('#'))
+                  ) {
+                    if (cleanSlug && onNavigateArticle) {
+                      onNavigateArticle(cleanSlug);
+                      return;
+                    }
+                  }
+
+                  // Saludo / Bienvenida -> Modal de Saludo en video
                   if (
                     action.includes('saludo') ||
                     action.includes('intro') ||
@@ -208,25 +222,25 @@ const HeroSlider = ({ lang, onNavigateEvents, onNavigateSchools, onNavigateInter
                   ) {
                     onOpenIntroModal?.();
                   }
-                  // Ver catálogo / Ver eventos → Eventos
-                  else if (buttonText.includes('catálogo') || buttonText.includes('catalog') || action.includes('event')) {
+                  // Ver catálogo / Ver eventos -> Eventos
+                  else if (buttonText.includes('catálogo') || buttonText.includes('catalogo') || buttonText.includes('catalog') || action.includes('event')) {
                     onNavigateEvents();
                   }
-                  // Ver escuelas → Escuelas
+                  // Ver escuelas -> Escuelas
                   else if (buttonText.includes('escuel') || buttonText.includes('school') || action.includes('school')) {
                     onNavigateSchools();
                   }
-                  // Saber más / Más información → Internacional
-                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('more') || buttonText.includes('international') || action.includes('international')) {
-                    onNavigateInternational?.();
-                  }
-                  // Inscripción / Registro → Modal Highlands
+                  // Inscripción / Registro -> Modal Highlands
                   else if (buttonText.includes('inscripción') || buttonText.includes('inscripcion') || buttonText.includes('registro') || buttonText.includes('registr') || buttonText.includes('inscríbete') || buttonText.includes('inscribete') || action.includes('preinscription') || action.includes('inscripcion')) {
                     if (onOpenHighlandsModal) {
                       onOpenHighlandsModal();
                     } else {
                       onNavigatePreinscription();
                     }
+                  }
+                  // Saber más / Más información -> Internacional
+                  else if (buttonText.includes('saber') || buttonText.includes('más') || buttonText.includes('mas') || buttonText.includes('more') || buttonText.includes('international') || action.includes('international')) {
+                    onNavigateInternational?.();
                   }
                   else {
                     // Fallback: intentar abrir URL si no coincide con ninguna
