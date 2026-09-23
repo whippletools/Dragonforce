@@ -69,16 +69,66 @@ function App() {
     }, 100);
   };
 
-  const navigateToBlog = (slug: string) => {
-    setBlogSlug(slug);
+  const navigateToBlog = (slug: string, updateUrl = true) => {
+    const cleanSlug = slug.replace(/^\/?(news\/|noticias\/)?/, '').replace(/^\/+/, '').trim();
+    setBlogSlug(cleanSlug);
     setCurrentPage('blog');
     window.scrollTo(0, 0);
+    if (updateUrl && typeof window !== 'undefined') {
+      window.history.pushState({ page: 'blog', slug: cleanSlug }, '', `/news/${cleanSlug}`);
+    }
   };
 
-  const navigateToHome = () => {
+  const navigateToHome = (updateUrl = true) => {
     setCurrentPage('home');
+    setBlogSlug('');
     window.scrollTo(0, 0);
+    if (updateUrl && typeof window !== 'undefined' && window.location.pathname !== '/') {
+      window.history.pushState({ page: 'home' }, '', '/');
+    }
   };
+
+  // Sincronizar navegación con el botón Atrás / Adelante del navegador
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path.startsWith('/news/')) {
+        const slug = path.replace('/news/', '').replace(/\/$/, '');
+        if (slug) {
+          setBlogSlug(slug);
+          setCurrentPage('blog');
+          return;
+        }
+      } else if (path.startsWith('/noticias/')) {
+        const slug = path.replace('/noticias/', '').replace(/\/$/, '');
+        if (slug) {
+          setBlogSlug(slug);
+          setCurrentPage('blog');
+          return;
+        }
+      }
+      setCurrentPage('home');
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Carga inicial: abrir noticia si la URL es directa (ej. /news/slug o /noticias/slug)
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.startsWith('/news/')) {
+      const slug = path.replace('/news/', '').replace(/\/$/, '');
+      if (slug) {
+        navigateToBlog(slug, false);
+      }
+    } else if (path.startsWith('/noticias/')) {
+      const slug = path.replace('/noticias/', '').replace(/\/$/, '');
+      if (slug) {
+        navigateToBlog(slug, false);
+      }
+    }
+  }, []);
 
   const navigateToRecruitment = () => {
     setCurrentPage('recruitment');
@@ -184,6 +234,7 @@ function App() {
               onNavigateEvents={navigateToEventsSection}
               onNavigateSchools={navigateToSchools}
               onNavigatePreinscription={navigateToPreinscription}
+              onNavigateArticle={navigateToBlog}
               onOpenHighlandsModal={() => setIsHighlandsModalOpen(true)}
               onOpenIntroModal={() => setIsIntroModalOpen(true)}
             />
